@@ -1,2 +1,20 @@
 .bg {
+  background-color: #3992cdec;
+}
+/* Selecciona el elemento con el título "Servicios" dentro del NavDropdown */
+.navbar-nav .nav-link.dropdown-toggle {
+  color: white;
+}
+/* Cambiar el color del botón de toggle del Navbar a blanco */
+.navbar-toggler {
+  border-color: white;
+}
+
+.navbar-toggler.custom-border {
+  border-color: white;
+}
+
+.separator {
+  border-top: 1px solid white;
+  margin-top: 0.5rem;
 }
