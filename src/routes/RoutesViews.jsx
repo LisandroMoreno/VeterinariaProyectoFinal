@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import NavbarC from "../components/NavbarC";
+import FooterC from "../components/FooterC";
 /* Todas las rutas del proyecto - Path / element  */
 
 const RoutesViews = () => {
@@ -9,6 +10,7 @@ const RoutesViews = () => {
       <Routes>
         <Route />
       </Routes>
+      <FooterC />
     </>
   );
 };

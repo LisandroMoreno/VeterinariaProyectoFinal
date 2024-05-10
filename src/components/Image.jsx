@@ -1,5 +1,5 @@
 const Image = ({ urlImagen, alternativo, ancho }) => {
-  console.log(urlImagen);
+  /*   console.log(urlImagen); */
   return (
     <>
       <img src={urlImagen} alt={alternativo} width={ancho} />
