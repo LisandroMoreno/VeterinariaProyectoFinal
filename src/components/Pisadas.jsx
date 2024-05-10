@@ -1,47 +1,35 @@
 import React from "react";
-import "../css/Pisadas.css"; // Archivo de estilos CSS para las pisadas
 import Image from "./Image";
+import "../css/Pisadas.css"; // Archivo de estilos CSS para las pisadas
 
 const Pisadas = () => {
   const url =
-    "https://res.cloudinary.com/duexhxoyy/image/upload/v1715287763/istockphoto-1402818302-612x612_l58aos.jpg";
+    "https://res.cloudinary.com/duexhxoyy/image/upload/v1715298389/huellas_ptf3an.jpg";
   return (
     <div className="pisadas-container">
-      <div className="pisada">
-        <Image urlImagen={url} ancho="75" alternativo="logo" />
+      <div className="pisada d-none d-sm-block">
+        <Image urlImagen={url} ancho="60" alternativo="logo" />
+      </div>
+      <div className="pisada  d-none d-sm-block">
+        <Image urlImagen={url} ancho="60" alternativo="logo" />
+      </div>
+      <div className="pisada d-none d-sm-block">
+        <Image urlImagen={url} ancho="60" alternativo="logo" />
+      </div>
+      <div className="pisada  d-none d-sm-block">
+        <Image urlImagen={url} ancho="60" alternativo="logo" />
+      </div>
+      <div className="pisada d-none d-sm-block">
+        <Image urlImagen={url} ancho="60" alternativo="logo" />
+      </div>
+      <div className="pisada d-none d-sm-block">
+        <Image urlImagen={url} ancho="60" alternativo="logo" />
       </div>
       <div className="pisada">
-        <Image urlImagen={url} ancho="75" alternativo="logo" />
+        <Image urlImagen={url} ancho="60" alternativo="logo" />
       </div>
       <div className="pisada">
-        <Image urlImagen={url} ancho="75" alternativo="logo" />
-      </div>
-      <div className="pisada">
-        <Image urlImagen={url} ancho="75" alternativo="logo" />
-      </div>
-      <div className="pisada">
-        <Image urlImagen={url} ancho="75" alternativo="logo" />
-      </div>
-      <div className="pisada">
-        <Image urlImagen={url} ancho="75" alternativo="logo" />
-      </div>
-      <div className="pisada">
-        <Image urlImagen={url} ancho="75" alternativo="logo" />
-      </div>
-      <div className="pisada">
-        <Image urlImagen={url} ancho="75" alternativo="logo" />
-      </div>
-      <div className="pisada">
-        <Image urlImagen={url} ancho="75" alternativo="logo" />
-      </div>
-      <div className="pisada">
-        <Image urlImagen={url} ancho="75" alternativo="logo" />
-      </div>
-      <div className="pisada">
-        <Image urlImagen={url} ancho="75" alternativo="logo" />
-      </div>
-      <div className="pisada">
-        <Image urlImagen={url} ancho="75" alternativo="logo" />
+        <Image urlImagen={url} ancho="60" alternativo="logo" />
       </div>
     </div>
   );

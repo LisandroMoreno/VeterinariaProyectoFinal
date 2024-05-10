@@ -3,8 +3,8 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Image from "./Image";
-import "../css/NavbarC.css";
 import Pisadas from "./Pisadas";
+import "../css/NavbarC.css";
 
 const NavbarC = () => {
   const url =
@@ -27,20 +27,21 @@ const NavbarC = () => {
                 <Nav.Link className="text-white"> </Nav.Link>
               </Nav>
               <Nav className="me-auto">
-                <Nav.Link href="#home" className="text-white">
+                <Nav.Link href="/" class="my-custom-link">
                   Inicio
                 </Nav.Link>
-                <Nav.Link href="#link" className="text-white">
+
+                <Nav.Link href="/sobreNosotros" className="my-custom-link">
                   Sobre Nosotros
                 </Nav.Link>
                 <NavDropdown title="Servicios" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Planes</NavDropdown.Item>
+                  <NavDropdown.Item href="/planes">Planes</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.2">
+                  <NavDropdown.Item href="/productos">
                     Productos
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.3">
+                  <NavDropdown.Item href="/reservaTurnos">
                     Reserva de turnos
                   </NavDropdown.Item>
                 </NavDropdown>
@@ -50,10 +51,10 @@ const NavbarC = () => {
                 <Nav.Link className="text-white"> </Nav.Link>
               </Nav>
               <Nav>
-                <Nav.Link href="#home" className="text-white">
+                <Nav.Link href="/login" className="my-custom-link">
                   Iniciar Sesion
                 </Nav.Link>
-                <Nav.Link href="#link" className="text-white">
+                <Nav.Link href="/registro" className="my-custom-link">
                   Registrarse
                 </Nav.Link>
               </Nav>
