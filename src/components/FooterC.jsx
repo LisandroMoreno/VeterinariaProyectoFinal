@@ -8,48 +8,48 @@ const FooterC = () => {
   return (
     <>
       <footer className="bg">
-        <div className="container-fluid text-center mt-1">
+        <div className="container-fluid text-center ">
           <div className="row justify-content-center">
-            <div className="col-12 col-md-6 col-lg-3 align-items-center  d-flex justify-content-center ">
+            <div className="col-12 mt-2 col-md-6 col-lg-3 align-items-center d-flex justify-content-center">
               <NavLink to="/">
-                <Image urlImagen={url} ancho="25%" alternativo="logo" />
+                <Image urlImagen={url} ancho="70vh" alternativo="logo" />
               </NavLink>
             </div>
             <div className="col-12 col-md-6 col-lg-3 align-items-center flex-column mt-5  ">
               <NavLink to="/" className="text-decoration-none">
-                <h5 className="text-white ">Inicio</h5>
+                <h6 className="text-white ">Inicio</h6>
               </NavLink>
               <NavLink to="/sobre-nosotros" className="text-decoration-none">
-                <h5 className="text-white ">Sobre Nosotros</h5>
+                <h6 className="text-white ">Sobre Nosotros</h6>
               </NavLink>
               <NavLink to="/contacto" className="text-decoration-none">
-                <h5 className="text-white ">Contacto</h5>
+                <h6 className="text-white ">Contacto</h6>
               </NavLink>
               <NavLink
                 to="/trabaja-con-nosotros"
                 className="text-decoration-none">
-                <h5 className="text-white mb-5">Trabaja con Nosotros</h5>
+                <h6 className="text-white mb-5">Trabaja con Nosotros</h6>
               </NavLink>
             </div>
             <div className="col-12 col-md-6 col-lg-3 justify-content-center align-items-center d-flex flex-row ">
               <a
                 href="https://www.facebook.com/RollingCodeSchool/"
-                className="text-white fs-5 p-2 ">
+                className="text-white fs-6 p-2 ">
                 <FaFacebook />
               </a>
               <a
                 href="https://twitter.com/rollingcodeok"
-                className="text-white fs-5 p-2">
+                className="text-white fs-6 p-2">
                 <FaTwitter />
               </a>
               <a
                 href="https://www.instagram.com/rollingcodeschool/?utm_source=ig_web_button_share_sheet&igshid=OGQ5ZDc2ODk2ZA=="
-                className="text-white fs-5 p-2 ">
+                className="text-white fs-6 p-2 ">
                 <FaInstagram />
               </a>
               <a
                 href="https://wa.me/3816342100"
-                className="text-white fs-5 p-2">
+                className="text-white fs-6 p-2">
                 <FaWhatsapp />
               </a>
             </div>
@@ -57,8 +57,8 @@ const FooterC = () => {
               <iframe
                 className="rounded-3"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.106067949468!2d-65.20974192481181!3d-26.836578490026472!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94225d3ad7f30f1d%3A0xf8606cd659b8e3e4!2sRollingCode%20School!5e0!3m2!1ses!2sar!4v1700003312887!5m2!1ses!2sar"
-                width="75%%"
-                height="75%"
+                width="70%"
+                height="60%"
                 style={{ border: 0 }}
                 allowFullScreen=""
                 loading="lazy"
