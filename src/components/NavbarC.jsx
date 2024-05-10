@@ -27,7 +27,7 @@ const NavbarC = () => {
                 <Nav.Link className="text-white"> </Nav.Link>
               </Nav>
               <Nav className="me-auto">
-                <Nav.Link href="/" class="my-custom-link">
+                <Nav.Link href="/" className="my-custom-link">
                   Inicio
                 </Nav.Link>
 
