@@ -1,5 +1,13 @@
+import MainC from "../components/MainC";
+import { tittlePage } from "../helpers/titlePages";
+
 const HomePage = () => {
-  return <div>HomePage</div>;
+  tittlePage("Pagina Principal");
+  return (
+    <>
+      <MainC />
+    </>
+  );
 };
 
 export default HomePage;
