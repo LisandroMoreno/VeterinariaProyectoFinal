@@ -1,7 +1,9 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { tittlePage } from "../helpers/titlePages";
 
 const RegisterPage = () => {
+  tittlePage("Registro");
   return (
     <>
       <div className="d-flex justify-content-center my-5">

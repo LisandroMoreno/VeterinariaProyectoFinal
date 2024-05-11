@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import HomePage from "../pages/HomePage";
+import RegisterPage from "../pages/RegisterPage";
 import NavbarC from "../components/NavbarC";
 import FooterC from "../components/FooterC";
 
@@ -9,7 +11,8 @@ const RoutesViews = () => {
     <>
       <NavbarC />
       <Routes>
-
+        <Route path="/registro" element={<RegisterPage />} />
+        <Route path="/" element={<HomePage />} />
       </Routes>
       <FooterC />
     </>
