@@ -14,7 +14,7 @@ const NavbarC = () => {
       <div>
         <Navbar expand="lg" className="bg fixed-top">
           <Container fluid>
-            <Navbar.Brand href="#home">
+            <Navbar.Brand href="/">
               <Image urlImagen={url} ancho="50" alternativo="logo" />
             </Navbar.Brand>
             <Navbar.Toggle
