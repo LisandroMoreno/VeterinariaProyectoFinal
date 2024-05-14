@@ -1,0 +1,10 @@
+.btn {
+  background-color: #3992cdec;
+  -webkit-box-shadow: 6px 6px 7px 0px rgba(0, 0, 0, 0.74);
+  -moz-box-shadow: 6px 6px 7px 0px rgba(0, 0, 0, 0.74);
+  box-shadow: 6px 6px 7px 0px rgba(0, 0, 0, 0.74);
+}
+
+.btn:hover {
+  background-color: #3992cdec;
+}
