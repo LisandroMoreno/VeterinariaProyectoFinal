@@ -1,3 +1,9 @@
 .bg {
   background-color: #3992cdec;
 }
+
+.my-custom-link:hover,
+.my-custom-link:focus,
+.my-custom-link:active {
+  color: black;
+}

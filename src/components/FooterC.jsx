@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { FaFacebook, FaInstagram, FaTwitter, FaWhatsapp } from "react-icons/fa";
 import Image from "./Image";
+import "../css/FooterC.css";
 
 const FooterC = () => {
   const url =
@@ -27,7 +28,7 @@ const FooterC = () => {
               </NavLink>
               <NavLink
                 to="/trabaja-con-nosotros"
-                className="text-decoration-none">
+                className="text-decoration-none ">
                 <h6 className="text-white mb-5">Trabaja con Nosotros</h6>
               </NavLink>
             </div>

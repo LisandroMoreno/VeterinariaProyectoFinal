@@ -1,6 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { tittlePage } from "../helpers/titlePages";
+import "../css/Reg-Log.css";
 
 const RegisterPage = () => {
   tittlePage("Registro");
@@ -24,11 +25,11 @@ const RegisterPage = () => {
             Si tienes una cuenta haz click <a href="/login">aqui</a>
           </p>
           <div>
-            <Button variant="primary" type="submit" className="w-100">
-              Registrase con Gmail
+            <Button variant="primary" type="submit" className="w-100 btn">
+              Registrarse con Gmail
             </Button>
           </div>
-          <Button variant="primary" type="submit" className="w-100 mt-3">
+          <Button variant="primary" type="submit" className="w-100 mt-3 btn">
             Confirmar
           </Button>
         </Form>
