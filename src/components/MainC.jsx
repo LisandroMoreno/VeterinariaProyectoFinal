@@ -76,6 +76,75 @@ const MainC = () => {
           </div>
         </div>
       </div>
+      <div>
+        <h6 className="text-black text-center mb-5 mt-5 ">
+          Marcas con las que trabajamos
+        </h6>
+        <div className="container mt-3">
+          <div className="row d-flex text-center ">
+            <div className="col-lg-4 col-md-6 mb-4 ">
+              <div className="card-size">
+                <Image
+                  className="card-img-top"
+                  urlImagen="https://1000logos.net/wp-content/uploads/2020/08/Royal_Canin_logo_PNG1.png"
+                  alternativo="logo de pedigree"
+                  ancho="50%"
+                />
+              </div>
+            </div>
+            <div className="col-lg-4 col-md-6 mb-4 ">
+              <div className="card-size">
+                <Image
+                  className="card-img-top"
+                  urlImagen="https://1000logos.net/wp-content/uploads/2020/09/Pedigree_logo_PNG7.png"
+                  alternativo="logo de pedigree"
+                  ancho="50%"
+                />
+              </div>
+            </div>
+            <div className="col-lg-4 col-md-6 mb-4 mt-5">
+              <div className="card-size">
+                <Image
+                  className="card-img-top"
+                  urlImagen="https://1000logos.net/wp-content/uploads/2020/09/Purina_logo_PNG3.png"
+                  alternativo="logo de pedigree"
+                  ancho="50%"
+                />
+              </div>
+            </div>
+            <div className="col-lg-4 col-md-6 mb-4 ">
+              <div className="card-size">
+                <Image
+                  className="card-img-top"
+                  urlImagen="https://1000logos.net/wp-content/uploads/2023/10/Eukanuba_logo_PNG5.png"
+                  alternativo="logo de pedigree"
+                  ancho="50%"
+                />
+              </div>
+            </div>
+            <div className="col-lg-4 col-md-6 mb-4 ">
+              <div className="card-size">
+                <Image
+                  className="card-img-top"
+                  urlImagen="https://1000logos.net/wp-content/uploads/2021/03/Whiskas_logo_PNG7.png"
+                  alternativo="logo de pedigree"
+                  ancho="50%"
+                />
+              </div>
+            </div>
+            <div className="col-lg-4 col-md-6 mb-4 ">
+              <div className="card-size">
+                <Image
+                  className="card-img-top"
+                  urlImagen="https://1000logos.net/wp-content/uploads/2020/09/Friskies_logo_PNG7.png"
+                  alternativo="logo de pedigree"
+                  ancho="50%"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
