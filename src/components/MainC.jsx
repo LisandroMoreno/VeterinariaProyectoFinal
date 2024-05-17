@@ -78,7 +78,7 @@ const MainC = () => {
       </div>
       <div>
         <h5 className="text-black text-center mb-5 mt-5 ">
-          Trabajamos con las mejores marcas
+          Marcas con las que trabajamos
         </h5>
         <div className="container mt-3">
           <div className="row d-flex text-center">
@@ -122,7 +122,7 @@ const MainC = () => {
                 />
               </div>
             </div>
-            <div className="col-lg-4 col-md-6  mb-3">
+            <div className="col-lg-4 col-md-6 mb-3">
               <div className="card-size">
                 <Image
                   className="card-img-top"
@@ -132,7 +132,7 @@ const MainC = () => {
                 />
               </div>
             </div>
-            <div className="col-lg-4 col-md-6  mb-3">
+            <div className="col-lg-4 col-md-6 mb-3">
               <div className="card-size">
                 <Image
                   className="card-img-top"
