@@ -1,3 +1,27 @@
+.carousel-caption {
+  position: absolute;
+  right: 15%;
+  bottom: 20px;
+  left: 15%;
+  z-index: 10;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: #fff;
+  text-align: center;
+}
+
+.carousel-caption {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(61, 70, 77, 0.5);
+  z-index: 1;
+}
+.captionMW {
+  max-width: 700px;
+}
+
 /* ------------- */
 
 .product-offer {
@@ -27,4 +51,18 @@
 .productH2 img {
   height: 430px;
   object-fit: cover;
+}
+
+.product-offer .offer-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(61, 70, 77, 0.5);
+  z-index: 1;
 }
