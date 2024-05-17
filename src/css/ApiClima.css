@@ -1,11 +1,11 @@
-.App {
+.ApiClima {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-.container {
+.containerApi {
   background-color: #b3e5fc; /* Cambia el color a celeste */
   padding: 20px;
   border-radius: 8px;
@@ -16,6 +16,6 @@
   margin-bottom: 20px;
 }
 
-.form input {
+.formApi input {
   margin-right: 10px;
 }
