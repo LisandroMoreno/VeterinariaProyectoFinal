@@ -16,12 +16,25 @@ const MainC = () => {
                   ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
                 />
               </div>
-
               <Carousel.Caption>
-                <h3>First slide label</h3>
-                <p>
-                  Nulla vitae elit libero, a pharetra augue mollis interdum.
-                </p>
+                <div className="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                  <div className="p-3 captionMW">
+                    <h1 className="display-4 text-white mb-3 animate__animated animate__fadeInDown">
+                      Nuestros Profesionales
+                    </h1>
+                    <p className="mx-md-5 px-5">
+                      Nuestros profesionales están comprometidos con la salud y
+                      el bienestar de las mascotas. ¡Confía en ellos para el
+                      cuidado de tus animales!
+                    </p>
+                    <a
+                      className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInDown"
+                      href="/profesionales"
+                    >
+                      Ver más
+                    </a>
+                  </div>
+                </div>
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
@@ -32,10 +45,24 @@ const MainC = () => {
                   ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
                 />
               </div>
-
               <Carousel.Caption>
-                <h3>Second slide label</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <div className="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                  <div className="p-3 captionMW">
+                    <h1 className="display-4 text-white mb-3 animate__animated animate__fadeInDown">
+                      Planes para tu mascota
+                    </h1>
+                    <p className="mx-md-5 px-5">
+                      El cuidado de tu mascota nos importa, es por eso que
+                      ofrecemos planes accesibles para su bienestar
+                    </p>
+                    <a
+                      className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInDown"
+                      href="/detallePlanes"
+                    >
+                      Ver más
+                    </a>
+                  </div>
+                </div>
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
@@ -46,13 +73,24 @@ const MainC = () => {
                   ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
                 />
               </div>
-
               <Carousel.Caption>
-                <h3>Third slide label</h3>
-                <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl
-                  consectetur.
-                </p>
+                <div className="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                  <div className="p-3 captionMW">
+                    <h1 className="display-4 text-white mb-3 animate__animated animate__fadeInDown">
+                      Pet Market
+                    </h1>
+                    <p className="mx-md-5 px-5">
+                      Te ofrecemos nuestros productos para el cuidado y
+                      bienestar de tu mascota
+                    </p>
+                    <a
+                      className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInDown"
+                      href="#"
+                    >
+                      Ver más
+                    </a>
+                  </div>
+                </div>
               </Carousel.Caption>
             </Carousel.Item>
           </Carousel>
@@ -65,6 +103,13 @@ const MainC = () => {
               alternativo="Descripción de la imagen derecha 1"
               ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
             />
+            <div className="offer-text">
+              <h6 className="text-white text-uppercase">Descuento 20%</h6>
+              <h3 className="text-white mb-3">Oferta especial</h3>
+              <a href="" className="btn btn-outline-light py-2 px-4 mt-3">
+                Ver más
+              </a>
+            </div>
           </div>
           <div className="product-offer mb-30 productH">
             <Image
@@ -73,11 +118,18 @@ const MainC = () => {
               alternativo="Descripción de la imagen derecha 1"
               ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
             />
+            <div className="offer-text">
+              <h6 className="text-white text-uppercase">Descuento 20%</h6>
+              <h3 className="text-white mb-3">Oferta especial</h3>
+              <a href="" className="btn btn-outline-light py-2 px-4 mt-3">
+                Ver más
+              </a>
+            </div>
           </div>
         </div>
       </div>
       <div>
-        <h5 className="text-black text-center mb-5 mt-5 ">
+        <h5 className="text-black text-center mb-5 mt-5">
           Marcas con las que trabajamos
         </h5>
         <div className="container mt-3">
