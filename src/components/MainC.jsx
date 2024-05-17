@@ -1,10 +1,24 @@
 import Carousel from "react-bootstrap/Carousel";
 import Image from "./Image"; // Asegúrate de importar correctamente tu componente Image desde su ubicación correcta
+import Button from "react-bootstrap/Button";
+import Pagination from "react-bootstrap/Pagination";
+import CardC from "./CardC";
 import "../css/Carrusel.css";
+import "../css/Productos.css";
+import Pisadas from "./Pisadas";
 
 const MainC = () => {
+  let active = 2;
+  let items = [];
+  for (let number = 1; number <= 5; number++) {
+    items.push(
+      <Pagination.Item key={number} active={number === active}>
+        {number}
+      </Pagination.Item>
+    );
+  }
   return (
-    <div className="container-fluid mb-3">
+    <div className="container-fluid mt-30">
       <div className="row px-xl-5 ">
         <div className="col-lg-8 mb-30">
           <Carousel fade className="h-100 ">
@@ -128,6 +142,54 @@ const MainC = () => {
           </div>
         </div>
       </div>
+
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-12">
+            <h3 className="text-center">
+              <Pisadas />
+              PetMarket: Te ofrecemos nuestros productos para el cuidado y
+              bienestar de tu mascota
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div className="container-fluid mb-30 mt-30 bg-btn">
+        <div className="row d-flex justify-content-center">
+          <div className="col-12 col-md-2 mtButton  mb-30 d-flex justify-content-center">
+            <Button variant="light" className=" btn-categoria">
+              Accesorios
+            </Button>
+          </div>
+          <div className="col-12 col-md-2 mtButton  mb-30 d-flex justify-content-center">
+            <Button variant="light" className=" btn-categoria">
+              Alimentación
+            </Button>
+          </div>
+          <div className="col-12 col-md-2 mtButton mb-30 d-flex justify-content-center">
+            <Button variant="light" className=" btn-categoria">
+              Cuidados/Limpieza
+            </Button>
+          </div>
+          <div className="col-12 col-md-2 mtButton mb-30 d-flex justify-content-center">
+            <Button variant="light" className="btn-categoria">
+              Todas las categorias
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-12 col-md-6 col-lg-3">
+            <CardC />
+          </div>
+          <div className="d-flex justify-content-center mt-30">
+            <Pagination size="sm">{items}</Pagination>
+          </div>
+        </div>
+      </div>
+
       <div>
         <h5 className="text-black text-center mb-5 mt-5">
           Marcas con las que trabajamos

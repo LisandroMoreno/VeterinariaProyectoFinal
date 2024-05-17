@@ -1,8 +1,8 @@
 import MainC from "../components/MainC";
-import { tittlePage } from "../helpers/titlePages";
+import { titlePage } from "../helpers/titlePages";
 
 const HomePage = () => {
-  tittlePage("Pagina Principal");
+  titlePage("Pagina Principal");
   return (
     <>
       <MainC />

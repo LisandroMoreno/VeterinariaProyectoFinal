@@ -1,9 +1,9 @@
+import Image from "./Image";
+import Pisadas from "./Pisadas";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import Image from "./Image";
-import Pisadas from "./Pisadas";
 import "../css/NavbarC.css";
 
 const NavbarC = () => {
@@ -11,7 +11,8 @@ const NavbarC = () => {
     "https://res.cloudinary.com/duexhxoyy/image/upload/v1714683325/hek6sf6ymtztchwpq7sr.jpg";
   return (
     <>
-      <div>
+      <div className="navbar-container">
+        <div className="pisadas-container"></div>
         <Navbar expand="lg" className="bg fixed-top">
           <Container fluid>
             <Navbar.Brand href="/">
@@ -22,15 +23,12 @@ const NavbarC = () => {
               className="custom-border"
             />
             <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="separator d-lg-none mt-4">
-                {" "}
-                <Nav.Link className="text-white"> </Nav.Link>
-              </Nav>
+              <Nav className="separator d-lg-none mt-4" />
+              <Nav.Link className="text-white"> </Nav.Link>
               <Nav className="me-auto">
                 <Nav.Link href="/" className="my-custom-link">
                   Inicio
                 </Nav.Link>
-
                 <Nav.Link href="/sobreNosotros" className="my-custom-link">
                   Sobre Nosotros
                 </Nav.Link>
@@ -47,7 +45,6 @@ const NavbarC = () => {
                 </NavDropdown>
               </Nav>
               <Nav className="separator d-lg-none">
-                {" "}
                 <Nav.Link className="text-white"> </Nav.Link>
               </Nav>
               <Nav>

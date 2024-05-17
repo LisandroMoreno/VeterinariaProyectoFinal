@@ -1,3 +1,3 @@
-export const tittlePage = (idPage) => {
+export const titlePage = (idPage) => {
   document.title = idPage;
 };

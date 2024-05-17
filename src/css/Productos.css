@@ -1,0 +1,53 @@
+.mtButton {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.bg-btn {
+  background-color: #dcdddb;
+}
+
+.btn-categoria {
+  background-color: black; /* Color Coral */
+  color: white; /* Texto en blanco para contraste */
+  padding: 10px 20px; /* Espaciado interno del botón */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  text-align: center; /* Alineación del texto */
+  text-decoration: none; /* Sin subrayado en el texto */
+  display: inline-block; /* Tipo de display */
+  font-size: 14px; /* Tamaño del texto */
+  margin: 4px 2px; /* Margen alrededor del botón */
+  cursor: pointer; /* Cambiar el cursor a puntero */
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+  transition: all 0.3s ease 0s; /* Transición suave al interactuar */
+  box-sizing: border-box; /* Asegurar que padding y border estén incluidos en el ancho total */
+}
+
+.btn-categoria:hover {
+  background-color: white; /* Oscurecer el botón al pasar el mouse */
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada al pasar el mouse */
+}
+
+@media (max-width: 768px) {
+  .btn-categoria {
+    padding: 10px 14px;
+    font-size: 14px;
+    margin: 3px 1px;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-categoria {
+    padding: 10px 14px;
+    font-size: 12px;
+    margin: 2px;
+  }
+
+  .btn-categoria {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 5px 0;
+  }
+}

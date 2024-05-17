@@ -1,10 +1,10 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { tittlePage } from "../helpers/titlePages";
+import { titlePage } from "../helpers/titlePages";
 import "../css/Reg-Log.css";
 
 const LoginPage = () => {
-  tittlePage("Iniciar Sesion");
+  titlePage("Iniciar Sesion");
   return (
     <>
       <div className="d-flex justify-content-center my-5">
@@ -24,11 +24,15 @@ const LoginPage = () => {
             ¿No tienes una cuenta? Haz click <a href="/Registro">aqui</a>
           </p>
           <div>
-            <Button variant="primary" type="submit" className="w-100 btn">
+            <Button variant="primary" type="submit" className="w-100 btnForm">
               Ingresar con Gmail
             </Button>
           </div>
-          <Button variant="primary" type="submit" className="w-100 mt-3 btn">
+          <Button
+            variant="primary"
+            type="submit"
+            className="w-100 mt-3 btnForm"
+          >
             Iniciar Sesion
           </Button>
         </Form>
