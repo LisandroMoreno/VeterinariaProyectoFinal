@@ -18,39 +18,41 @@ const FooterC = () => {
             </div>
             <div className="col-12 col-md-6 col-lg-3 align-items-center flex-column mt-5  ">
               <NavLink to="/" className="text-decoration-none">
-                <h6 className="text-white ">Inicio</h6>
+                <h6 className="text-white footer-link">Inicio</h6>
               </NavLink>
               <NavLink to="/sobre-nosotros" className="text-decoration-none">
-                <h6 className="text-white ">Sobre Nosotros</h6>
+                <h6 className="text-white footer-link">Sobre Nosotros</h6>
               </NavLink>
               <NavLink to="/contacto" className="text-decoration-none">
-                <h6 className="text-white ">Contacto</h6>
+                <h6 className="text-white footer-link">Contacto</h6>
               </NavLink>
               <NavLink
                 to="/trabaja-con-nosotros"
                 className="text-decoration-none ">
-                <h6 className="text-white mb-5">Trabaja con Nosotros</h6>
+                <h6 className="text-white mb-5 footer-link">
+                  Trabaja con Nosotros
+                </h6>
               </NavLink>
             </div>
             <div className="col-12 col-md-6 col-lg-3 justify-content-center align-items-center d-flex flex-row ">
               <a
                 href="https://www.facebook.com/RollingCodeSchool/"
-                className="text-white fs-6 p-2 ">
+                className="text-white fs-6 p-2 footer-link">
                 <FaFacebook />
               </a>
               <a
                 href="https://twitter.com/rollingcodeok"
-                className="text-white fs-6 p-2">
+                className="text-white fs-6 p-2 footer-link">
                 <FaTwitter />
               </a>
               <a
                 href="https://www.instagram.com/rollingcodeschool/?utm_source=ig_web_button_share_sheet&igshid=OGQ5ZDc2ODk2ZA=="
-                className="text-white fs-6 p-2 ">
+                className="text-white fs-6 p-2 footer-link">
                 <FaInstagram />
               </a>
               <a
                 href="https://wa.me/3816342100"
-                className="text-white fs-6 p-2">
+                className="text-white fs-6 p-2 footer-link">
                 <FaWhatsapp />
               </a>
             </div>
