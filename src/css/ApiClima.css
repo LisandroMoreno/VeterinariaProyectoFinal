@@ -1,0 +1,21 @@
+.ApiClima {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.containerApi {
+  background-color: #b3e5fc; /* Cambia el color a celeste */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.weather-info {
+  margin-bottom: 20px;
+}
+
+.formApi input {
+  margin-right: 10px;
+}
