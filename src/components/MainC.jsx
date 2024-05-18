@@ -7,23 +7,20 @@ import { useEffect, useState } from "react";
 
 const MainC = () => {
   const [apiData, setApiData] = useState({});
-  const [getState, setGetState] = useState("San Miguel de Tucuman");
-  const [state, setState] = useState("San Miguel de Tucuman");
+  const [getState, setGetState] = useState('San Miguel de Tucuman');
+  const [state, setState] = useState('San Miguel de Tucuman');
 
-  // Directamente insertando la clave de API aquí
-  const apiKey = "232e32153bfe7c18c89ebc060432d510";
+  const apiKey = '232e32153bfe7c18c89ebc060432d510';
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${state}&appid=${apiKey}`;
 
   useEffect(() => {
-    // Utiliza Axios para hacer la solicitud HTTP
-    axios
-      .get(apiUrl)
+    axios.get(apiUrl)
       .then((response) => {
-        console.log(response); // Agrega esta línea para ver la respuesta del servidor
+        console.log(response);
         setApiData(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching weather data:", error);
+        console.error('Error fetching weather data:', error);
       });
   }, [state]);
 
@@ -35,30 +32,58 @@ const MainC = () => {
     setState(getState);
   };
 
-  function kelvinToFahrenheit(kelvin) {
-    return kelvin - 273.15;
+  function kelvinToCelsius(kelvin) {
+    return (kelvin - 273.15);
   }
+
+  const getWeatherIconClass = (iconCode) => {
+    const iconMap = {
+      '01d': 'wi-day-sunny',
+      '01n': 'wi-night-clear',
+      '02d': 'wi-day-cloudy',
+      '02n': 'wi-night-alt-cloudy',
+      '03d': 'wi-cloud',
+      '03n': 'wi-cloud',
+      '04d': 'wi-cloudy',
+      '04n': 'wi-cloudy',
+      '09d': 'wi-showers',
+      '09n': 'wi-showers',
+      '10d': 'wi-day-rain',
+      '10n': 'wi-night-alt-rain',
+      '11d': 'wi-thunderstorm',
+      '11n': 'wi-thunderstorm',
+      '13d': 'wi-snow',
+      '13n': 'wi-snow',
+      '50d': 'wi-fog',
+      '50n': 'wi-fog'
+    };
+    return iconMap[iconCode] || 'wi-na';
+  };
 
   return (
     <>
-      <div className="apiClima">
-        <div className="containerApi">
-          <h1>Weather App</h1>
-          <div className="weather-info">
-            <h2>Current Weather in {state}</h2>
-            <p>
-              Temperatura:{" "}
-              {apiData.main && kelvinToFahrenheit(apiData.main.temp).toFixed(1)}
-              °
-            </p>
-            <p>Clima: {apiData.weather && apiData.weather[0].description}</p>
+      <div className="App">
+      <div id="weatherWrapper">
+        <div className="weatherCard">
+          <div className="currentTemp">
+            <span className="temp">{apiData.main && kelvinToCelsius(apiData.main.temp).toFixed(1)}°C</span>
+            <span className="location">{state}</span>
           </div>
-          <div className="formApi">
-            <input type="text" value={state} onChange={inputHandler} />
-            <button onClick={submitHandler}>Submit</button>
+          <div className="currentWeather">
+            <span className="conditions">
+              {apiData.weather && (
+                <i className={`wi ${getWeatherIconClass(apiData.weather[0].icon)}`}></i>
+              )}
+            </span>
+            <div className="info">
+              {apiData.main && (
+                <span>{kelvinToCelsius(apiData.main.temp_min).toFixed(1)}°C / {kelvinToCelsius(apiData.main.temp_max).toFixed(1)}°C</span>
+              )}
+            </div>
           </div>
         </div>
       </div>
+    </div>
 
       <div className="container-fluid mb-3">
         <div className="row px-xl-5">
