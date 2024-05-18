@@ -8,28 +8,31 @@ const Pisadas = () => {
   return (
     <div className="pisadas-container">
       <div className="pisada d-none d-sm-block">
-        <Image urlImagen={url} ancho="60" alternativo="logo" />
-      </div>
-      <div className="pisada  d-none d-sm-block">
-        <Image urlImagen={url} ancho="60" alternativo="logo" />
+        <Image urlImagen={url} ancho="50" alternativo="logo" />
       </div>
       <div className="pisada d-none d-sm-block">
-        <Image urlImagen={url} ancho="60" alternativo="logo" />
-      </div>
-      <div className="pisada  d-none d-sm-block">
-        <Image urlImagen={url} ancho="60" alternativo="logo" />
+        <Image urlImagen={url} ancho="50" alternativo="logo" />
       </div>
       <div className="pisada d-none d-sm-block">
-        <Image urlImagen={url} ancho="60" alternativo="logo" />
+        <Image urlImagen={url} ancho="50" alternativo="logo" />
       </div>
       <div className="pisada d-none d-sm-block">
-        <Image urlImagen={url} ancho="60" alternativo="logo" />
+        <Image urlImagen={url} ancho="50" alternativo="logo" />
+      </div>
+      <div className="pisada d-none d-sm-block">
+        <Image urlImagen={url} ancho="50" alternativo="logo" />
+      </div>
+      <div className="pisada d-none d-sm-block">
+        <Image urlImagen={url} ancho="50" alternativo="logo" />
       </div>
       <div className="pisada">
-        <Image urlImagen={url} ancho="60" alternativo="logo" />
+        <Image urlImagen={url} ancho="50" alternativo="logo" />
       </div>
       <div className="pisada">
-        <Image urlImagen={url} ancho="60" alternativo="logo" />
+        <Image urlImagen={url} ancho="50" alternativo="logo" />
+      </div>
+      <div className="pisada">
+        <Image urlImagen={url} ancho="50" alternativo="logo" />
       </div>
     </div>
   );

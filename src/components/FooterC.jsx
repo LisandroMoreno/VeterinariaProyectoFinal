@@ -18,18 +18,19 @@ const FooterC = () => {
             </div>
             <div className="col-12 col-md-6 col-lg-3 align-items-center flex-column mt-5  ">
               <NavLink to="/" className="text-decoration-none">
-                <h6 className="text-white footer-link">Inicio</h6>
+                <h6 className="text-white my-custom-link">Inicio</h6>
               </NavLink>
               <NavLink to="/sobre-nosotros" className="text-decoration-none">
-                <h6 className="text-white footer-link">Sobre Nosotros</h6>
+                <h6 className="text-white my-custom-link">Sobre Nosotros</h6>
               </NavLink>
               <NavLink to="/contacto" className="text-decoration-none">
-                <h6 className="text-white footer-link">Contacto</h6>
+                <h6 className="text-white my-custom-link">Contacto</h6>
               </NavLink>
               <NavLink
                 to="/trabaja-con-nosotros"
-                className="text-decoration-none ">
-                <h6 className="text-white mb-5 footer-link">
+                className="text-decoration-none "
+              >
+                <h6 className="text-white mb-5 my-custom-link">
                   Trabaja con Nosotros
                 </h6>
               </NavLink>
@@ -37,22 +38,26 @@ const FooterC = () => {
             <div className="col-12 col-md-6 col-lg-3 justify-content-center align-items-center d-flex flex-row ">
               <a
                 href="https://www.facebook.com/RollingCodeSchool/"
-                className="text-white fs-6 p-2 footer-link">
+                className="text-white fs-6 p-2 my-custom-link"
+              >
                 <FaFacebook />
               </a>
               <a
                 href="https://twitter.com/rollingcodeok"
-                className="text-white fs-6 p-2 footer-link">
+                className="text-white fs-6 p-2 my-custom-link"
+              >
                 <FaTwitter />
               </a>
               <a
                 href="https://www.instagram.com/rollingcodeschool/?utm_source=ig_web_button_share_sheet&igshid=OGQ5ZDc2ODk2ZA=="
-                className="text-white fs-6 p-2 footer-link">
+                className="text-white fs-6 p-2 my-custom-link"
+              >
                 <FaInstagram />
               </a>
               <a
                 href="https://wa.me/3816342100"
-                className="text-white fs-6 p-2 footer-link">
+                className="text-white fs-6 p-2 my-custom-link"
+              >
                 <FaWhatsapp />
               </a>
             </div>
@@ -65,7 +70,8 @@ const FooterC = () => {
                 style={{ border: 0 }}
                 allowFullScreen=""
                 loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"></iframe>
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
             </div>
           </div>
         </div>

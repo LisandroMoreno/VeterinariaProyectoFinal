@@ -1,76 +1,55 @@
 import Carousel from "react-bootstrap/Carousel";
 import Image from "./Image"; // Asegúrate de importar correctamente tu componente Image desde su ubicación correcta
-import axios from "axios";
+import Button from "react-bootstrap/Button";
+import Pagination from "react-bootstrap/Pagination";
+import CardC from "./CardC";
 import "../css/Carrusel.css";
-import "../css/ApiClima.css";
-import { useEffect, useState } from "react";
+import "../css/Productos.css";
+import Pisadas from "./Pisadas";
 
 const MainC = () => {
-  const [apiData, setApiData] = useState({});
-  const [getState, setGetState] = useState("San Miguel de Tucuman");
-  const [state, setState] = useState("San Miguel de Tucuman");
-
-  // Directamente insertando la clave de API aquí
-  const apiKey = "232e32153bfe7c18c89ebc060432d510";
-  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${state}&appid=${apiKey}`;
-
-  useEffect(() => {
-    // Utiliza Axios para hacer la solicitud HTTP
-    axios
-      .get(apiUrl)
-      .then((response) => {
-        console.log(response); // Agrega esta línea para ver la respuesta del servidor
-        setApiData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching weather data:", error);
-      });
-  }, [state]);
-
-  const inputHandler = (event) => {
-    setGetState(event.target.value);
-  };
-
-  const submitHandler = () => {
-    setState(getState);
-  };
-
-  function kelvinToFahrenheit(kelvin) {
-    return kelvin - 273.15;
+  let active = 2;
+  let items = [];
+  for (let number = 1; number <= 5; number++) {
+    items.push(
+      <Pagination.Item key={number} active={number === active}>
+        {number}
+      </Pagination.Item>
+    );
   }
-
   return (
-    <>
-      <div className="apiClima">
-        <div className="containerApi">
-          <h1>Weather App</h1>
-          <div className="weather-info">
-            <h2>Current Weather in {state}</h2>
-            <p>
-              Temperatura:{" "}
-              {apiData.main && kelvinToFahrenheit(apiData.main.temp).toFixed(1)}
-              °
-            </p>
-            <p>Clima: {apiData.weather && apiData.weather[0].description}</p>
-          </div>
-          <div className="formApi">
-            <input type="text" value={state} onChange={inputHandler} />
-            <button onClick={submitHandler}>Submit</button>
-          </div>
-        </div>
-      </div>
+    <div className="container-fluid mt-30">
+      <div className="row px-xl-5 ">
+        <div className="col-lg-8 mb-30">
+          <Carousel fade className="h-100 ">
+            <Carousel.Item>
+              <div className="productH2">
+                <Image
+                  urlImagen="https://cdn.euroinnova.edu.es/img/subidasEditor/curso-1612925686.webp"
+                  alternativo="Descripción de la primera imagen"
+                  ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
+                />
+              </div>
+              <Carousel.Caption>
+                <div className="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                  <div className="p-3 captionMW">
+                    <h1 className="display-4 text-white mb-3 animate__animated animate__fadeInDown">
+                      Nuestros Profesionales
+                    </h1>
+                    <p className="mx-md-5 px-5">
+                      Nuestros profesionales están comprometidos con la salud y
+                      el bienestar de las mascotas. ¡Confía en ellos para el
+                      cuidado de tus animales!
+                    </p>
+                    <a
+                      className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInDown"
+                      href="/profesionales"
+                    >
+                      Ver más
+                    </a>
+                  </div>
 
-      <div className="container-fluid mb-3">
-        <div className="row px-xl-5">
-          <div className="col-lg-8 mb-30">
-            <Carousel fade className="h-100">
-              <Carousel.Item>
-                <div className="productH2">
-                  <Image
-                    urlImagen="https://cdn.euroinnova.edu.es/img/subidasEditor/curso-1612925686.webp"
-                    alternativo="Descripción de la primera imagen"
-                    ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
-                  />
+
                 </div>
                 <Carousel.Caption>
                   <div className="carousel-caption d-flex flex-column align-items-center justify-content-center">
@@ -181,21 +160,71 @@ const MainC = () => {
             </div>
           </div>
         </div>
-        <div>
-          <h5 className="text-black text-center mb-5 mt-5">
-            Marcas con las que trabajamos
-          </h5>
-          <div className="container mt-3">
-            <div className="row d-flex text-center">
-              <div className="col-lg-4 col-md-6 mb-4">
-                <div className="card-size">
-                  <Image
-                    className="card-img-top"
-                    urlImagen="https://1000logos.net/wp-content/uploads/2020/08/Royal_Canin_logo_PNG1.png"
-                    alternativo="logo de Royal Canin"
-                    ancho="25%"
-                  />
-                </div>
+
+      </div>
+
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-12">
+            <h3 className="text-center">
+              <Pisadas />
+              PetMarket: Te ofrecemos nuestros productos para el cuidado y
+              bienestar de tu mascota
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div className="container-fluid mb-30 mt-30 bg-btn">
+        <div className="row d-flex justify-content-center">
+          <div className="col-12 col-md-2 mtButton  mb-30 d-flex justify-content-center">
+            <Button variant="light" className=" btn-categoria">
+              Accesorios
+            </Button>
+          </div>
+          <div className="col-12 col-md-2 mtButton  mb-30 d-flex justify-content-center">
+            <Button variant="light" className=" btn-categoria">
+              Alimentación
+            </Button>
+          </div>
+          <div className="col-12 col-md-2 mtButton mb-30 d-flex justify-content-center">
+            <Button variant="light" className=" btn-categoria">
+              Cuidados/Limpieza
+            </Button>
+          </div>
+          <div className="col-12 col-md-2 mtButton mb-30 d-flex justify-content-center">
+            <Button variant="light" className="btn-categoria">
+              Todas las categorias
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-12 col-md-6 col-lg-3">
+            <CardC />
+          </div>
+          <div className="d-flex justify-content-center mt-30">
+            <Pagination size="sm">{items}</Pagination>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h5 className="text-black text-center mb-5 mt-5">
+          Marcas con las que trabajamos
+        </h5>
+        <div className="container mt-3">
+          <div className="row d-flex text-center">
+            <div className="col-lg-4 col-md-6 mb-4">
+              <div className="card-size">
+                <Image
+                  className="card-img-top"
+                  urlImagen="https://1000logos.net/wp-content/uploads/2020/08/Royal_Canin_logo_PNG1.png"
+                  alternativo="logo de Royal Canin"
+                  ancho="25%"
+                />
+
               </div>
               <div className="col-lg-4 col-md-6 mb-4">
                 <div className="card-size">
