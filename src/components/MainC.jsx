@@ -45,8 +45,7 @@ const MainC = () => {
                       </p>
                       <a
                         className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInDown"
-                        href="/profesionales"
-                      >
+                        href="/profesionales">
                         Ver más
                       </a>
                     </div>
@@ -73,8 +72,7 @@ const MainC = () => {
                       </p>
                       <a
                         className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInDown"
-                        href="/detallePlanes"
-                      >
+                        href="/detallePlanes">
                         Ver más
                       </a>
                     </div>
@@ -101,8 +99,7 @@ const MainC = () => {
                       </p>
                       <a
                         className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInDown"
-                        href="#"
-                      >
+                        href="#">
                         Ver más
                       </a>
                     </div>
