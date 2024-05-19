@@ -21,7 +21,8 @@
   flex-wrap: wrap; /* Permitir que los hijos se envuelvan */
 }
 
-.currentTemp, .currentWeather {
+.currentTemp,
+.currentWeather {
   flex: 1; /* Ocupar el mismo espacio */
   display: flex;
   justify-content: center; /* Centrar horizontalmente */
@@ -75,7 +76,8 @@
 
 /* Media queries para pantallas más pequeñas */
 @media only screen and (max-width: 300px) {
-  .currentTemp, .currentWeather {
+  .currentTemp,
+  .currentWeather {
     width: 100%; /* Ocupar todo el ancho disponible en pantallas pequeñas */
     height: auto; /* Ajustar la altura automáticamente */
   }
