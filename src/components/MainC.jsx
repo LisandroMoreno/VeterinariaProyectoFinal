@@ -1,13 +1,25 @@
+import Image from "./Image";
+import CardC from "./CardC";
+import Pisadas from "./Pisadas";
 import Carousel from "react-bootstrap/Carousel";
-import Image from "./Image"; // Asegúrate de importar correctamente tu componente Image desde su ubicación correcta
 import Button from "react-bootstrap/Button";
 import Pagination from "react-bootstrap/Pagination";
-import CardC from "./CardC";
+import { useState } from "react";
+import clienteAxios from "../helpers/clienteAxios";
+import { useEffect } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import "../css/Carrusel.css";
 import "../css/Productos.css";
-import Pisadas from "./Pisadas";
 
 const MainC = () => {
+  const [products, setProducts] = useState([]);
+
+  const getProducts = async () => {
+    const allProducts = await clienteAxios.get("/productos");
+    console.log(allProducts);
+    setProducts(allProducts.data.getAllProductos);
+  };
+
   let active = 2;
   let items = [];
   for (let number = 1; number <= 5; number++) {
@@ -17,6 +29,9 @@ const MainC = () => {
       </Pagination.Item>
     );
   }
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   return (
     <>
@@ -182,16 +197,21 @@ const MainC = () => {
         </div>
       </div>
 
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-12 col-md-6 col-lg-3">
-            <CardC />
-          </div>
-          <div className="d-flex justify-content-center mt-30">
-            <Pagination size="sm">{items}</Pagination>
-          </div>
-        </div>
-      </div>
+      <Container className="mt-5">
+        <Row className="justify-content-center text-center">
+          {products.map((product) => (
+            <Col sm="12" md="6" lg="4" className="my-3" key={product._id}>
+              <CardC
+                idProd={product._id}
+                image={product.image}
+                titulo={product.titulo}
+                descripcion={product.descripcion}
+                precio={product.precio}
+              />
+            </Col>
+          ))}
+        </Row>
+      </Container>
 
       <div>
         <h5 className="text-black text-center mb-5 mt-5">
