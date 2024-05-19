@@ -8,25 +8,25 @@
 }
 
 .btn-categoria {
-  background-color: black; /* Color Coral */
-  color: white; /* Texto en blanco para contraste */
-  padding: 10px 20px; /* Espaciado interno del botón */
-  border: none; /* Sin borde */
-  border-radius: 5px; /* Bordes redondeados */
-  text-align: center; /* Alineación del texto */
-  text-decoration: none; /* Sin subrayado en el texto */
-  display: inline-block; /* Tipo de display */
-  font-size: 14px; /* Tamaño del texto */
-  margin: 4px 2px; /* Margen alrededor del botón */
-  cursor: pointer; /* Cambiar el cursor a puntero */
-  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2); /* Sombra sutil */
-  transition: all 0.3s ease 0s; /* Transición suave al interactuar */
-  box-sizing: border-box; /* Asegurar que padding y border estén incluidos en el ancho total */
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease 0s;
+  box-sizing: border-box;
 }
 
 .btn-categoria:hover {
-  background-color: white; /* Oscurecer el botón al pasar el mouse */
-  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada al pasar el mouse */
+  background-color: white;
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.3);
 }
 
 @media (max-width: 768px) {
