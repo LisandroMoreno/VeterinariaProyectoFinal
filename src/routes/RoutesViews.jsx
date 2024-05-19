@@ -4,6 +4,8 @@ import RegisterPage from "../pages/RegisterPage";
 import NavbarC from "../components/NavbarC";
 import FooterC from "../components/FooterC";
 import LoginPage from "../pages/LoginPage";
+import SobreNosotros from "../pages/SobreNosotros";
+
 
 /* Todas las rutas del proyecto - Path / element  */
 
@@ -12,6 +14,7 @@ const RoutesViews = () => {
     <>
       <NavbarC />
       <Routes>
+      <Route path="/sobreNosotros" element={<SobreNosotros />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegisterPage />} />
         <Route path="/" element={<HomePage />} />
