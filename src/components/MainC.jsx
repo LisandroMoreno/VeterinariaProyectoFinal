@@ -8,20 +8,91 @@ import "../css/Productos.css";
 import Pisadas from "./Pisadas";
 
 const MainC = () => {
-  let active = 2;
-  let items = [];
-  for (let number = 1; number <= 5; number++) {
-    items.push(
-      <Pagination.Item key={number} active={number === active}>
-        {number}
-      </Pagination.Item>
-    );
+
+  const [apiData, setApiData] = useState({});
+  const [getState, setGetState] = useState('San Miguel de Tucuman');
+  const [state, setState] = useState('San Miguel de Tucuman');
+
+  const apiKey = '232e32153bfe7c18c89ebc060432d510';
+  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${state}&appid=${apiKey}`;
+
+  useEffect(() => {
+    axios.get(apiUrl)
+      .then((response) => {
+        console.log(response);
+        setApiData(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching weather data:', error);
+      });
+  }, [state]);
+
+  const inputHandler = (event) => {
+    setGetState(event.target.value);
+  };
+
+  const submitHandler = () => {
+    setState(getState);
+  };
+
+  function kelvinToCelsius(kelvin) {
+    return (kelvin - 273.15);
+
   }
+
+  const getWeatherIconClass = (iconCode) => {
+    const iconMap = {
+      '01d': 'wi-day-sunny',
+      '01n': 'wi-night-clear',
+      '02d': 'wi-day-cloudy',
+      '02n': 'wi-night-alt-cloudy',
+      '03d': 'wi-cloud',
+      '03n': 'wi-cloud',
+      '04d': 'wi-cloudy',
+      '04n': 'wi-cloudy',
+      '09d': 'wi-showers',
+      '09n': 'wi-showers',
+      '10d': 'wi-day-rain',
+      '10n': 'wi-night-alt-rain',
+      '11d': 'wi-thunderstorm',
+      '11n': 'wi-thunderstorm',
+      '13d': 'wi-snow',
+      '13n': 'wi-snow',
+      '50d': 'wi-fog',
+      '50n': 'wi-fog'
+    };
+    return iconMap[iconCode] || 'wi-na';
+  };
 
   return (
     <>
-      <div className="container-fluid mt-30">
-        <div className="row px-xl-5 ">
+
+      <div className="App">
+      <div id="weatherWrapper">
+        <div className="weatherCard">
+          <div className="currentTemp">
+            <span className="temp">{apiData.main && kelvinToCelsius(apiData.main.temp).toFixed(1)}°C</span>
+            <span className="location">{state}</span>
+          </div>
+          <div className="currentWeather">
+            <span className="conditions">
+              {apiData.weather && (
+                <i className={`wi ${getWeatherIconClass(apiData.weather[0].icon)}`}></i>
+              )}
+            </span>
+            <div className="info">
+              {apiData.main && (
+                <span>{kelvinToCelsius(apiData.main.temp_min).toFixed(1)}°C / {kelvinToCelsius(apiData.main.temp_max).toFixed(1)}°C</span>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div className="container-fluid mb-3">
+        <div className="row px-xl-5">
+
           <div className="col-lg-8 mb-30">
             <Carousel fade className="h-100 ">
               <Carousel.Item>
