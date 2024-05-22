@@ -15,6 +15,9 @@ import "../css/ApiClima.css";
 
 const MainC = () => {
   const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(
+    "Todas las categorias"
+  );
 
   const getProducts = async () => {
     const allProducts = await clienteAxios.get("/productos");
@@ -64,6 +67,15 @@ const MainC = () => {
       };
       return iconMap[iconCode] || "wi-na";
     };
+
+    const filteredProducts =
+      selectedCategory === "Todas las categorias"
+        ? products
+        : products.filter((product) =>
+            product.categoria
+              .toLowerCase()
+              .includes(selectedCategory.toLowerCase())
+          );
 
     useEffect(() => {
       getProducts();
@@ -254,57 +266,74 @@ const MainC = () => {
           </div>
         </div>
 
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-12">
-              <h3 className="text-center">
-                <Pisadas />
-                PetMarket: Te ofrecemos nuestros productos para el cuidado y
-                bienestar de tu mascota
-              </h3>
+        <div>
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-12">
+                <h3 className="text-center">
+                  <Pisadas />
+                  PetMarket: Te ofrecemos nuestros productos para el cuidado y
+                  bienestar de tu mascota
+                </h3>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="container-fluid mb-30 mt-30 bg-btn">
-          <div className="row d-flex justify-content-center">
-            <div className="col-12 col-md-2 mtButton  mb-30 d-flex justify-content-center">
-              <Button variant="light" className=" btn-categoria">
-                Accesorios
-              </Button>
-            </div>
-            <div className="col-12 col-md-2 mtButton  mb-30 d-flex justify-content-center">
-              <Button variant="light" className=" btn-categoria">
-                Alimentación
-              </Button>
-            </div>
-            <div className="col-12 col-md-2 mtButton mb-30 d-flex justify-content-center">
-              <Button variant="light" className=" btn-categoria">
-                Cuidados/Limpieza
-              </Button>
-            </div>
-            <div className="col-12 col-md-2 mtButton mb-30 d-flex justify-content-center">
-              <Button variant="light" className="btn-categoria">
-                Todas las categorias
-              </Button>
+          <div className="container-fluid mb-30 mt-30 bg-btn">
+            <div className="row d-flex justify-content-center">
+              <div className="col-12 col-md-2 mtButton mb-30 d-flex justify-content-center">
+                <Button
+                  variant="light"
+                  className="btn-categoria"
+                  onClick={() => setSelectedCategory("Accesorios")}
+                >
+                  Accesorios
+                </Button>
+              </div>
+              <div className="col-12 col-md-2 mtButton mb-30 d-flex justify-content-center">
+                <Button
+                  variant="light"
+                  className="btn-categoria"
+                  onClick={() => setSelectedCategory("Alimentación")}
+                >
+                  Alimentación
+                </Button>
+              </div>
+              <div className="col-12 col-md-2 mtButton mb-30 d-flex justify-content-center">
+                <Button
+                  variant="light"
+                  className="btn-categoria"
+                  onClick={() => setSelectedCategory("Cuidados/Limpieza")}
+                >
+                  Cuidados/Limpieza
+                </Button>
+              </div>
+              <div className="col-12 col-md-2 mtButton mb-30 d-flex justify-content-center">
+                <Button
+                  variant="light"
+                  className="btn-categoria"
+                  onClick={() => setSelectedCategory("Todas las categorias")}
+                >
+                  Todas las categorias
+                </Button>
+              </div>
             </div>
           </div>
+          <Container className="mt-5">
+            <Row className="justify-content-center text-center">
+              {filteredProducts.map((product) => (
+                <Col sm="12" md="6" lg="4" className="my-3" key={product._id}>
+                  <CardC
+                    idProd={product._id}
+                    image={product.image}
+                    titulo={product.titulo}
+                    descripcion={product.descripcion}
+                    precio={product.precio}
+                  />
+                </Col>
+              ))}
+            </Row>
+          </Container>
         </div>
-
-        <Container className="mt-5">
-          <Row className="justify-content-center text-center">
-            {products.map((product) => (
-              <Col sm="12" md="6" lg="4" className="my-3" key={product._id}>
-                <CardC
-                  idProd={product._id}
-                  image={product.image}
-                  titulo={product.titulo}
-                  descripcion={product.descripcion}
-                  precio={product.precio}
-                />
-              </Col>
-            ))}
-          </Row>
-        </Container>
 
         <div>
           <h5 className="text-black text-center mb-5 mt-5">
