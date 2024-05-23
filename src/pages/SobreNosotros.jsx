@@ -1,9 +1,9 @@
-import React from 'react'
-import "../css/SobreNosotros.css"; 
+import React from "react";
+import "../css/SobreNosotros.css";
 
 const SobreNosotros = () => {
   return (
-<div>
+    <div>
       <div className="video-container">
         <iframe
           width="600"
@@ -22,20 +22,23 @@ const SobreNosotros = () => {
           <strong>Quienes somos</strong>
         </h1>
         <h4>
-          En Veterinaria Paws and Caws, nuestra pasión es el bienestar de tus queridas
-          mascotas. Somos un equipo dedicado de profesionales apasionados por la
-          salud y felicidad de los animales. Desde los traviesos cachorros hasta
-          los leales compañeros de vida, estamos aquí para brindarles la mejor
-          atención posible.
-          Desde la selección meticulosa de tratamientos hasta la atención personalizada, trabajamos incansablemente para que cada visita a Veterinaria Shamrock sea memorable y gratificante. Tu confianza en nosotros es nuestra mayor recompensa. <br />
-          <br />🐾 ¡Confía en nosotros para cuidar a tus peludos amigos como si fueran parte de nuestra propia familia! 🐾 <br />
+          En Veterinaria Paws and Caws, nuestra pasión es el bienestar de tus
+          queridas mascotas. Somos un equipo dedicado de profesionales
+          apasionados por la salud y felicidad de los animales. Desde los
+          traviesos cachorros hasta los leales compañeros de vida, estamos aquí
+          para brindarles la mejor atención posible. Desde la selección
+          meticulosa de tratamientos hasta la atención personalizada, trabajamos
+          incansablemente para que cada visita a Veterinaria Shamrock sea
+          memorable y gratificante. Tu confianza en nosotros es nuestra mayor
+          recompensa. <br />
+          <br />
+          🐾 ¡Confía en nosotros para cuidar a tus peludos amigos como si fueran
+          parte de nuestra propia familia! 🐾 <br />
         </h4>
       </div>
 
       <div className="descripcion-individual">
-        {/* Contenedor principal con flexbox */}
         <div className="integrantes-container">
-          {/* Integrante 1 */}
           <div className="integrante">
             <div className="circulo">
               <img
@@ -49,13 +52,12 @@ const SobreNosotros = () => {
             </h5>
             <div className="">
               <p className="Descripcion">
-                Hola, soy Rodrigo, tengo 23 años, padre de 3 gatos y una tortuga.
-                Cursando la carrera de programación en UTN.
+                Hola, soy Rodrigo, tengo 23 años, padre de 3 gatos y una
+                tortuga. Cursando la carrera de programación en UTN.
               </p>
             </div>
           </div>
 
-          {/* Integrante 2 */}
           <div className="integrante">
             <div className="circulo">
               <img
@@ -69,14 +71,13 @@ const SobreNosotros = () => {
             </h5>
             <div className="">
               <p className="Descripcion">
-                Hola, Mi nombre es Jose Martin Fe, tengo 27 años, soy padre de familia
-                con una hermosa hija. Mi objetivo es lograr desarrollar y adquirir
-                nuevos conocimientos en el ámbito de la programación.
+                Hola, Mi nombre es Jose Martin Fe, tengo 27 años, soy padre de
+                familia con una hermosa hija. Mi objetivo es lograr desarrollar
+                y adquirir nuevos conocimientos en el ámbito de la programación.
               </p>
             </div>
           </div>
 
-          {/* Integrante 3 */}
           <div className="integrante">
             <div className="circulo">
               <img
@@ -98,7 +99,7 @@ const SobreNosotros = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default SobreNosotros;
