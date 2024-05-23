@@ -1,10 +1,39 @@
+.video-container {
+  display: flex;
+  justify-content: center;
+  background-color: #4b4b4b;
+}
+
+.video-container iframe {
+  width: 60%; /* Ajustamos el ancho máximo del iframe */
+}
+
+/*  */
+
+.descripcion-general {
+  text-align: center; /* Centra el contenido horizontalmente */
+  max-width: 80%; /* Establece un ancho máximo para que el contenido no se extienda demasiado en pantallas grandes */
+  margin: 0 auto; /* Centra el contenedor horizontalmente */
+  padding: 15px; /* Agrega un espacio alrededor del contenido */
+}
+
+.descripcion-general h1 {
+  margin-bottom: 5px; /* Agrega un espacio debajo del título */
+}
+
+.descripcion-general h4 {
+  font-size: 22px; /* Tamaño de fuente base */
+  line-height: 1.3; /* Altura de línea para mejorar la legibilidad */
+}
+
+/*  */
 .circulo {
   width: 150px;
   height: 150px;
   border-radius: 50%;
   overflow: hidden; /* Asegura que las imágenes no se salgan del círculo */
-  margin: auto;
-  border: 2px solid #2387ea;
+  margin: 0 auto; /* Centra horizontalmente el círculo */
+  border: 1px solid #000000;
   position: relative;
 }
 
@@ -14,19 +43,18 @@
   object-fit: cover; /* Hace que la imagen se ajuste correctamente dentro del círculo */
 }
 
-
 .integrante {
-  border: 2px solid #125291; /* Bordes para identificación visual, ajustar colores si es necesario */
+  border: 1px solid #000000; /* Bordes para identificación visual, ajustar colores si es necesario */
   font-size: 18px;
   text-align: center;
   padding: 20px;
-  margin: 2%;
-  flex: 1; /* Permite que los elementos se estiren uniformemente */
-  min-width: 250px; /* Ajusta el ancho mínimo según tus necesidades */
+  margin: 20px; /* Ajusta el margen para centrar y espaciado uniforme */
+  flex: 1 1 250px; /* Flex-grow, flex-shrink, flex-basis para control de espacio */
   box-sizing: border-box; /* Asegura que el padding y el borde se incluyan en el tamaño total del elemento */
   display: flex;
   flex-direction: column;
   height: auto; /* Asegura que todos los planes tengan la misma altura */
+  align-items: center; /* Centra los contenidos dentro del integrante */
 }
 
 
