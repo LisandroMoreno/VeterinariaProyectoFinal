@@ -5,25 +5,25 @@
 }
 
 .video-container iframe {
-  width: 60%; /* Ajustamos el ancho máximo del iframe */
+  width: 60%; 
 }
 
 /*  */
 
 .descripcion-general {
-  text-align: center; /* Centra el contenido horizontalmente */
-  max-width: 80%; /* Establece un ancho máximo para que el contenido no se extienda demasiado en pantallas grandes */
-  margin: 0 auto; /* Centra el contenedor horizontalmente */
-  padding: 15px; /* Agrega un espacio alrededor del contenido */
+  text-align: center; 
+  max-width: 80%; 
+  margin: 0 auto; 
+  padding: 15px; 
 }
 
 .descripcion-general h1 {
-  margin-bottom: 5px; /* Agrega un espacio debajo del título */
+  margin-bottom: 5px; 
 }
 
 .descripcion-general h4 {
-  font-size: 22px; /* Tamaño de fuente base */
-  line-height: 1.3; /* Altura de línea para mejorar la legibilidad */
+  font-size: 22px; 
+  line-height: 1.3; 
 }
 
 /*  */
@@ -31,8 +31,8 @@
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  overflow: hidden; /* Asegura que las imágenes no se salgan del círculo */
-  margin: 0 auto; /* Centra horizontalmente el círculo */
+  overflow: hidden; 
+  margin: 0 auto; 
   border: 1px solid #000000;
   position: relative;
 }
@@ -40,21 +40,21 @@
 .circulo img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Hace que la imagen se ajuste correctamente dentro del círculo */
+  object-fit: cover; 
 }
 
 .integrante {
-  border: 1px solid #000000; /* Bordes para identificación visual, ajustar colores si es necesario */
+  border: 1px solid #000000; 
   font-size: 18px;
   text-align: center;
   padding: 20px;
-  margin: 20px; /* Ajusta el margen para centrar y espaciado uniforme */
-  flex: 1 1 250px; /* Flex-grow, flex-shrink, flex-basis para control de espacio */
-  box-sizing: border-box; /* Asegura que el padding y el borde se incluyan en el tamaño total del elemento */
+  margin: 20px; 
+  flex: 1 1 250px; 
+  box-sizing: border-box; 
   display: flex;
   flex-direction: column;
-  height: auto; /* Asegura que todos los planes tengan la misma altura */
-  align-items: center; /* Centra los contenidos dentro del integrante */
+  height: auto; 
+  align-items: center; 
 }
 
 
@@ -70,8 +70,8 @@
 
 .integrantes-container {
   display: flex;
-  justify-content: space-between; /* Distribuye el espacio entre los elementos */
-  flex-wrap: wrap; /* Permite que los elementos se ajusten en varias filas si es necesario */
+  justify-content: space-between; 
+  flex-wrap: wrap; 
 }
 
 @media (max-width: 600px) {

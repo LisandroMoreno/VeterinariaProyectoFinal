@@ -12,6 +12,7 @@ import axios from "axios";
 import "../css/Carrusel.css";
 import "../css/Productos.css";
 import "../css/ApiClima.css";
+import "../css/HealthPlan.css"
 
 const MainC = () => {
   const [products, setProducts] = useState([]);
@@ -333,6 +334,19 @@ const MainC = () => {
               ))}
             </Row>
           </Container>
+        </div>
+
+        <div className="health-plan-container">
+          <div className="health-plan-content">
+            <h1>Plan de salud para animales</h1>
+            <p>
+              Ofrecemos un plan de salud integral para tus mascotas que incluye
+              consultas, vacunas y mucho más.
+            </p>
+            <Button variant="primary" type="submit" className="learn-more-button btnForm">
+            Saber más
+            </Button>
+          </div>
         </div>
 
         <div>
