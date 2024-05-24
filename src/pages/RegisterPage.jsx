@@ -5,6 +5,24 @@ import "../css/Reg-Log.css";
 
 const RegisterPage = () => {
   titlePage("Registro");
+  const handleSubmitForm = async (values) => {
+    if (values.pass === values.rpass) {
+      const res = await clienteAxios.post(
+        "/users/register",
+        {
+          nombreUsuario: values.user,
+          contrasenia: values.pass,
+        },
+        config
+      );
+      alert("Usuario registrado");
+      location.href = "/login";
+      console.log(res);
+    } else {
+      alert("Las contraseñas no coinciden");
+    }
+  };
+
   return (
     <>
       <div className="d-flex justify-content-center my-5">
@@ -32,8 +50,7 @@ const RegisterPage = () => {
           <Button
             variant="primary"
             type="submit"
-            className="w-100 mt-3 btnForm"
-          >
+            className="w-100 mt-3 btnForm">
             Confirmar
           </Button>
         </Form>
