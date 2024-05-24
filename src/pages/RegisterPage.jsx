@@ -1,6 +1,9 @@
+import { titlePage } from "../helpers/titlePages";
+import { Formik } from "formik";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { titlePage } from "../helpers/titlePages";
+import clienteAxios, { config } from "../helpers/clienteAxios";
+import formSchema from "../helpers/yupSchema";
 import "../css/Reg-Log.css";
 
 const RegisterPage = () => {
@@ -26,7 +29,99 @@ const RegisterPage = () => {
   return (
     <>
       <div className="d-flex justify-content-center my-5">
-        <Form>
+        <Formik
+          initialValues={{ user: "", pass: "", rpass: "" }}
+          validationSchema={formSchema}
+          onSubmit={(values) => {
+            handleSubmitForm(values);
+          }}>
+          {({ values, errors, touched, handleChange, handleSubmit }) => (
+            <Form>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Correo Electronico</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Por ej: usuario@gmail.com"
+                  value={values.user}
+                  name="user"
+                  onChange={handleChange}
+                  className={
+                    errors.user && touched.user
+                      ? "form-control is-invalid"
+                      : "form-control"
+                  }
+                />
+                <p className="text-danger">
+                  {errors.user && touched.user && errors.user}
+                </p>
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Contraseña</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  value={values.pass}
+                  name="pass"
+                  onChange={handleChange}
+                  className={
+                    errors.pass && touched.pass
+                      ? "form-control is-invalid"
+                      : "form-control"
+                  }
+                />
+                <p className="text-danger">
+                  {errors.pass && touched.pass && errors.pass}
+                </p>
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formBasicRPassword">
+                <Form.Label>Repetir contraseña</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  value={values.rpass}
+                  name="rpass"
+                  onChange={handleChange}
+                  className={
+                    errors.rpass && touched.rpass
+                      ? "form-control is-invalid"
+                      : "form-control"
+                  }
+                />
+                <p className="text-danger">
+                  {errors.rpass && touched.rpass && errors.rpass}
+                </p>
+              </Form.Group>
+              <p>
+                Si tienes una cuenta haz click <a href="/login">aqui</a>
+              </p>
+              <div>
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="w-100 btnForm">
+                  Registrarse con Gmail
+                </Button>
+              </div>
+              <Button
+                variant="primary"
+                type="submit"
+                className="w-100 btnForm mt-3"
+                onClick={handleSubmit}>
+                Registrarse
+              </Button>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </>
+  );
+};
+
+export default RegisterPage;
+
+/* <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Correo Electronico</Form.Label>
             <Form.Control type="email" placeholder="Enter email" />
@@ -53,10 +148,4 @@ const RegisterPage = () => {
             className="w-100 mt-3 btnForm">
             Confirmar
           </Button>
-        </Form>
-      </div>
-    </>
-  );
-};
-
-export default RegisterPage;
+        </Form> */
