@@ -61,17 +61,17 @@ const MainC = () => {
       let response;
       const skip = (page - 1) * itemsPerPage;
       const limit = itemsPerPage;
-
+  
       if (categoria === "Todas las categorias") {
         response = await clienteAxios.get("/productos", {
-          params: { skip, limit },
+          params: { skip, limit, page },
         });
       } else {
         response = await clienteAxios.get("/productos", {
-          params: { categoria, skip, limit },
+          params: { categoria, skip, limit, page },
         });
       }
-
+  
       const { products, count } = response.data;
       setProducts(products);
       setTotalPages(Math.ceil(count / itemsPerPage));
