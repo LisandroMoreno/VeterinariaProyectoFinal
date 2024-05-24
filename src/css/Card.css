@@ -4,7 +4,7 @@
   height: 400px; /* Ajustar automáticamente la altura según el contenido */
   border: none;
   border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
   transition: transform 0.2s, box-shadow 0.2s;
   overflow: hidden;
   margin: 20px auto; /* Centro las tarjetas horizontalmente */
@@ -14,7 +14,7 @@
 
 .card-vet:hover {
   transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.1); /* Sombra al hacer hover */
 }
 
 .card-vet .card-img-top img {
@@ -27,12 +27,13 @@
 
 .card-vet .card-body {
   padding: 20px;
-  background: linear-gradient(to bottom right, #3992cdec, #fad0c4);
+  background: linear-gradient(to bottom right, #3992cdec, #b5d8efec);
   color: #fff;
   flex: 1; /* Hacer que el cuerpo ocupe todo el espacio disponible */
   display: flex; /* Alinear los elementos como columna */
   flex-direction: column; /* Alinear los elementos como columna */
   justify-content: space-between; /* Espacio entre elementos */
+  overflow: hidden; /* Ocultar cualquier desbordamiento */
 }
 
 .card-vet .card-title {
