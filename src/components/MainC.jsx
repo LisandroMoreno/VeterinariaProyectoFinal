@@ -20,12 +20,12 @@ const MainC = () => {
   );
   const [apiData, setApiData] = useState({});
   const [state, setState] = useState("San Miguel de Tucuman");
-  const [currentPage, setCurrentPage] = useState();
-  const [totalPages, setTotalPages] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const itemsPerPage = 10; // Número de productos por página
 
-  const apiKey = "232e32153bfe7c18c89ebc060432d510";
+  const apiKey = `${import.meta.env.VITE_API_KEY}`;
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${state}&appid=${apiKey}`;
 
   function kelvinToCelsius(kelvin) {
