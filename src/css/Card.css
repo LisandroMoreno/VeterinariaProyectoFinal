@@ -1,25 +1,76 @@
-.card-img-top {
+.card-vet {
+  width: 100%;
+  max-width: 300px;
+  height: 400px; /* Ajustar automáticamente la altura según el contenido */
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
   overflow: hidden;
-  height: 200px; /* Altura de la imagen */
+  margin: 20px auto; /* Centro las tarjetas horizontalmente */
+  display: flex; /* Para asegurar que los hijos se ajusten correctamente */
+  flex-direction: column; /* Alinear los elementos como columna */
 }
 
-.card-img-top img {
+.card-vet:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-vet .card-img-top img {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  width: 100%; /* Ajustar la imagen al ancho de su contenedor */
+  height: 150px;
   object-fit: cover;
-  height: 100%; /* Ajusta la imagen */
 }
 
-.card-title {
-  font-size: 1.2rem; /* Tamaño del título */
+.card-vet .card-body {
+  padding: 20px;
+  background: linear-gradient(to bottom right, #3992cdec, #fad0c4);
+  color: #fff;
+  flex: 1; /* Hacer que el cuerpo ocupe todo el espacio disponible */
+  display: flex; /* Alinear los elementos como columna */
+  flex-direction: column; /* Alinear los elementos como columna */
+  justify-content: space-between; /* Espacio entre elementos */
 }
 
-.card-text {
-  font-size: 1rem; /* Tamaño del texto */
+.card-vet .card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-.card-body {
-  padding: 1.25rem; /* Ajusta el relleno del cuerpo */
+.card-vet .card-text {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.btn-primary {
-  margin-top: 10px; /* Espacio entre el texto y el botón */
+.card-vet .btn-primary {
+  background-color: black;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 30px;
+  transition: background-color 0.3s;
+  align-self: center; /* Centrar el botón horizontalmente */
+}
+
+.card-vet .btn-primary:hover {
+  background-color: white;
+  color: black;
+}
+
+@media (max-width: 576px) {
+  .card-vet {
+    max-width: 100%; /* Ancho máximo para dispositivos móviles */
+    height: auto; /* Altura automática para adaptarse al contenido */
+  }
+
+  .card-vet .card-img-top img {
+    height: 200px; /* Ajustar la altura de la imagen para dispositivos móviles */
+  }
 }

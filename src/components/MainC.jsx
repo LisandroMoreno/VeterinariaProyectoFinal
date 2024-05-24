@@ -20,8 +20,8 @@ const MainC = () => {
   );
   const [apiData, setApiData] = useState({});
   const [state, setState] = useState("San Miguel de Tucuman");
-  const [currentPage, setCurrentPage] = useState();
-  const [totalPages, setTotalPages] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const itemsPerPage = 10; // Número de productos por página
 

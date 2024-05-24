@@ -5,7 +5,7 @@ import "../css/Card.css";
 
 const CardC = ({ idProd, titulo, image, precio, descripcion }) => {
   return (
-    <Card className="text-center">
+    <Card className="card-vet text-center">
       <div className="card-img-top">
         <Card.Img variant="top" src={image} />
       </div>
