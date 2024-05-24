@@ -1,8 +1,3 @@
-.card {
-  width: 18rem; /* Ajusta el ancho de acuerdo a tus necesidades */
-  margin-bottom: 20px; /* Espacio entre tarjetas */
-}
-
 .card-img-top {
   overflow: hidden;
   height: 200px; /* Altura de la imagen */
