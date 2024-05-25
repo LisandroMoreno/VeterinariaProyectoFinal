@@ -5,6 +5,11 @@ const formSchema = yup.object({
     .string()
     .required("Completa el campo")
     .email("Formato email. Por ej: usuario@gmail.com"),
+  userName: yup
+    .string()
+    .required("Completa el campo")
+    .min(8, "Minimo 8 caracteres")
+    .max(30, "Maximo 30 caracteres"),
   pass: yup
     .string()
     .required("Completa el campo")
