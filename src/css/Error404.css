@@ -1,0 +1,32 @@
+.img-error404 {
+  background-image: url(../Img/ERROR404.jpg);
+  background-size: 50%; /* Reducir el tamaño de la imagen al 50% del contenedor */
+  background-position: center;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 15px;
+ 
+}
+
+.img-error404 h1 {
+  color: rgb(0, 0, 0);
+  font-size: 50px;
+  margin-bottom: 20px; /* Espacio entre el h1 y el siguiente elemento */
+}
+
+.img-error404 h2 {
+  color: rgb(0, 0, 0);
+  font-size: 25px;
+  margin-bottom: 20px; /* Espacio entre el h2 y el siguiente elemento */
+}
+
+
+.img-error404 h4 {
+  color: rgb(0, 0, 0); /* Cambiado el color del h4 a negro */
+  font-size: 20px;
+  margin-bottom: 20px; /* Espacio entre el h4 y el siguiente elemento */
+}
