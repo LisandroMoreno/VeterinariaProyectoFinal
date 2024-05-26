@@ -6,55 +6,20 @@ import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
 import Pagination from "react-bootstrap/Pagination";
 import { Col, Container, Row } from "react-bootstrap";
-import axios from "axios";
 import clienteAxios from "../helpers/clienteAxios";
 import "../css/Carrusel.css";
 import "../css/Productos.css";
 import "../css/ApiClima.css";
 import "../css/HealthPlan.css";
+import ApiClima from "./ApiClima";
 
 const MainC = () => {
   const [products, setProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(
-    "Todas las categorias"
-  );
-  const [apiData, setApiData] = useState({});
-  const [state, setState] = useState("San Miguel de Tucuman");
+  const [selectedCategory, setSelectedCategory] = useState("Todas las categorias");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
   const itemsPerPage = 10; // Número de productos por página
-
-  const apiKey = `${import.meta.env.VITE_API_KEY}`;
-  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${state}&appid=${apiKey}`;
-
-  function kelvinToCelsius(kelvin) {
-    return kelvin - 273.15;
-  }
-
-  const getWeatherIconClass = (iconCode) => {
-    const iconMap = {
-      "01d": "wi-day-sunny",
-      "01n": "wi-night-clear",
-      "02d": "wi-day-cloudy",
-      "02n": "wi-night-alt-cloudy",
-      "03d": "wi-cloud",
-      "03n": "wi-cloud",
-      "04d": "wi-cloudy",
-      "04n": "wi-cloudy",
-      "09d": "wi-showers",
-      "09n": "wi-showers",
-      "10d": "wi-day-rain",
-      "10n": "wi-night-alt-rain",
-      "11d": "wi-thunderstorm",
-      "11n": "wi-thunderstorm",
-      "13d": "wi-snow",
-      "13n": "wi-snow",
-      "50d": "wi-fog",
-      "50n": "wi-fog",
-    };
-    return iconMap[iconCode] || "wi-na";
-  };
 
   const getProducts = async (categoria, page) => {
     try {
@@ -83,75 +48,25 @@ const MainC = () => {
 
   const handleCategoryClick = (categoria) => {
     setSelectedCategory(categoria);
+    getProducts(categoria, 1); // cargar productos cuando cambia la categoría
   };
 
-  const filteredProducts =
-    selectedCategory === "Todas las categorias"
-      ? products
-      : products.filter((product) =>
-          product.categoria
-            .toLowerCase()
-            .includes(selectedCategory.toLowerCase())
-        );
+  const filteredProducts = selectedCategory === "Todas las categorias"
+    ? products
+    : products.filter((product) =>
+        product.categoria.toLowerCase().includes(selectedCategory.toLowerCase())
+      );
 
   useEffect(() => {
     getProducts(selectedCategory, 1);
   }, [selectedCategory]);
 
-  useEffect(() => {
-    axios
-      .get(apiUrl)
-      .then((response) => {
-        setApiData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching weather data:", error);
-      });
-  }, [state]);
-
   return (
     <>
-      <Container fluid>
-        <Row>
-          <Col sm="12" md="6" lg="4">
-            <div className="mt-3 mb-3">
-              <div id="weatherWrapper">
-                <div className="weatherCard">
-                  <div className="currentTemp">
-                    <span className="temp">
-                      {apiData.main &&
-                        kelvinToCelsius(apiData.main.temp).toFixed(1)}
-                      °C
-                    </span>
-                    <span className="location">{state}</span>
-                  </div>
-                  <div className="currentWeather">
-                    <span className="conditions">
-                      {apiData.weather && (
-                        <i
-                          className={`wi ${getWeatherIconClass(
-                            apiData.weather[0].icon
-                          )}`}
-                        ></i>
-                      )}
-                    </span>
-                    <div className="info">
-                      {apiData.main && (
-                        <span>
-                          {kelvinToCelsius(apiData.main.temp_min).toFixed(1)}
-                          °C /{" "}
-                          {kelvinToCelsius(apiData.main.temp_max).toFixed(1)}
-                          °C
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Col>
-        </Row>
-      </Container>
+
+<div className="ClimaSearch">
+      <ApiClima/>
+      </div>
 
       <div className="text-center mt-2 mb-2">
         <h2>Veterinaria Patas y Garras, un lugar para cuidar a tu mascota</h2>
