@@ -1,89 +1,150 @@
 import React from "react";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import "../css/PlanesPage.css";
 
 const PlanesPage = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData.entries());
+    console.log(data);
+    // Aquí puedes manejar el envío del formulario, como enviarlo a un servidor
+  };
+
   return (
     <>
       <div className="descripcion-Planes">
         <div className="Planes-container">
           <div className="Plan">
-            <div className="circulo">
+            <div className="Cuadro">
               <img
-                src="./src/img/Rodrigo.jpg"
+                src="./src/img/Plan1.avif"
                 alt="Foto-integrante1"
-                className="img-fluid rounded-circle"
+                className="img-fluid"
               />
             </div>
             <h5 className="NombrePlan">
-              <strong>Plan Básico</strong>
+              <strong>Plan “Primeros Pasos”</strong>
+              <h4>(Mascotas de 0 a 5 años)</h4>
             </h5>
-            <div className="Plan">
+
+            <div className="PlanDescripcion">
               <p className="Descripcion">
-                Consultas veterinarias: 2 consultas anuales gratuitas Vacunas
-                básicas: Incluye vacunas contra la rabia, parvovirus, y
-                distemper Desparasitaciones: 2 desparasitaciones anuales
-                Revisión dental: 1 revisión anual Descuento en medicamentos: 10%
-                de descuento en medicamentos y tratamientos adicionales Asesoría
-                telefónica: 24/7 para emergencias y consultas básicas
+                ● Consultas Preventivas: Exámenes médicos regulares para
+                detectar problemas de salud temprano. <br /> <br />
+                ● Vacunas y Desparasitación: Protege a las mascotas jóvenes
+                contra enfermedades y parásitos. <br /> <br /> ● Asesoramiento
+                Nutricional: Recomendaciones personalizadas para una dieta
+                saludable. <br /> <br />
+                ● Descuentos en Productos: Ofertas especiales en alimentos,
+                juguetes y accesorios. <br /> <br />
+                Costo Mensual: $xxxx
               </p>
+              <Button variant="primary" className="button-custom mt-3">
+                Adquirir
+              </Button>
             </div>
           </div>
 
           <div className="Plan">
-            <div className="circulo">
+            <div className="Cuadro">
               <img
-                src="./src/img/Jose.png"
+                src="./src/img/Plan2.jpg"
                 alt="Foto-integrante2"
-                className="img-fluid rounded-circle"
+                className="img-fluid"
               />
             </div>
             <h5 className="NombrePlan">
-              <strong>Plan Intermedio</strong>
+              <strong>
+                Plan “Madurando”
+                <h4>(Mascotas de 5 a 10 años)</h4>
+              </strong>
             </h5>
-            <div className="">
+            <div className="PlanDescripcion">
               <p className="Descripcion">
-                Consultas veterinarias: 4 consultas anuales gratuitas Vacunas
-                completas: Incluye todas las vacunas del plan básico más vacunas
-                contra leptospirosis, bordetella, y hepatitis Desparasitaciones:
-                4 desparasitaciones anuales Revisión dental: 2 revisiones
-                anuales, incluyendo limpieza Análisis de laboratorio: 2 análisis
-                completos al año (sangre, orina, etc.) Descuento en
-                medicamentos: 20% de descuento en medicamentos y tratamientos
-                adicionales Asesoría telefónica: 24/7 para emergencias y
-                consultas avanzadas
+                ● Vacunas y Desparasitación: Protege a las mascotas jóvenes contra enfermedades y parásitos. <br /> <br />
+                ● Control Geriátrico: Evaluaciones específicas para detectar
+                problemas relacionados con la edad. <br /> <br />
+                ● Tratamientos Crónicos: Manejo de enfermedades crónicas como la
+                artritis o la diabetes. <br /> <br />
+                ● Descuentos en Cirugías Electivas: Beneficios para
+                procedimientos como la esterilización. <br /> <br />
+                Costo Mensual: $xxxx
               </p>
+              <Button variant="primary" className="button-custom mt-3">
+                Adquirir
+              </Button>
             </div>
           </div>
 
           <div className="Plan">
-            <div className="circulo">
+            <div className="Cuadro">
               <img
-                src="./src/img/Lisandro.jpg"
+                src="./src/img/Plan3.png"
                 alt="Foto-integrante3"
-                className="img-fluid rounded-circle"
+                className="img-fluid"
               />
             </div>
             <h5 className="NombrePlan">
-              <strong>Plan Premium</strong>
+              <strong>
+                Plan “Adultos”
+                <h4>(Mascotas de más de 10 años)</h4>
+              </strong>
             </h5>
-            <div className="Plan">
+            <div className="PlanDescripcion">
               <p className="Descripcion">
-                Consultas veterinarias: Consultas ilimitadas Vacunas completas:
-                Incluye todas las vacunas necesarias según la especie y edad de
-                la mascota Desparasitaciones: Desparasitaciones ilimitadas
-                Revisión dental: Revisiones y limpiezas dentales ilimitadas
-                Análisis de laboratorio: Análisis completos ilimitados (sangre,
-                orina, etc.) Tratamientos preventivos: Incluye tratamiento para
-                pulgas, garrapatas, y enfermedades del corazón Cirugías menores:
-                Cobertura de cirugías menores (hasta un límite anual de $1,000)
-                Hospitalización: Cobertura de hospitalización (hasta un límite
-                anual de $2,500) Descuento en medicamentos: 30% de descuento en
-                medicamentos y tratamientos adicionales Asesoría telefónica:
-                24/7 para emergencias y consultas completas
+                ● Vacunas y Desparasitación: Protege a las mascotas jóvenes contra enfermedades y parásitos. <br /> <br />
+                ● Atención Especializada: Enfoque en la salud de órganos vitales
+                y prevención de enfermedades. <br /> <br />
+                ● Análisis Clínicos Regulares: Monitoreo de la función renal,
+                hepática y cardíaca. <br /> <br />
+                ● Descuentos en Medicamentos: Ayuda a los dueños a acceder a
+                tratamientos necesarios. <br /> <br />
+                Costo Mensual: $xxxx
               </p>
+              <Button variant="primary" className="button-custom mt-3">
+                Adquirir
+              </Button>
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="formulario-container">
+        <h2>Envianos tu consulta</h2>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3">
+            <Form.Label>Nombre</Form.Label>
+            <Form.Control type="text" placeholder="Ingresa tu nombre" name="nombre" required />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Correo Electrónico</Form.Label>
+            <Form.Control type="email" placeholder="Ingresa tu correo electrónico" name="email" required />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Asunto</Form.Label>
+            <Form.Select name="asunto" required>
+              <option value="">Selecciona un asunto</option>
+              <option value="Primeros Pasos">Plan "Primeros pasos"</option>
+              <option value="Madurando">Plan "Madurando"</option>
+              <option value="Adultos">Plan "Adultos"</option>
+            </Form.Select>
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Mensaje</Form.Label>
+            <Form.Control as="textarea" rows={3} placeholder="Escribe tu mensaje" name="mensaje" required />
+          </Form.Group>
+
+          <div className="button-container">
+            <Button variant="primary" type="submit" className="button-custom mt-3">
+              Enviar
+            </Button>
+          </div>
+        </Form>
       </div>
     </>
   );

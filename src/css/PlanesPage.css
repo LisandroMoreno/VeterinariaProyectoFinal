@@ -1,34 +1,33 @@
-.circulo {
+.Cuadro {
   width: 150px;
   height: 150px;
-  border-radius: 50%;
-  overflow: hidden; /* Asegura que las imágenes no se salgan del círculo */
-  margin: auto;
-  border: 2px solid #2387ea;
+  overflow: hidden; /* Asegura que las imágenes no se salgan del contenedor */
+  margin: 0 auto;
+  border: 1px solid #000000;
   position: relative;
+  /* Eliminado border-radius: 50%; para no hacer que sea un círculo */
 }
 
-.circulo img {
+.Cuadro img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Hace que la imagen se ajuste correctamente dentro del círculo */
+  object-fit: cover; /* Hace que la imagen se ajuste correctamente dentro del cuadro */
 }
-
 
 .Plan {
   border: 2px solid #125291; /* Bordes para identificación visual, ajustar colores si es necesario */
-  font-size: 18px;
+  font-size: 17px;
   text-align: center;
-  padding: 20px;
-  margin: 2%;
+  padding: 15px;
+  margin: 1% 3.5%;
   flex: 1; /* Permite que los elementos se estiren uniformemente */
   min-width: 250px; /* Ajusta el ancho mínimo según tus necesidades */
-  box-sizing: border-box; /* Asegura que el padding y el borde se incluyan en el tamaño total del elemento */
+  /* box-sizing: border-box; */ /* Asegura que el padding y el borde se incluyan en el tamaño total del elemento */
   display: flex;
   flex-direction: column;
-  height: auto; /* Asegura que todos los planes tengan la misma altura */
+  
+  /* height: auto; */ /* Asegura que todos los planes tengan la misma altura */
 }
-
 
 .NombrePlan {
   text-align: center;
@@ -36,7 +35,7 @@
   margin: 35px;
 }
 
-.Plan img {
+.cuadro img {
   max-width: 100%;
 }
 
@@ -50,4 +49,61 @@
   .Planes-container {
     flex-direction: column;
   }
+}
+
+
+.button-custom {
+  background-color: #3696f6;
+  border-color: #003366;
+  color: white;
+  -webkit-box-shadow: 6px 6px 7px 0px rgba(0, 0, 0, 0.74);
+  -moz-box-shadow: 6px 6px 7px 0px rgba(0, 0, 0, 0.74);
+  box-shadow: 6px 6px 7px 0px rgba(0, 0, 0, 0.74);
+}
+
+.formulario-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+
+}
+
+.formulario-container h2 {
+  margin-bottom: 20px;
+  
+}
+
+form {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  background: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+form .mb-3 {
+  margin-bottom: 15px;
+}
+
+form .form-label {
+  font-weight: bold;
+}
+
+form .form-control {
+  border-radius: 4px;
+  padding: 10px;
+}
+
+form button {
+  width: 50%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+form .button-container {
+  display: flex;
+  justify-content: center;
 }

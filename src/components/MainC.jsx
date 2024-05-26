@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import Image from "./Image";
 import CardC from "./CardC";
 import Pisadas from "./Pisadas";
@@ -18,6 +19,7 @@ const MainC = () => {
   const [selectedCategory, setSelectedCategory] = useState("Todas las categorias");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const navigate = useNavigate();
 
   const itemsPerPage = 10; // Número de productos por página
 
@@ -61,11 +63,14 @@ const MainC = () => {
     getProducts(selectedCategory, 1);
   }, [selectedCategory]);
 
+  const handleButtonClick = () => {
+    navigate('/planes');
+  };
+
   return (
     <>
-
-<div className="ClimaSearch">
-      <ApiClima/>
+      <div className="ClimaSearch">
+        <ApiClima/>
       </div>
 
       <div className="text-center mt-2 mb-2">
@@ -289,8 +294,9 @@ const MainC = () => {
           </p>
           <Button
             variant="primary"
-            type="submit"
+            type="button"
             className="learn-more-button btnForm"
+            onClick={handleButtonClick}
           >
             Saber más
           </Button>
