@@ -17,8 +17,8 @@ const RoutesViews = () => {
       <NavbarC />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/planes" element={<PlanesPage/>} />
         <Route path="/productos/:id" element={<DetalleProducto />} />
-        <Route path="/PlanesPage" element={<PlanesPage/>} />
         <Route path="/sobreNosotros" element={<SobreNosotros />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegisterPage />} />
