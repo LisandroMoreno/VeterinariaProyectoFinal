@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { FaFacebook, FaInstagram, FaTwitter, FaWhatsapp } from "react-icons/fa";
-import Image from "./Image";
+import ImageC from "./ImageC";
 import "../css/FooterC.css";
 
 const FooterC = () => {
@@ -13,7 +13,7 @@ const FooterC = () => {
           <div className="row justify-content-center">
             <div className="col-12 mt-2 col-md-6 col-lg-3 align-items-center d-flex justify-content-center">
               <NavLink to="/">
-                <Image urlImagen={url} ancho="70vh" alternativo="logo" />
+                <ImageC urlImagen={url} ancho="70vh" alternativo="logo" />
               </NavLink>
             </div>
             <div className="col-12 col-md-6 col-lg-3 align-items-center flex-column mt-5  ">
@@ -28,7 +28,8 @@ const FooterC = () => {
               </NavLink>
               <NavLink
                 to="/trabaja-con-nosotros"
-                className="text-decoration-none ">
+                className="text-decoration-none "
+              >
                 <h6 className="text-white mb-5 footer-link">
                   Trabaja con Nosotros
                 </h6>
@@ -37,22 +38,26 @@ const FooterC = () => {
             <div className="col-12 col-md-6 col-lg-3 justify-content-center align-items-center d-flex flex-row ">
               <a
                 href="https://www.facebook.com/RollingCodeSchool/"
-                className="text-white fs-6 p-2 footer-link">
+                className="text-white fs-6 p-2 footer-link"
+              >
                 <FaFacebook />
               </a>
               <a
                 href="https://twitter.com/rollingcodeok"
-                className="text-white fs-6 p-2 footer-link">
+                className="text-white fs-6 p-2 footer-link"
+              >
                 <FaTwitter />
               </a>
               <a
                 href="https://www.instagram.com/rollingcodeschool/?utm_source=ig_web_button_share_sheet&igshid=OGQ5ZDc2ODk2ZA=="
-                className="text-white fs-6 p-2 footer-link">
+                className="text-white fs-6 p-2 footer-link"
+              >
                 <FaInstagram />
               </a>
               <a
                 href="https://wa.me/3816342100"
-                className="text-white fs-6 p-2 footer-link">
+                className="text-white fs-6 p-2 footer-link"
+              >
                 <FaWhatsapp />
               </a>
             </div>
@@ -65,7 +70,8 @@ const FooterC = () => {
                 style={{ border: 0 }}
                 allowFullScreen=""
                 loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"></iframe>
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
             </div>
           </div>
         </div>
