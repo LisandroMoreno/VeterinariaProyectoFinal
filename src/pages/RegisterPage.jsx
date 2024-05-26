@@ -23,7 +23,6 @@ const RegisterPage = () => {
         );
 
         if (res.status === 201) {
-          // Assuming 201 for successful creation
           alert("Usuario registrado");
           location.href = "/login";
         } else {
@@ -92,7 +91,7 @@ const RegisterPage = () => {
                 }
               />
               <p className="text-danger">
-                {errors.user && touched.user && errors.user}
+                {errors.userName && touched.userName && errors.userName}
               </p>
             </Form.Group>
 
