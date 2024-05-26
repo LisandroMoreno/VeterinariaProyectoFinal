@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Image from "./Image";
+import ImageC from "./ImageC";
 import CardC from "./CardC";
 import Pisadas from "./Pisadas";
 import Carousel from "react-bootstrap/Carousel";
@@ -26,7 +26,7 @@ const MainC = () => {
       let response;
       const skip = (page - 1) * itemsPerPage;
       const limit = itemsPerPage;
-  
+
       if (categoria === "Todas las categorias") {
         response = await clienteAxios.get("/productos", {
           params: { skip, limit, page },
@@ -36,7 +36,7 @@ const MainC = () => {
           params: { categoria, skip, limit, page },
         });
       }
-  
+
       const { products, count } = response.data;
       setProducts(products);
       setTotalPages(Math.ceil(count / itemsPerPage));
@@ -78,7 +78,7 @@ const MainC = () => {
             <Carousel fade className="h-100 ">
               <Carousel.Item>
                 <div className="productH2">
-                  <Image
+                  <ImageC
                     urlImagen="https://cdn.euroinnova.edu.es/img/subidasEditor/curso-1612925686.webp"
                     alternativo="Descripción de la primera imagen"
                     ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
@@ -107,7 +107,7 @@ const MainC = () => {
               </Carousel.Item>
               <Carousel.Item>
                 <div className="productH2">
-                  <Image
+                  <ImageC
                     urlImagen="https://www.animalshealth.es/fileuploads/news/mesa-de-trabajo-11_790.jpg"
                     alternativo="Descripción de la segunda imagen"
                     ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
@@ -135,7 +135,7 @@ const MainC = () => {
               </Carousel.Item>
               <Carousel.Item>
                 <div className="productH2">
-                  <Image
+                  <ImageC
                     urlImagen="https://www.animalshealth.es/fileuploads/news/mesa-de-trabajo-11_790.jpg"
                     alternativo="Descripción de la tercera imagen"
                     ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
@@ -165,7 +165,7 @@ const MainC = () => {
           </div>
           <div className="col-lg-4">
             <div className="product-offer mb-30 productH">
-              <Image
+              <ImageC
                 className="img-fluid"
                 urlImagen="https://cdn.ready-market.com.tw/78d8bdd7/Templates/pic/Dog-Toy-1.jpg"
                 alternativo="Descripción de la imagen derecha 1"
@@ -180,7 +180,7 @@ const MainC = () => {
               </div>
             </div>
             <div className="product-offer mb-30 productH">
-              <Image
+              <ImageC
                 className="img-fluid"
                 urlImagen="https://cdn.ready-market.com.tw/78d8bdd7/Templates/pic/Dog-Toy-1.jpg"
                 alternativo="Descripción de la imagen derecha 2"
@@ -272,6 +272,7 @@ const MainC = () => {
                 key={index + 1}
                 active={index + 1 === currentPage}
                 onClick={() => getProducts(selectedCategory, index + 1)}
+                linkClassName="custom-pagination-item"
               >
                 {index + 1}
               </Pagination.Item>
@@ -305,7 +306,7 @@ const MainC = () => {
           <div className="row d-flex text-center">
             <div className="col-lg-4 col-md-6 mb-4">
               <div className="card-size">
-                <Image
+                <ImageC
                   className="card-img-top"
                   urlImagen="https://1000logos.net/wp-content/uploads/2020/08/Royal_Canin_logo_PNG1.png"
                   alternativo="logo de Royal Canin"
@@ -315,7 +316,7 @@ const MainC = () => {
             </div>
             <div className="col-lg-4 col-md-6 mb-4">
               <div className="card-size">
-                <Image
+                <ImageC
                   className="card-img-top"
                   urlImagen="https://1000logos.net/wp-content/uploads/2020/09/Pedigree_logo_PNG7.png"
                   alternativo="logo de Pedigree"
@@ -325,7 +326,7 @@ const MainC = () => {
             </div>
             <div className="col-lg-4 col-md-6 mb-4 mt-4">
               <div className="card-size">
-                <Image
+                <ImageC
                   className="card-img-top"
                   urlImagen="https://1000logos.net/wp-content/uploads/2020/09/Purina_logo_PNG3.png"
                   alternativo="logo de Purina"
@@ -335,7 +336,7 @@ const MainC = () => {
             </div>
             <div className="col-lg-4 col-md-6 mb-3">
               <div className="card-size">
-                <Image
+                <ImageC
                   className="card-img-top"
                   urlImagen="https://1000logos.net/wp-content/uploads/2023/10/Eukanuba_logo_PNG5.png"
                   alternativo="logo de Eukanuba"
@@ -345,7 +346,7 @@ const MainC = () => {
             </div>
             <div className="col-lg-4 col-md-6 mb-3">
               <div className="card-size">
-                <Image
+                <ImageC
                   className="card-img-top"
                   urlImagen="https://1000logos.net/wp-content/uploads/2021/03/Whiskas_logo_PNG7.png"
                   alternativo="logo de Whiskas"
@@ -355,7 +356,7 @@ const MainC = () => {
             </div>
             <div className="col-lg-4 col-md-6 mb-3">
               <div className="card-size">
-                <Image
+                <ImageC
                   className="card-img-top"
                   urlImagen="https://1000logos.net/wp-content/uploads/2020/09/Friskies_logo_PNG7.png"
                   alternativo="logo de Friskies"

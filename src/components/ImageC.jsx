@@ -1,4 +1,4 @@
-const Image = ({ urlImagen, alternativo, ancho }) => {
+const ImageC = ({ urlImagen, alternativo, ancho }) => {
   /*   console.log(urlImagen); */
   return (
     <>
@@ -7,4 +7,4 @@ const Image = ({ urlImagen, alternativo, ancho }) => {
   );
 };
 
-export default Image;
+export default ImageC;
