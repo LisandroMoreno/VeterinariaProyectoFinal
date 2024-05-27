@@ -48,88 +48,92 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center my-5">
-      <Formik
-        initialValues={{ userName: "", pass: "" }}
-        validationSchema={formSchemaLogin}
-        onSubmit={(values, actions) => {
-          handleSubmitForm(values, actions);
-        }}>
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleSubmit,
-          isSubmitting,
-        }) => (
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="formBasicUser">
-              <Form.Label>Usuario</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Por ej: usuario123"
-                value={values.userName}
-                name="userName"
-                onChange={handleChange}
-                className={
-                  errors.userName && touched.userName
-                    ? "form-control is-invalid"
-                    : "form-control"
-                }
-              />
-              <p className="text-danger">
-                {errors.userName && touched.userName && errors.userName}
+    <div className="formImg">
+      <div className="d-flex justify-content-center my-5 ">
+        <Formik
+          initialValues={{ userName: "", pass: "" }}
+          validationSchema={formSchemaLogin}
+          onSubmit={(values, actions) => {
+            handleSubmitForm(values, actions);
+          }}>
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleSubmit,
+            isSubmitting,
+          }) => (
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3" controlId="formBasicUser">
+                <Form.Label>Usuario</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Por ej: usuario123"
+                  value={values.userName}
+                  name="userName"
+                  onChange={handleChange}
+                  className={
+                    errors.userName && touched.userName
+                      ? "form-control is-invalid"
+                      : "form-control"
+                  }
+                />
+                <p className="text-danger">
+                  {errors.userName && touched.userName && errors.userName}
+                </p>
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Contraseña</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  value={values.pass}
+                  name="pass"
+                  onChange={handleChange}
+                  className={
+                    errors.pass && touched.pass
+                      ? "form-control is-invalid"
+                      : "form-control"
+                  }
+                />
+                <p className="text-danger">
+                  {errors.pass && touched.pass && errors.pass}
+                </p>
+              </Form.Group>
+
+              <p className="text-center ">
+                <a className="text-black" href="/RecuperarContraseña">
+                  ¿Olvidaste tu contraseña?
+                </a>{" "}
               </p>
-            </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Contraseña</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                value={values.pass}
-                name="pass"
-                onChange={handleChange}
-                className={
-                  errors.pass && touched.pass
-                    ? "form-control is-invalid"
-                    : "form-control"
-                }
-              />
-              <p className="text-danger">
-                {errors.pass && touched.pass && errors.pass}
+              <p>
+                Si no tienes una cuenta haz click <a href="/registro">aquí</a>
               </p>
-            </Form.Group>
 
-            <p className="text-center">
-              <a href="/RecuperarContraseña">¿Olvidaste tu contraseña?</a>{" "}
-            </p>
+              <div>
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="w-100 btnForm"
+                  disabled={isSubmitting}>
+                  Ingresar con Gmail
+                </Button>
+              </div>
 
-            <p>
-              Si no tienes una cuenta haz click <a href="/registro">aquí</a>
-            </p>
-
-            <div>
               <Button
                 variant="primary"
                 type="submit"
-                className="w-100 btnForm"
+                className="w-100 btnForm mt-3"
                 disabled={isSubmitting}>
-                Ingresar con Gmail
+                Iniciar Sesion
               </Button>
-            </div>
-
-            <Button
-              variant="primary"
-              type="submit"
-              className="w-100 btnForm mt-3"
-              disabled={isSubmitting}>
-              Iniciar Sesion
-            </Button>
-          </Form>
-        )}
-      </Formik>
+            </Form>
+          )}
+        </Formik>
+      </div>
     </div>
   );
 };

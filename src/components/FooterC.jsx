@@ -39,32 +39,28 @@ const FooterC = () => {
                 href="https://www.facebook.com/RollingCodeSchool/"
                 className="text-white social-icon p-2"
                 target="_blank"
-                rel="noopener noreferrer"
-              >
+                rel="noopener noreferrer">
                 <FaFacebook />
               </a>
               <a
                 href="https://twitter.com/rollingcodeok"
                 className="text-white social-icon p-2 footer-link"
                 target="_blank"
-                rel="noopener noreferrer"
-              >
+                rel="noopener noreferrer">
                 <FaTwitter />
               </a>
               <a
                 href="https://www.instagram.com/rollingcodeschool/?utm_source=ig_web_button_share_sheet&igshid=OGQ5ZDc2ODk2ZA=="
                 className="text-white social-icon p-2 footer-link"
                 target="_blank"
-                rel="noopener noreferrer"
-              >
+                rel="noopener noreferrer">
                 <FaInstagram />
               </a>
               <a
                 href="https://wa.me/3816342100"
                 className="text-white social-icon p-2 footer-link"
                 target="_blank"
-                rel="noopener noreferrer"
-              >
+                rel="noopener noreferrer">
                 <FaWhatsapp />
               </a>
             </div>
