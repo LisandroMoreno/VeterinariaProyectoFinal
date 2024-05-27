@@ -22,13 +22,13 @@ const SobreNosotros = () => {
           <strong>Quienes somos</strong>
         </h1>
         <h4>
-          En Veterinaria Paws and Caws, nuestra pasión es el bienestar de tus
+          En Veterinaria Patas y garras, nuestra pasión es el bienestar de tus
           queridas mascotas. Somos un equipo dedicado de profesionales
           apasionados por la salud y felicidad de los animales. Desde los
           traviesos cachorros hasta los leales compañeros de vida, estamos aquí
           para brindarles la mejor atención posible. Desde la selección
           meticulosa de tratamientos hasta la atención personalizada, trabajamos
-          incansablemente para que cada visita a Veterinaria Shamrock sea
+          incansablemente para que cada visita a Veterinaria Patas y garras sea
           memorable y gratificante. Tu confianza en nosotros es nuestra mayor
           recompensa. <br />
           <br />

@@ -1,6 +1,7 @@
 import React from "react";
-import Image from "./Image";
+import Image from "./ImageC";
 import "../css/Pisadas.css"; // Archivo de estilos CSS para las pisadas
+import ImageC from "./ImageC";
 
 const Pisadas = () => {
   const url =
@@ -8,31 +9,31 @@ const Pisadas = () => {
   return (
     <div className="pisadas-container">
       <div className="pisada d-none d-sm-block">
-        <Image urlImagen={url} ancho="50" alternativo="logo" />
+        <ImageC urlImagen={url} ancho="45" alternativo="logo" />
       </div>
       <div className="pisada d-none d-sm-block">
-        <Image urlImagen={url} ancho="50" alternativo="logo" />
+        <ImageC urlImagen={url} ancho="45" alternativo="logo" />
       </div>
       <div className="pisada d-none d-sm-block">
-        <Image urlImagen={url} ancho="50" alternativo="logo" />
+        <ImageC urlImagen={url} ancho="45" alternativo="logo" />
       </div>
       <div className="pisada d-none d-sm-block">
-        <Image urlImagen={url} ancho="50" alternativo="logo" />
+        <ImageC urlImagen={url} ancho="45" alternativo="logo" />
       </div>
       <div className="pisada d-none d-sm-block">
-        <Image urlImagen={url} ancho="50" alternativo="logo" />
+        <ImageC urlImagen={url} ancho="45" alternativo="logo" />
       </div>
       <div className="pisada d-none d-sm-block">
-        <Image urlImagen={url} ancho="50" alternativo="logo" />
+        <ImageC urlImagen={url} ancho="45" alternativo="logo" />
       </div>
       <div className="pisada">
-        <Image urlImagen={url} ancho="50" alternativo="logo" />
+        <ImageC urlImagen={url} ancho="45" alternativo="logo" />
       </div>
       <div className="pisada">
-        <Image urlImagen={url} ancho="50" alternativo="logo" />
+        <ImageC urlImagen={url} ancho="45" alternativo="logo" />
       </div>
       <div className="pisada">
-        <Image urlImagen={url} ancho="50" alternativo="logo" />
+        <ImageC urlImagen={url} ancho="45" alternativo="logo" />
       </div>
     </div>
   );

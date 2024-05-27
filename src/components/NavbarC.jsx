@@ -1,9 +1,11 @@
-import Image from "./Image";
-import Pisadas from "./Pisadas";
+import React from "react";
+import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import ImageC from "./ImageC";
+import Pisadas from "./Pisadas";
 import "../css/NavbarC.css";
 
 const NavbarC = () => {
@@ -15,8 +17,8 @@ const NavbarC = () => {
         <div className="pisadas-container"></div>
         <Navbar expand="lg" className="bg fixed-top">
           <Container fluid>
-            <Navbar.Brand href="/">
-              <Image urlImagen={url} ancho="50" alternativo="logo" />
+            <Navbar.Brand as={Link} to="/">
+              <ImageC urlImagen={url} ancho="50" alternativo="logo" />
             </Navbar.Brand>
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
@@ -26,20 +28,26 @@ const NavbarC = () => {
               <Nav className="separator d-lg-none mt-4" />
               <Nav.Link className="text-white"> </Nav.Link>
               <Nav className="me-auto">
-                <Nav.Link href="/" className="my-custom-link">
+                <Nav.Link as={Link} to="/" className="my-custom-link">
                   Inicio
                 </Nav.Link>
-                <Nav.Link href="/sobreNosotros" className="my-custom-link">
+                <Nav.Link
+                  as={Link}
+                  to="/sobreNosotros"
+                  className="my-custom-link"
+                >
                   Sobre Nosotros
                 </Nav.Link>
                 <NavDropdown title="Servicios" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="/planes">Planes</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/planes">
+                    Planes
+                  </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="/productos">
+                  <NavDropdown.Item as={Link} to="/productos">
                     Productos
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="/reservaTurnos">
+                  <NavDropdown.Item as={Link} to="/reservaTurnos">
                     Reserva de turnos
                   </NavDropdown.Item>
                 </NavDropdown>
@@ -48,10 +56,10 @@ const NavbarC = () => {
                 <Nav.Link className="text-white"> </Nav.Link>
               </Nav>
               <Nav>
-                <Nav.Link href="/login" className="my-custom-link">
+                <Nav.Link as={Link} to="/login" className="my-custom-link">
                   Iniciar Sesion
                 </Nav.Link>
-                <Nav.Link href="/registro" className="my-custom-link">
+                <Nav.Link as={Link} to="/registro" className="my-custom-link">
                   Registrarse
                 </Nav.Link>
               </Nav>

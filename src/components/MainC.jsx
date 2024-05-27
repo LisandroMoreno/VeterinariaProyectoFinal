@@ -1,67 +1,36 @@
 import React, { useState, useEffect } from "react";
-import Image from "./Image";
+import { useNavigate } from "react-router-dom";
+import ImageC from "./ImageC";
 import CardC from "./CardC";
 import Pisadas from "./Pisadas";
 import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
 import Pagination from "react-bootstrap/Pagination";
 import { Col, Container, Row } from "react-bootstrap";
-import axios from "axios";
 import clienteAxios from "../helpers/clienteAxios";
 import "../css/Carrusel.css";
 import "../css/Productos.css";
 import "../css/ApiClima.css";
 import "../css/HealthPlan.css";
+import ApiClima from "./ApiClima";
 
 const MainC = () => {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(
     "Todas las categorias"
   );
-  const [apiData, setApiData] = useState({});
-  const [state, setState] = useState("San Miguel de Tucuman");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const navigate = useNavigate();
 
   const itemsPerPage = 10; // Número de productos por página
-
-  const apiKey = `${import.meta.env.VITE_API_KEY}`;
-  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${state}&appid=${apiKey}`;
-
-  function kelvinToCelsius(kelvin) {
-    return kelvin - 273.15;
-  }
-
-  const getWeatherIconClass = (iconCode) => {
-    const iconMap = {
-      "01d": "wi-day-sunny",
-      "01n": "wi-night-clear",
-      "02d": "wi-day-cloudy",
-      "02n": "wi-night-alt-cloudy",
-      "03d": "wi-cloud",
-      "03n": "wi-cloud",
-      "04d": "wi-cloudy",
-      "04n": "wi-cloudy",
-      "09d": "wi-showers",
-      "09n": "wi-showers",
-      "10d": "wi-day-rain",
-      "10n": "wi-night-alt-rain",
-      "11d": "wi-thunderstorm",
-      "11n": "wi-thunderstorm",
-      "13d": "wi-snow",
-      "13n": "wi-snow",
-      "50d": "wi-fog",
-      "50n": "wi-fog",
-    };
-    return iconMap[iconCode] || "wi-na";
-  };
 
   const getProducts = async (categoria, page) => {
     try {
       let response;
       const skip = (page - 1) * itemsPerPage;
       const limit = itemsPerPage;
-  
+
       if (categoria === "Todas las categorias") {
         response = await clienteAxios.get("/productos", {
           params: { skip, limit, page },
@@ -71,7 +40,7 @@ const MainC = () => {
           params: { categoria, skip, limit, page },
         });
       }
-  
+
       const { products, count } = response.data;
       setProducts(products);
       setTotalPages(Math.ceil(count / itemsPerPage));
@@ -83,6 +52,7 @@ const MainC = () => {
 
   const handleCategoryClick = (categoria) => {
     setSelectedCategory(categoria);
+    getProducts(categoria, 1); // cargar productos cuando cambia la categoría
   };
 
   const filteredProducts =
@@ -98,60 +68,15 @@ const MainC = () => {
     getProducts(selectedCategory, 1);
   }, [selectedCategory]);
 
-  useEffect(() => {
-    axios
-      .get(apiUrl)
-      .then((response) => {
-        setApiData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching weather data:", error);
-      });
-  }, [state]);
+  const handleButtonClick = () => {
+    navigate("/planes");
+  };
 
   return (
     <>
-      <Container fluid>
-        <Row>
-          <Col sm="12" md="6" lg="4">
-            <div className="mt-3 mb-3">
-              <div id="weatherWrapper">
-                <div className="weatherCard">
-                  <div className="currentTemp">
-                    <span className="temp">
-                      {apiData.main &&
-                        kelvinToCelsius(apiData.main.temp).toFixed(1)}
-                      °C
-                    </span>
-                    <span className="location">{state}</span>
-                  </div>
-                  <div className="currentWeather">
-                    <span className="conditions">
-                      {apiData.weather && (
-                        <i
-                          className={`wi ${getWeatherIconClass(
-                            apiData.weather[0].icon
-                          )}`}
-                        ></i>
-                      )}
-                    </span>
-                    <div className="info">
-                      {apiData.main && (
-                        <span>
-                          {kelvinToCelsius(apiData.main.temp_min).toFixed(1)}
-                          °C /{" "}
-                          {kelvinToCelsius(apiData.main.temp_max).toFixed(1)}
-                          °C
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Col>
-        </Row>
-      </Container>
+      <div className="ClimaSearch">
+        <ApiClima />
+      </div>
 
       <div className="text-center mt-2 mb-2">
         <h2>Veterinaria Patas y Garras, un lugar para cuidar a tu mascota</h2>
@@ -163,7 +88,7 @@ const MainC = () => {
             <Carousel fade className="h-100 ">
               <Carousel.Item>
                 <div className="productH2">
-                  <Image
+                  <ImageC
                     urlImagen="https://cdn.euroinnova.edu.es/img/subidasEditor/curso-1612925686.webp"
                     alternativo="Descripción de la primera imagen"
                     ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
@@ -192,7 +117,7 @@ const MainC = () => {
               </Carousel.Item>
               <Carousel.Item>
                 <div className="productH2">
-                  <Image
+                  <ImageC
                     urlImagen="https://www.animalshealth.es/fileuploads/news/mesa-de-trabajo-11_790.jpg"
                     alternativo="Descripción de la segunda imagen"
                     ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
@@ -220,7 +145,7 @@ const MainC = () => {
               </Carousel.Item>
               <Carousel.Item>
                 <div className="productH2">
-                  <Image
+                  <ImageC
                     urlImagen="https://www.animalshealth.es/fileuploads/news/mesa-de-trabajo-11_790.jpg"
                     alternativo="Descripción de la tercera imagen"
                     ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
@@ -250,7 +175,7 @@ const MainC = () => {
           </div>
           <div className="col-lg-4">
             <div className="product-offer mb-30 productH">
-              <Image
+              <ImageC
                 className="img-fluid"
                 urlImagen="https://cdn.ready-market.com.tw/78d8bdd7/Templates/pic/Dog-Toy-1.jpg"
                 alternativo="Descripción de la imagen derecha 1"
@@ -265,7 +190,7 @@ const MainC = () => {
               </div>
             </div>
             <div className="product-offer mb-30 productH">
-              <Image
+              <ImageC
                 className="img-fluid"
                 urlImagen="https://cdn.ready-market.com.tw/78d8bdd7/Templates/pic/Dog-Toy-1.jpg"
                 alternativo="Descripción de la imagen derecha 2"
@@ -357,6 +282,7 @@ const MainC = () => {
                 key={index + 1}
                 active={index + 1 === currentPage}
                 onClick={() => getProducts(selectedCategory, index + 1)}
+                linkClassName="custom-pagination-item"
               >
                 {index + 1}
               </Pagination.Item>
@@ -374,8 +300,9 @@ const MainC = () => {
           </p>
           <Button
             variant="primary"
-            type="submit"
+            type="button"
             className="learn-more-button btnForm"
+            onClick={handleButtonClick}
           >
             Saber más
           </Button>
@@ -390,7 +317,7 @@ const MainC = () => {
           <div className="row d-flex text-center">
             <div className="col-lg-4 col-md-6 mb-4">
               <div className="card-size">
-                <Image
+                <ImageC
                   className="card-img-top"
                   urlImagen="https://1000logos.net/wp-content/uploads/2020/08/Royal_Canin_logo_PNG1.png"
                   alternativo="logo de Royal Canin"
@@ -400,7 +327,7 @@ const MainC = () => {
             </div>
             <div className="col-lg-4 col-md-6 mb-4">
               <div className="card-size">
-                <Image
+                <ImageC
                   className="card-img-top"
                   urlImagen="https://1000logos.net/wp-content/uploads/2020/09/Pedigree_logo_PNG7.png"
                   alternativo="logo de Pedigree"
@@ -410,7 +337,7 @@ const MainC = () => {
             </div>
             <div className="col-lg-4 col-md-6 mb-4 mt-4">
               <div className="card-size">
-                <Image
+                <ImageC
                   className="card-img-top"
                   urlImagen="https://1000logos.net/wp-content/uploads/2020/09/Purina_logo_PNG3.png"
                   alternativo="logo de Purina"
@@ -420,7 +347,7 @@ const MainC = () => {
             </div>
             <div className="col-lg-4 col-md-6 mb-3">
               <div className="card-size">
-                <Image
+                <ImageC
                   className="card-img-top"
                   urlImagen="https://1000logos.net/wp-content/uploads/2023/10/Eukanuba_logo_PNG5.png"
                   alternativo="logo de Eukanuba"
@@ -430,7 +357,7 @@ const MainC = () => {
             </div>
             <div className="col-lg-4 col-md-6 mb-3">
               <div className="card-size">
-                <Image
+                <ImageC
                   className="card-img-top"
                   urlImagen="https://1000logos.net/wp-content/uploads/2021/03/Whiskas_logo_PNG7.png"
                   alternativo="logo de Whiskas"
@@ -440,7 +367,7 @@ const MainC = () => {
             </div>
             <div className="col-lg-4 col-md-6 mb-3">
               <div className="card-size">
-                <Image
+                <ImageC
                   className="card-img-top"
                   urlImagen="https://1000logos.net/wp-content/uploads/2020/09/Friskies_logo_PNG7.png"
                   alternativo="logo de Friskies"

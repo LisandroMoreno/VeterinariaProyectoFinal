@@ -58,6 +58,7 @@
   border-radius: 30px;
   transition: background-color 0.3s;
   align-self: center; /* Centrar el botón horizontalmente */
+  text-decoration: none;
 }
 
 .card-vet .btn-primary:hover {

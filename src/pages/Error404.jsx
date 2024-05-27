@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import "../css/Error404.css";
 
 const Error404 = () => {
@@ -8,32 +8,28 @@ const Error404 = () => {
   };
 
   return (
-    <> 
-    <div className="error-container">
-      <div className="img-error404">
-        <h1>404</h1>
-        <div className="linea"></div>
-        <div>
-          <h2>¡ENCONTRASTE UN PERRITO!</h2>
-        </div>
-        <div>
-          <h3 className="mbT">
-            <button
-              className="w-100 btnForm mt-3" variant="primary"
+    <>
+      <div className="error-container">
+        <div className="img-error404">
+          <h1>404</h1>
+          <div className="linea"></div>
+          <div>
+            <h2>¡OOPS! La pagina no está disponible en estos momentos, disculpe las molestias</h2>
+          </div>
+          <div className="volverBTN">
+            <button 
+              type="button"
+              className="btnForm"
               onClick={atras}
             >
-              CLICKEA AQUÍ
+              Volver
             </button>
-            PARA ADOPTARLO
-          </h3>
-        </div>
-        <div>
-        <button className="w-100 btnForm mt-3" variant="primary" onClick={atras}>Volver</button>
+          </div>
         </div>
       </div>
-    </div> 
     </>
   );
-}
+};
+
 
 export default Error404;
