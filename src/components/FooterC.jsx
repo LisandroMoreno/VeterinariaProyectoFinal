@@ -20,7 +20,7 @@ const FooterC = () => {
               <NavLink to="/" className="text-decoration-none">
                 <h6 className="text-white footer-link">Inicio</h6>
               </NavLink>
-              <NavLink to="/sobre-nosotros" className="text-decoration-none">
+              <NavLink to="/sobreNosotros" className="text-decoration-none">
                 <h6 className="text-white footer-link">Sobre Nosotros</h6>
               </NavLink>
               <NavLink to="/contacto" className="text-decoration-none">
