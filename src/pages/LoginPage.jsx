@@ -109,7 +109,7 @@ const LoginPage = () => {
               </Form.Group>
 
               <p className="text-center ">
-                <a className="text-black" href="/RecuperarContraseña">
+                <a className="text-black" href="/*">
                   ¿Olvidaste tu contraseña?
                 </a>{" "}
               </p>
