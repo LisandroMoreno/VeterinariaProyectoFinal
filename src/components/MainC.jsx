@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import ImageC from "./ImageC";
 import CardC from "./CardC";
 import Pisadas from "./Pisadas";
@@ -16,7 +16,9 @@ import ApiClima from "./ApiClima";
 
 const MainC = () => {
   const [products, setProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("Todas las categorias");
+  const [selectedCategory, setSelectedCategory] = useState(
+    "Todas las categorias"
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
@@ -53,24 +55,27 @@ const MainC = () => {
     getProducts(categoria, 1); // cargar productos cuando cambia la categoría
   };
 
-  const filteredProducts = selectedCategory === "Todas las categorias"
-    ? products
-    : products.filter((product) =>
-        product.categoria.toLowerCase().includes(selectedCategory.toLowerCase())
-      );
+  const filteredProducts =
+    selectedCategory === "Todas las categorias"
+      ? products
+      : products.filter((product) =>
+          product.categoria
+            .toLowerCase()
+            .includes(selectedCategory.toLowerCase())
+        );
 
   useEffect(() => {
     getProducts(selectedCategory, 1);
   }, [selectedCategory]);
 
   const handleButtonClick = () => {
-    navigate('/planes');
+    navigate("/planes");
   };
 
   return (
     <>
       <div className="ClimaSearch">
-        <ApiClima/>
+        <ApiClima />
       </div>
 
       <div className="text-center mt-2 mb-2">
