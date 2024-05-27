@@ -40,6 +40,11 @@ const RegisterPage = () => {
     actions.setSubmitting(false);
   };
 
+  const handleGmailLogin = () => {
+    // Redirigir a una página inexistente para mostrar el error 404
+    location.href = "/*";
+  };
+
   return (
     <div className="formImg">
       <div className="d-flex justify-content-center my-5 ">
@@ -134,16 +139,16 @@ const RegisterPage = () => {
                 </p>
               </Form.Group>
 
-              <p>
+              <p className="text-center">
                 Si tienes una cuenta haz click <a href="/login">aquí</a>
               </p>
 
               <div>
                 <Button
                   variant="primary"
-                  type="submit"
                   className="w-100 btnForm"
-                  disabled={isSubmitting}>
+                  disabled={isSubmitting}
+                  onClick={handleGmailLogin}>
                   Registrarse con Gmail
                 </Button>
               </div>

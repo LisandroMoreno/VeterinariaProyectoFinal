@@ -47,6 +47,11 @@ const LoginPage = () => {
     }
   };
 
+  const handleGmailLogin = () => {
+    // Redirigir a una página inexistente para mostrar el error 404
+    location.href = "/*";
+  };
+
   return (
     <div className="formImg">
       <div className="d-flex justify-content-center my-5 ">
@@ -109,16 +114,16 @@ const LoginPage = () => {
                 </a>{" "}
               </p>
 
-              <p>
+              <p className="text-center">
                 Si no tienes una cuenta haz click <a href="/registro">aquí</a>
               </p>
 
               <div>
                 <Button
                   variant="primary"
-                  type="submit"
                   className="w-100 btnForm"
-                  disabled={isSubmitting}>
+                  disabled={isSubmitting}
+                  onClick={handleGmailLogin}>
                   Ingresar con Gmail
                 </Button>
               </div>
