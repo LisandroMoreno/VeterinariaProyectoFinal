@@ -66,3 +66,12 @@
   background-color: 3992cdec;
   color: white;
 }
+
+.icono-favorito {
+  color: black;
+  transition: color 0.3s ease;
+}
+
+.icono-favorito:hover {
+  color: red;
+}
