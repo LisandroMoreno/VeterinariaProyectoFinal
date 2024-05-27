@@ -1,4 +1,4 @@
-import Image from "./Image";
+import ImageC from "./ImageC";
 import Pisadas from "./Pisadas";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -16,7 +16,7 @@ const NavbarC = () => {
         <Navbar expand="lg" className="bg fixed-top">
           <Container fluid>
             <Navbar.Brand href="/">
-              <Image urlImagen={url} ancho="50" alternativo="logo" />
+              <ImageC urlImagen={url} ancho="50" alternativo="logo" />
             </Navbar.Brand>
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
