@@ -3,14 +3,32 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { FaWhatsapp, FaFacebook, FaInstagram } from "react-icons/fa";
 import "../css/Contacto.css";
 import { titlePage } from "../helpers/titlePages";
+import { Formik } from 'formik';
+import * as yup from 'yup';
+
+const validationSchema = yup.object().shape({
+  nombre: yup.string().required('Completa el campo vacío').min(8, "Mínimo 8 caracteres")
+  .max(15, "Máximo 15 caracteres")
+  .matches(
+    /^[a-zA-Z]+$/,
+    "El nombre de usuario solo puede contener letras."
+  ),
+  apellido: yup.string().required('Completa el campo vacío').min(8, "Mínimo 8 caracteres")
+  .max(15, "Máximo 15 caracteres")
+  .matches(
+    /^[a-zA-Z]+$/,
+    "El nombre de usuario solo puede contener letras."
+  ),
+  email: yup.string().email("Formato de email incorrecto. Por ejemplo: usuario@gmail.com").required('Completa el campo vacío'),
+  mensaje: yup.string().required('Completa el campo vacío').min(10, 'Mínimo 10 caracteres'),
+});
 
 const Contacto = () => {
   titlePage("Contacto");
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries());
-    console.log(data);
+
+  const handleSubmit = (values, actions) => {
+    console.log(values);
+    actions.setSubmitting(false);
     // Aquí puedes manejar el envío del formulario, como enviarlo a un servidor
   };
 
@@ -19,57 +37,87 @@ const Contacto = () => {
       <Row>
         <Col md={6} className="form-container">
           <h2>Contáctanos</h2>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
-              <Form.Label>Nombre</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingresa tu nombre"
-                name="nombre"
-                required
-              />
-            </Form.Group>
+          <Formik
+            initialValues={{ nombre: '', apellido: '', email: '', mensaje: '' }}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ values, errors, touched, handleChange, handleSubmit, isSubmitting }) => (
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Nombre</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ingresa tu nombre"
+                    name="nombre"
+                    value={values.nombre}
+                    onChange={handleChange}
+                    isInvalid={touched.nombre && !!errors.nombre}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.nombre}
+                  </Form.Control.Feedback>
+                </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Form.Label>Apellido</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingresa tu apellido"
-                name="apellido"
-                required
-              />
-            </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Apellido</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ingresa tu apellido"
+                    name="apellido"
+                    value={values.apellido}
+                    onChange={handleChange}
+                    isInvalid={touched.apellido && !!errors.apellido}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.apellido}
+                  </Form.Control.Feedback>
+                </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Form.Label>Correo Electrónico</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Ingresa tu correo electrónico"
-                name="email"
-                required
-              />
-            </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Correo Electrónico</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Ingresa tu correo electrónico"
+                    name="email"
+                    value={values.email}
+                    onChange={handleChange}
+                    isInvalid={touched.email && !!errors.email}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.email}
+                  </Form.Control.Feedback>
+                </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Form.Label>Mensaje</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                placeholder="Escribe tu mensaje"
-                name="mensaje"
-                required
-              />
-            </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Mensaje</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    placeholder="Escribe tu mensaje"
+                    name="mensaje"
+                    value={values.mensaje}
+                    onChange={handleChange}
+                    isInvalid={touched.mensaje && !!errors.mensaje}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.mensaje}
+                  </Form.Control.Feedback>
+                </Form.Group>
 
-            <div className="button-container">
-              <Button
-                variant="primary"
-                type="submit"
-                className="button-custom mt-3">
-                Enviar
-              </Button>
-            </div>
-          </Form>
+                <div className="button-container">
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    className="button-custom mt-3"
+                    disabled={isSubmitting}
+                  >
+                    Enviar
+                  </Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
         </Col>
 
         <Col md={6} className="info-container">
@@ -97,7 +145,8 @@ const Contacto = () => {
               style={{ border: 0 }}
               allowFullScreen=""
               aria-hidden="false"
-              tabIndex="0"></iframe>
+              tabIndex="0"
+            ></iframe>
           </div>
         </Col>
       </Row>
