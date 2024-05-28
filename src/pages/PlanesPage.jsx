@@ -3,14 +3,33 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "../css/PlanesPage.css";
 import { titlePage } from "../helpers/titlePages";
+import { Formik } from "formik";
+import * as yup from "yup";
+
+const validationSchema = yup.object().shape({
+  nombre: yup
+    .string()
+    .required("Completa el campo vacío")
+    .min(8, "Mínimo 8 caracteres")
+    .max(15, "Máximo 15 caracteres")
+    .matches(/^[a-zA-Z]+$/, "El nombre de usuario solo puede contener letras."),
+  email: yup
+    .string()
+    .email("Formato de email incorrecto. Por ejemplo: usuario@gmail.com")
+    .required("Completa el campo vacío"),
+  asunto: yup.string().required("Selecciona un asunto"),
+  mensaje: yup
+    .string()
+    .required("Completa el campo vacío")
+    .min(10, "Mínimo 10 caracteres"),
+});
 
 const PlanesPage = () => {
   titlePage("Planes");
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries());
-    console.log(data);
+
+  const handleSubmit = (values, actions) => {
+    console.log(values);
+    actions.setSubmitting(false);
     // Aquí puedes manejar el envío del formulario, como enviarlo a un servidor
   };
 
@@ -28,7 +47,7 @@ const PlanesPage = () => {
             </div>
             <h5 className="NombrePlan">
               <strong>Plan “Primeros Pasos”</strong>
-              <h4>(Mascotas de 0 a 5 años)</h4>
+              <p>(Mascotas de 0 a 5 años)</p>
             </h5>
 
             <div className="PlanDescripcion">
@@ -36,9 +55,9 @@ const PlanesPage = () => {
                 ● Consultas Preventivas: Exámenes médicos regulares para
                 detectar problemas de salud temprano. <br /> <br />
                 ● Vacunas y Desparasitación: Protege a las mascotas jóvenes
-                contra enfermedades y parásitos. <br /> <br /> ● Asesoramiento
-                Nutricional: Recomendaciones personalizadas para una dieta
-                saludable. <br /> <br />
+                contra enfermedades y parásitos. <br /> <br />
+                ● Asesoramiento Nutricional: Recomendaciones personalizadas para
+                una dieta saludable. <br /> <br />
                 ● Descuentos en Productos: Ofertas especiales en alimentos,
                 juguetes y accesorios. <br /> <br />
                 Costo Mensual: $xxxx
@@ -60,7 +79,7 @@ const PlanesPage = () => {
             <h5 className="NombrePlan">
               <strong>
                 Plan “Madurando”
-                <h4>(Mascotas de 5 a 10 años)</h4>
+                <p>(Mascotas de 5 a 10 años)</p>
               </strong>
             </h5>
             <div className="PlanDescripcion">
@@ -92,7 +111,7 @@ const PlanesPage = () => {
             <h5 className="NombrePlan">
               <strong>
                 Plan “Adultos”
-                <h4>(Mascotas de más de 10 años)</h4>
+                <p>(Mascotas de más de 10 años)</p>
               </strong>
             </h5>
             <div className="PlanDescripcion">
@@ -117,57 +136,97 @@ const PlanesPage = () => {
 
       <div className="formulario-container">
         <h2>Envianos tu consulta</h2>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3">
-            <Form.Label>Nombre</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Ingresa tu nombre"
-              name="nombre"
-              required
-            />
-          </Form.Group>
+        <Formik
+          initialValues={{ nombre: "", email: "", asunto: "", mensaje: "" }}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleSubmit,
+            isSubmitting,
+          }) => (
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3">
+                <Form.Label>Nombre</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ingresa tu nombre"
+                  name="nombre"
+                  value={values.nombre}
+                  onChange={handleChange}
+                  isInvalid={touched.nombre && !!errors.nombre}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.nombre}
+                </Form.Control.Feedback>
+              </Form.Group>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Correo Electrónico</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Ingresa tu correo electrónico"
-              name="email"
-              required
-            />
-          </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Correo Electrónico</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Ingresa tu correo electrónico"
+                  name="email"
+                  value={values.email}
+                  onChange={handleChange}
+                  isInvalid={touched.email && !!errors.email}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.email}
+                </Form.Control.Feedback>
+              </Form.Group>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Asunto</Form.Label>
-            <Form.Select name="asunto" required>
-              <option value="">Selecciona un asunto</option>
-              <option value="Primeros Pasos">Plan "Primeros pasos"</option>
-              <option value="Madurando">Plan "Madurando"</option>
-              <option value="Adultos">Plan "Adultos"</option>
-            </Form.Select>
-          </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Asunto</Form.Label>
+                <Form.Select
+                  name="asunto"
+                  value={values.asunto}
+                  onChange={handleChange}
+                  isInvalid={touched.asunto && !!errors.asunto}
+                >
+                  <option value="">Selecciona un asunto</option>
+                  <option value="Primeros Pasos">Plan "Primeros pasos"</option>
+                  <option value="Madurando">Plan "Madurando"</option>
+                  <option value="Adultos">Plan "Adultos"</option>
+                </Form.Select>
+                <Form.Control.Feedback type="invalid">
+                  {errors.asunto}
+                </Form.Control.Feedback>
+              </Form.Group>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Mensaje</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={3}
-              placeholder="Escribe tu mensaje"
-              name="mensaje"
-              required
-            />
-          </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Mensaje</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  placeholder="Escribe tu mensaje"
+                  name="mensaje"
+                  value={values.mensaje}
+                  onChange={handleChange}
+                  isInvalid={touched.mensaje && !!errors.mensaje}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.mensaje}
+                </Form.Control.Feedback>
+              </Form.Group>
 
-          <div className="button-container">
-            <Button
-              variant="primary"
-              type="submit"
-              className="button-custom mt-3">
-              Enviar
-            </Button>
-          </div>
-        </Form>
+              <div className="button-container">
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="button-custom mt-3"
+                  disabled={isSubmitting}
+                >
+                  Enviar
+                </Button>
+              </div>
+            </Form>
+          )}
+        </Formik>
       </div>
     </>
   );
