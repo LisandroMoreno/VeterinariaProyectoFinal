@@ -2,8 +2,10 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "../css/PlanesPage.css";
+import { titlePage } from "../helpers/titlePages";
 
 const PlanesPage = () => {
+  titlePage("Planes");
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -63,7 +65,8 @@ const PlanesPage = () => {
             </h5>
             <div className="PlanDescripcion">
               <p className="Descripcion">
-                ● Vacunas y Desparasitación: Protege a las mascotas jóvenes contra enfermedades y parásitos. <br /> <br />
+                ● Vacunas y Desparasitación: Protege a las mascotas jóvenes
+                contra enfermedades y parásitos. <br /> <br />
                 ● Control Geriátrico: Evaluaciones específicas para detectar
                 problemas relacionados con la edad. <br /> <br />
                 ● Tratamientos Crónicos: Manejo de enfermedades crónicas como la
@@ -94,7 +97,8 @@ const PlanesPage = () => {
             </h5>
             <div className="PlanDescripcion">
               <p className="Descripcion">
-                ● Vacunas y Desparasitación: Protege a las mascotas jóvenes contra enfermedades y parásitos. <br /> <br />
+                ● Vacunas y Desparasitación: Protege a las mascotas jóvenes
+                contra enfermedades y parásitos. <br /> <br />
                 ● Atención Especializada: Enfoque en la salud de órganos vitales
                 y prevención de enfermedades. <br /> <br />
                 ● Análisis Clínicos Regulares: Monitoreo de la función renal,
@@ -116,12 +120,22 @@ const PlanesPage = () => {
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
             <Form.Label>Nombre</Form.Label>
-            <Form.Control type="text" placeholder="Ingresa tu nombre" name="nombre" required />
+            <Form.Control
+              type="text"
+              placeholder="Ingresa tu nombre"
+              name="nombre"
+              required
+            />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>Correo Electrónico</Form.Label>
-            <Form.Control type="email" placeholder="Ingresa tu correo electrónico" name="email" required />
+            <Form.Control
+              type="email"
+              placeholder="Ingresa tu correo electrónico"
+              name="email"
+              required
+            />
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -136,11 +150,20 @@ const PlanesPage = () => {
 
           <Form.Group className="mb-3">
             <Form.Label>Mensaje</Form.Label>
-            <Form.Control as="textarea" rows={3} placeholder="Escribe tu mensaje" name="mensaje" required />
+            <Form.Control
+              as="textarea"
+              rows={3}
+              placeholder="Escribe tu mensaje"
+              name="mensaje"
+              required
+            />
           </Form.Group>
 
           <div className="button-container">
-            <Button variant="primary" type="submit" className="button-custom mt-3">
+            <Button
+              variant="primary"
+              type="submit"
+              className="button-custom mt-3">
               Enviar
             </Button>
           </div>
