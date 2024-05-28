@@ -2,8 +2,10 @@ import React from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { FaWhatsapp, FaFacebook, FaInstagram } from "react-icons/fa";
 import "../css/Contacto.css";
+import { titlePage } from "../helpers/titlePages";
 
 const Contacto = () => {
+  titlePage("Contacto");
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -20,26 +22,50 @@ const Contacto = () => {
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Label>Nombre</Form.Label>
-              <Form.Control type="text" placeholder="Ingresa tu nombre" name="nombre" required />
+              <Form.Control
+                type="text"
+                placeholder="Ingresa tu nombre"
+                name="nombre"
+                required
+              />
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>Apellido</Form.Label>
-              <Form.Control type="text" placeholder="Ingresa tu apellido" name="apellido" required />
+              <Form.Control
+                type="text"
+                placeholder="Ingresa tu apellido"
+                name="apellido"
+                required
+              />
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>Correo Electrónico</Form.Label>
-              <Form.Control type="email" placeholder="Ingresa tu correo electrónico" name="email" required />
+              <Form.Control
+                type="email"
+                placeholder="Ingresa tu correo electrónico"
+                name="email"
+                required
+              />
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>Mensaje</Form.Label>
-              <Form.Control as="textarea" rows={3} placeholder="Escribe tu mensaje" name="mensaje" required />
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="Escribe tu mensaje"
+                name="mensaje"
+                required
+              />
             </Form.Group>
 
             <div className="button-container">
-              <Button variant="primary" type="submit" className="button-custom mt-3">
+              <Button
+                variant="primary"
+                type="submit"
+                className="button-custom mt-3">
                 Enviar
               </Button>
             </div>
@@ -48,15 +74,15 @@ const Contacto = () => {
 
         <Col md={6} className="info-container">
           <div className="social-icons">
-            <a href="/Error404.jsx" className="social-item">
+            <a href="/*" className="social-item">
               <FaWhatsapp size={30} className="icon whatsapp-icon" />
               <span className="social-text">38145648789</span>
             </a>
-            <a href="/Error404.jsx" className="social-item">
+            <a href="/*" className="social-item">
               <FaInstagram size={30} className="icon instagram-icon" />
               <span className="social-text">@PawsAndClaws</span>
             </a>
-            <a href="/Error404.jsx" className="social-item">
+            <a href="/*" className="social-item">
               <FaFacebook size={30} className="icon facebook-icon" />
               <span className="social-text">@PawsAndClaws</span>
             </a>
@@ -71,8 +97,7 @@ const Contacto = () => {
               style={{ border: 0 }}
               allowFullScreen=""
               aria-hidden="false"
-              tabIndex="0"
-            ></iframe>
+              tabIndex="0"></iframe>
           </div>
         </Col>
       </Row>

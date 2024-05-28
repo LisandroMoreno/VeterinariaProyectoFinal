@@ -1,7 +1,9 @@
 import React from "react";
 import "../css/SobreNosotros.css";
+import { titlePage } from "../helpers/titlePages";
 
 const SobreNosotros = () => {
+  titlePage("Sobre Nosotros")
   return (
     <div>
       <div className="video-container">
