@@ -1,80 +1,76 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/weather-icons/1.2/css/weather-icons.min.css);
 
 #weatherWrapper {
-  width: 30%; /* Ocupa el 10% del contenedor principal */
-  max-width: 250px; /* Ancho máximo para pantallas grandes */
+  width: 30%;
+  max-width: 250px;
   display: flex;
-  flex-direction: column; /* Alinear elementos en columna */
-  align-items: center; /* Centrar elementos horizontalmente */
+  flex-direction: column;
+  align-items: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  margin: 0 3%; /* Ajusta el margen según tus necesidades */
+  margin: 0 auto; /* Centramos el contenedor */
   box-sizing: border-box;
   transition: all 0.3s ease;
 }
 
-
 .weatherCard {
-  width: 100%; /* Ocupar todo el ancho disponible */
+  width: 100%;
   display: flex;
-  flex-direction: column; /* Alinear elementos en columna */
-  align-items: center; /* Centrar elementos horizontalmente */
-  transition: all 0.3s ease;  /* Transición suave para cambios */
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
 }
 
 .currentTemp,
 .currentWeather {
   width: 100%;
   display: flex;
-  justify-content: center; /* Centrar horizontalmente */
-  align-items: center; /* Centrar verticalmente */
+  justify-content: center;
+  align-items: center;
   box-sizing: border-box;
-  padding: 5px; /* Reducir padding */
+  padding: 5px;
   height: 33px;
 }
 
 .currentTemp {
   background: #272727;
   color: #2ab2ea;
-  border-radius: 10px 10px 0 0; /* Redondear bordes superiores */
+  border-radius: 10px 10px 0 0;
   display: flex;
-  flex-direction: row; /* Alinear elementos en fila */
-  justify-content: center; /* Centrar elementos horizontalmente */
-  align-items: center; /* Centrar elementos verticalmente */
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
-
 .temp {
-  font-size: 24px; /* Reducir tamaño de la fuente */
+  font-size: 24px;
   font-weight: 700;
   margin: 0;
-  margin-right: 5px; /* Añadir margen derecho para separar de la ubicación */
+  margin-right: 5px;
 }
 
 .location {
   color: #2ab2ea;
   font-weight: 700;
-  font-size: 12px; /* Reducir tamaño de la fuente */
+  font-size: 12px;
   margin: 0;
 }
 
 .currentWeather {
   background: #f1f1f1;
   color: #272727;
-  border-radius: 0 0 10px 10px; /* Redondear bordes inferiores */
-  display: flex; /* Asegurarse de que los elementos se alineen correctamente */
-  justify-content: center; /* Centrar elementos horizontalmente */
-  align-items: center; /* Centrar elementos verticalmente */
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
 
 .conditions {
   font-family: weathericons;
-  font-size: 24px; /* Reducir tamaño de la fuente */
+  font-size: 24px;
   text-align: center;
   color: #1ab2f3;
 }
-
 
 .info {
   width: 100%;
@@ -83,72 +79,76 @@
   color: #272727;
   text-align: center;
   box-sizing: border-box;
-  /* padding: 5px; */ /* Reducir padding */
-  font-size: 17px; /* Reducir tamaño de la fuente */
-  /* margin: 20px; */
+  font-size: 17px;
 }
-
 
 /* Media queries para pantallas más pequeñas */
 @media only screen and (max-width: 650px) {
   #weatherWrapper {
-    width: 30%; /* Ajusta el ancho para pantallas más pequeñas */
-    margin: 0 15px; /* Reducir el margen en pantallas más pequeñas */
-    
+    width: 80%; /* Ajusta el ancho para pantallas más pequeñas */
+    max-width: none;
   }
- 
+
+  .temp {
+    font-size: 20px;
+  }
+
+  .location {
+    font-size: 11px;
+  }
+
+  .conditions {
+    font-size: 22px;
+  }
+
   .info {
-    font-size: 13px; /* Reducir tamaño de la fuente en pantallas muy pequeñas */
+    font-size: 15px;
   }
 }
 
 @media only screen and (max-width: 450px) {
   #weatherWrapper {
-    width: 35%; /* Ajusta el ancho para pantallas muy pequeñas */
-    margin: 0 13px; /* Reducir el margen en pantallas muy pequeñas */
+    width: 90%;
   }
 
   .temp {
-    font-size: 20px; /* Reducir tamaño de la fuente en pantallas muy pequeñas */
+    font-size: 18px;
   }
 
   .location {
-    font-size: 13px; /* Reducir tamaño de la fuente en pantallas muy pequeñas */
+    font-size: 10px;
   }
 
   .conditions {
-    font-size: 25px; /* Reducir tamaño de la fuente en pantallas muy pequeñas */
+    font-size: 20px;
   }
 
   .info {
-    font-size: 13px; /* Reducir tamaño de la fuente en pantallas muy pequeñas */
+    font-size: 14px;
   }
-
+}
 
 @media only screen and (max-width: 350px) {
   #weatherWrapper {
-    width: 50%; /* Ajusta el ancho para pantallas muy pequeñas */
-    margin: 0 2px; /* Reducir el margen en pantallas muy pequeñas */
+    width: 100%;
   }
 
   .temp {
-    font-size: 20px; /* Reducir tamaño de la fuente en pantallas muy pequeñas */
+    font-size: 16px;
   }
 
   .location {
-    font-size: 10px; /* Reducir tamaño de la fuente en pantallas muy pequeñas */
+    font-size: 9px;
   }
 
   .conditions {
-    font-size: 20px; /* Reducir tamaño de la fuente en pantallas muy pequeñas */
+    font-size: 18px;
   }
 
   .info {
-    font-size: 10px; /* Reducir tamaño de la fuente en pantallas muy pequeñas */
+    font-size: 12px;
   }
- }
 }
-
 
 /* SEARCH */
 
@@ -160,8 +160,7 @@
   border-radius: 25px; /* Bordes más redondeados para un diseño moderno */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
   max-width: 600px; /* Ajusta este valor según tus necesidades */
-  width: 100%;
-  margin: 20px auto; /* Centra el contenedor horizontalmente y añade margen superior e inferior */
+  width: 100%; /* Centra el contenedor horizontalmente y añade margen superior e inferior */
   box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
 }
 
@@ -175,7 +174,7 @@
 }
 
 .search-button {
-  background-color: #09ff00;
+  background-color: #3992cdec;
   border: none; /* Eliminar el borde */
   color: white;
   padding: 10px 20px;
@@ -185,7 +184,7 @@
 }
 
 .search-button:hover {
-  background-color: #0056b3;
+  background-color: black;
 }
 
 /* Media queries para pantallas más pequeñas */
