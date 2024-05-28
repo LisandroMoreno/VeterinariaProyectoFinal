@@ -13,8 +13,6 @@ import clienteAxios from "../helpers/clienteAxios";
 import ImageC from "../components/ImageC";
 import "../css/DetalleProducto.css";
 
-titlePage("Detalle de Producto");
-
 const DetalleProducto = () => {
   const params = useParams();
   const [product, setProduct] = useState({});
@@ -26,6 +24,7 @@ const DetalleProducto = () => {
       const response = await clienteAxios.get(`/productos/${params.id}`);
       setProduct(response.data.product);
       setPrecioTotal(response.data.product.precio);
+      titlePage(`${response.data.product.titulo}`);
     } catch (error) {
       console.error("Error al obtener el producto:", error);
     }
@@ -64,7 +63,7 @@ const DetalleProducto = () => {
         </Col>
         <Col xs="12" md="6">
           <div className="text-end mt-4">
-            <a href="">
+            <a href="" onClick={agregarFavoritos}>
               <i className="fa-solid fa-heart fa-2x icono-favorito"></i>
             </a>
           </div>
