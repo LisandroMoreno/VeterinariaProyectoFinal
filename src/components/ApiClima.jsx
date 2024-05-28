@@ -4,7 +4,6 @@ import { Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
 import "../css/ApiClima.css";
 
-
 const ApiClima = () => {
   const [currentTemp, setCurrentTemp] = useState(null);
   const [minTemp, setMinTemp] = useState(null);
@@ -86,7 +85,7 @@ const ApiClima = () => {
     <>
       <Container>
         <Row>
-          <Col sm="6" md="6" lg="6">
+          <Col sm="12" md="6" className="mt-3 mb-3">
             <div id="weatherWrapper">
               <div className="weatherCard">
                 <div className="currentTemp">
@@ -105,7 +104,6 @@ const ApiClima = () => {
                   </span>
                   <div className="info">
                     <span>
-                      {" "}
                       {minTemp}°C / {maxTemp}°C
                     </span>
                   </div>
@@ -113,8 +111,8 @@ const ApiClima = () => {
               </div>
             </div>
           </Col>
-          <Col sm="6" md="6" lg="6">
-            <div className="search-container">
+          <Col sm="12" md="6">
+            <div className="search-container mt-3 mb-3">
               <input
                 type="text"
                 className="search-input"
