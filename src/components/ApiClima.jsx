@@ -4,12 +4,13 @@ import { Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
 import "../css/ApiClima.css";
 
-const ApiClima = () => {
+const ApiClima = ({ onSearch }) => {
   const [currentTemp, setCurrentTemp] = useState(null);
   const [minTemp, setMinTemp] = useState(null);
   const [maxTemp, setMaxTemp] = useState(null);
   const [weatherIcon, setWeatherIcon] = useState(null);
   const [state, setState] = useState("San Miguel de Tucuman");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const apiKey = "232e32153bfe7c18c89ebc060432d510";
   const currentWeatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${state}&appid=${apiKey}`;
@@ -81,6 +82,14 @@ const ApiClima = () => {
       });
   }, [state]);
 
+  const handleSearchChange = (e) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+    if (onSearch) {
+      onSearch(term);
+    }
+  };
+
   return (
     <>
       <Container>
@@ -117,8 +126,9 @@ const ApiClima = () => {
                 type="text"
                 className="search-input"
                 placeholder="Buscar..."
+                value={searchTerm}
+                onChange={handleSearchChange}
               />
-              <button className="search-button">Buscar</button>
             </div>
           </Col>
         </Row>
