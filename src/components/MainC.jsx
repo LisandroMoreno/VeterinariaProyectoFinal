@@ -21,6 +21,7 @@ const MainC = () => {
   );
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
   const navigate = useNavigate();
 
   const itemsPerPage = 10; // Número de productos por página
@@ -55,18 +56,31 @@ const MainC = () => {
     getProducts(categoria, 1); // cargar productos cuando cambia la categoría
   };
 
-  const filteredProducts =
-    selectedCategory === "Todas las categorias"
-      ? products
-      : products.filter((product) =>
-          product.categoria
-            .toLowerCase()
-            .includes(selectedCategory.toLowerCase())
-        );
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+  };
+
+  const filteredProducts = products.filter((product) => {
+    const matchesCategory =
+      selectedCategory === "Todas las categorias" ||
+      product.categoria.toLowerCase().includes(selectedCategory.toLowerCase());
+    const matchesSearchTerm = product.titulo
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearchTerm;
+  });
 
   useEffect(() => {
     getProducts(selectedCategory, 1);
   }, [selectedCategory]);
+
+  useEffect(() => {
+    const fetchFilteredProducts = async () => {
+      await getProducts(selectedCategory, currentPage);
+    };
+
+    fetchFilteredProducts();
+  }, [searchTerm]);
 
   const handleButtonClick = () => {
     navigate("/planes");
@@ -75,7 +89,7 @@ const MainC = () => {
   return (
     <>
       <div className="ClimaSearch">
-        <ApiClima />
+        <ApiClima onSearch={handleSearch} />
       </div>
 
       <div className="text-center mt-2 mb-2">
@@ -189,10 +203,10 @@ const MainC = () => {
                 </a>
               </div>
             </div>
-            <div className="product-offer mb-30 productH">
+            <div className="product-offer productH">
               <ImageC
                 className="img-fluid"
-                urlImagen="https://cdn.ready-market.com.tw/78d8bdd7/Templates/pic/Dog-Toy-1.jpg"
+                urlImagen="https://cdn.ready-market.com.tw/78d8bdd7/Templates/pic/Cat-Toy-1.jpg"
                 alternativo="Descripción de la imagen derecha 2"
                 ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
               />
@@ -208,19 +222,8 @@ const MainC = () => {
         </div>
       </div>
 
-      <div>
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-12">
-              <h3 className="text-center">
-                <Pisadas />
-                PetMarket: Te ofrecemos nuestros productos para el cuidado y
-                bienestar de tu mascota
-              </h3>
-            </div>
-          </div>
-        </div>
-        <div className="container-fluid mb-30 mt-30 bg-btn">
+      <div className="container mt-5 text-center">
+        <div className="product-filter-container">
           <div className="row d-flex justify-content-center">
             <div className="col-12 col-md-2 mtButton mb-30 d-flex justify-content-center">
               <Button

@@ -155,6 +155,7 @@
 .search-container {
   display: flex;
   align-items: center;
+  position: relative;
   background-color: #f8f8f8; /* Color de fondo más claro para un aspecto limpio */
   padding: 8px; /* Reducir padding para un diseño más compacto */
   border-radius: 25px; /* Bordes más redondeados para un diseño moderno */
@@ -187,6 +188,7 @@
   background-color: black;
 }
 
+
 /* Media queries para pantallas más pequeñas */
 @media (max-width: 400px) {
   .search-container {
@@ -203,3 +205,4 @@
     padding: 8px 15px; /* Reducir padding en pantallas más pequeñas */
   }
 }
+
