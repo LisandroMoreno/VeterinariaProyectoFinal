@@ -69,7 +69,6 @@ const RegisterPage = () => {
   };
 
   const handleGmailLogin = () => {
-    // Redirigir a una página inexistente para mostrar el error 404
     location.href = "/*";
   };
 
