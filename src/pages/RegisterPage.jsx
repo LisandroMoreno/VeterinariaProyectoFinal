@@ -1,13 +1,41 @@
 import { titlePage } from "../helpers/titlePages";
 import { Formik } from "formik";
+import * as yup from "yup";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import clienteAxios, { config } from "../helpers/clienteAxios";
-import formSchema from "../helpers/yupSchema";
 import "../css/Reg-Log.css";
 
 const RegisterPage = () => {
   titlePage("Registro");
+  const yupSchemaRegister = yup.object().shape({
+    user: yup
+      .string()
+      .required("Completa el campo vacío")
+      .email("Formato de email incorrecto. Por ejemplo: usuario@gmail.com"),
+    userName: yup
+      .string()
+      .required("Completa el campo vacío")
+      .min(8, "Mínimo 8 caracteres")
+      .max(15, "Máximo 15 caracteres")
+      .matches(
+        /^[a-zA-Z0-9]+$/,
+        "El nombre de usuario solo puede contener letras y números."
+      ),
+    pass: yup
+      .string()
+      .required("Completa el campo vacío")
+      .min(8, "Mínimo 8 caracteres")
+      .max(15, "Máximo 15 caracteres")
+      .matches(
+        /^[a-zA-Z0-9]+$/,
+        "La contraseña solo puede contener letras y números."
+      ),
+    rpass: yup
+      .string()
+      .required("Completa el campo vacío")
+      .oneOf([yup.ref("pass"), null], "Las contraseñas deben coincidir."),
+  });
 
   const handleSubmitForm = async (values, actions) => {
     if (values.pass === values.rpass) {
@@ -50,7 +78,7 @@ const RegisterPage = () => {
       <div className="d-flex justify-content-center my-5 ">
         <Formik
           initialValues={{ user: "", userName: "", pass: "", rpass: "" }}
-          validationSchema={formSchema}
+          validationSchema={yupSchemaRegister}
           onSubmit={(values, actions) => {
             handleSubmitForm(values, actions);
           }}>
@@ -169,155 +197,3 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
-
-/* import { titlePage } from "../helpers/titlePages";
-import { Formik } from "formik";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import clienteAxios, { config } from "../helpers/clienteAxios";
-import formSchema from "../helpers/yupSchema";
-import "../css/Reg-Log.css";
-
-const RegisterPage = () => {
-  titlePage("Registro");
-  const handleSubmitForm = async (values) => {
-    if (values.pass === values.rpass) {
-      const res = await clienteAxios.post(
-        "/users/register",
-        {
-          nombreUsuario: values.user,
-          contrasenia: values.pass,
-        },
-        config
-      );
-      alert("Usuario registrado");
-      location.href = "/login";
-      console.log(res);
-    } else {
-      alert("Las contraseñas no coinciden");
-    }
-  };
-
-  return (
-    <>
-      <div className="d-flex justify-content-center my-5">
-        <Formik
-          initialValues={{ user: "", pass: "", rpass: "" }}
-          validationSchema={formSchema}
-          onSubmit={(values) => {
-            handleSubmitForm(values);
-          }}>
-          {({ values, errors, touched, handleChange, handleSubmit }) => (
-            <Form>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Correo Electronico</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Por ej: usuario@gmail.com"
-                  value={values.user}
-                  name="user"
-                  onChange={handleChange}
-                  className={
-                    errors.user && touched.user
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
-                />
-                <p className="text-danger">
-                  {errors.user && touched.user && errors.user}
-                </p>
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Contraseña</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  value={values.pass}
-                  name="pass"
-                  onChange={handleChange}
-                  className={
-                    errors.pass && touched.pass
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
-                />
-                <p className="text-danger">
-                  {errors.pass && touched.pass && errors.pass}
-                </p>
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formBasicRPassword">
-                <Form.Label>Repetir contraseña</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  value={values.rpass}
-                  name="rpass"
-                  onChange={handleChange}
-                  className={
-                    errors.rpass && touched.rpass
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
-                />
-                <p className="text-danger">
-                  {errors.rpass && touched.rpass && errors.rpass}
-                </p>
-              </Form.Group>
-              <p>
-                Si tienes una cuenta haz click <a href="/login">aqui</a>
-              </p>
-              <div>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  className="w-100 btnForm">
-                  Registrarse con Gmail
-                </Button>
-              </div>
-              <Button
-                variant="primary"
-                type="submit"
-                className="w-100 btnForm mt-3"
-                onClick={handleSubmit}>
-                Registrarse
-              </Button>
-            </Form>
-          )}
-        </Formik>
-      </div>
-    </>
-  );
-};
-
-export default RegisterPage; */
-
-/* <Form>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Correo Electronico</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Contraseña</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Repetir Contraseña</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
-          </Form.Group>
-          <p>
-            Si tienes una cuenta haz click <a href="/login">aqui</a>
-          </p>
-          <div>
-            <Button variant="primary" type="submit" className="w-100 btnForm">
-              Registrarse con Gmail
-            </Button>
-          </div>
-          <Button
-            variant="primary"
-            type="submit"
-            className="w-100 mt-3 btnForm">
-            Confirmar
-          </Button>
-        </Form> */
