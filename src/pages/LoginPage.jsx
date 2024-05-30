@@ -1,13 +1,33 @@
 import { titlePage } from "../helpers/titlePages";
 import { Formik } from "formik";
+import * as yup from "yup";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 import "../css/Reg-Log.css";
-import formSchemaLogin from "../helpers/yupSchemaLogin";
 
 const LoginPage = () => {
   titlePage("Iniciar Sesión");
+  const yupSchemaLogin = yup.object().shape({
+    userName: yup
+      .string()
+      .required("Completa el campo vacío")
+      .min(8, "Mínimo 8 caracteres")
+      .max(15, "Máximo 15 caracteres")
+      .matches(
+        /^[a-zA-Z0-9]+$/,
+        "El nombre de usuario solo puede contener letras y números."
+      ),
+    pass: yup
+      .string()
+      .required("Completa el campo vacío")
+      .min(8, "Mínimo 8 caracteres")
+      .max(15, "Máximo 15 caracteres")
+      .matches(
+        /^[a-zA-Z0-9]+$/,
+        "La contraseña solo puede contener letras y números."
+      ),
+  });
 
   const handleSubmitForm = async (values, actions) => {
     try {
@@ -48,7 +68,6 @@ const LoginPage = () => {
   };
 
   const handleGmailLogin = () => {
-    // Redirigir a una página inexistente para mostrar el error 404
     location.href = "/*";
   };
 
@@ -57,7 +76,7 @@ const LoginPage = () => {
       <div className="d-flex justify-content-center my-5 ">
         <Formik
           initialValues={{ userName: "", pass: "" }}
-          validationSchema={formSchemaLogin}
+          validationSchema={yupSchemaLogin}
           onSubmit={(values, actions) => {
             handleSubmitForm(values, actions);
           }}>
@@ -144,108 +163,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
-/* <Form>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Usuario</Form.Label>
-            <Form.Control
-              className={error.user === "errorUser" && "is-invalid"}
-              type="text"
-              placeholder="Por ej: Usuario123"
-              onChange={cambioDatosUsuario}
-              name="user"
-            />
-            {error.user && <p className="text-danger">Campo USUARIO Vacio</p>}
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Contraseña</Form.Label>
-            <Form.Control
-              className={error.pass === "errorPass" && "is-invalid"}
-              type="text"
-              placeholder="Contraseña"
-              onChange={cambioDatosUsuario}
-              name="pass"
-            />
-            {error.pass && (
-              <p className="text-danger">Campo CONTRASEÑA Vacio</p>
-            )}
-          </Form.Group>
-          <Button
-            variant="success"
-            type="submit"
-            className="w-100"
-            onClick={enviarFormulario}>
-            Iniciar Sesion
-          </Button>
-        </Form> */
-
-/* <Formik
-          initialValues={{ user: "", pass: "" }}
-          validationSchema={formSchema}
-          onSubmit={(values) => {
-            handleSubmitForm(values);
-          }}>
-          {({ values, errors, touched, handleChange, handleSubmit }) => (
-            <Form>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Correo Electronico</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Por ej: usuario@gmail.com"
-                  value={values.user}
-                  name="user"
-                  onChange={handleChange}
-                  className={
-                    errors.user && touched.user
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
-                />
-                <p className="text-danger">
-                  {errors.user && touched.user && errors.user}
-                </p>
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Contraseña</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  value={values.pass}
-                  name="pass"
-                  onChange={handleChange}
-                  className={
-                    errors.pass && touched.pass
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
-                />
-                <p className="text-danger">
-                  {errors.pass && touched.pass && errors.pass}
-                </p>
-              </Form.Group>
-
-              <p className="text-center">
-            <a href="/RecuperarContraseña">¿Olvidaste tu contraseña?</a>{" "}
-          </p>
-          <p>
-            ¿No tienes una cuenta? Haz click <a href="/Registro">aqui</a>
-          </p>
-              <div>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  className="w-100 btnForm">
-                  Ingresar con Gmail
-                </Button>
-              </div>
-              <Button
-                variant="primary"
-                type="submit"
-                className="w-100 btnForm mt-3"
-                onClick={handleSubmit}>
-                Iniciar Sesion
-              </Button>
-            </Form>
-          )}
-        </Formik> */
