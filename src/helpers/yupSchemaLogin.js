@@ -1,4 +1,4 @@
-import * as yup from "yup";
+/* import * as yup from "yup";
 
 const formSchemaLogin = yup.object({
   userName: yup
@@ -22,3 +22,4 @@ const formSchemaLogin = yup.object({
 });
 
 export default formSchemaLogin;
+ */
