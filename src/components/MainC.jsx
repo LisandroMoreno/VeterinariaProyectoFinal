@@ -70,6 +70,10 @@ const MainC = () => {
     return matchesCategory && matchesSearchTerm;
   });
 
+  const handleButtonClick = () => {
+    navigate("/planes");
+  };
+
   useEffect(() => {
     getProducts(selectedCategory, 1);
   }, [selectedCategory]);
@@ -81,10 +85,6 @@ const MainC = () => {
 
     fetchFilteredProducts();
   }, [searchTerm]);
-
-  const handleButtonClick = () => {
-    navigate("/planes");
-  };
 
   return (
     <>
