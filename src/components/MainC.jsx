@@ -53,7 +53,7 @@ const MainC = () => {
 
   const handleCategoryClick = (categoria) => {
     setSelectedCategory(categoria);
-    getProducts(categoria, 1); // cargar productos cuando cambia la categoría
+    getProducts(categoria, 2); // cargar productos cuando cambia la categoría
   };
 
   const handleSearch = (term) => {
