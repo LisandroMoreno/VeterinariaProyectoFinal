@@ -9,6 +9,9 @@ import Pisadas from "./Pisadas";
 import "../css/NavbarC.css";
 
 const NavbarC = () => {
+  const token = JSON.parse(sessionStorage.getItem("token"));
+  const role = JSON.parse(sessionStorage.getItem("role"));
+
   const url =
     "https://res.cloudinary.com/duexhxoyy/image/upload/v1714683325/hek6sf6ymtztchwpq7sr.jpg";
   return (
@@ -56,12 +59,34 @@ const NavbarC = () => {
                 <Nav.Link className="text-white"> </Nav.Link>
               </Nav>
               <Nav>
-                <Nav.Link as={Link} to="/login" className="my-custom-link">
-                  Iniciar Sesion
-                </Nav.Link>
-                <Nav.Link as={Link} to="/registro" className="my-custom-link">
-                  Registrarse
-                </Nav.Link>
+                {token && role === "usuario" ? (
+                  <NavDropdown
+                    title="Mi Cuenta"
+                    id="account-nav-dropdown"
+                    className="my-custom-link"
+                  >
+                    <NavDropdown.Item as={Link} to="/misReservas">
+                      Mis Reservas
+                    </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item as={Link} to="/misDatos">
+                      Mis Datos
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                ) : (
+                  <>
+                    <Nav.Link as={Link} to="/login" className="my-custom-link">
+                      Iniciar Sesión
+                    </Nav.Link>
+                    <Nav.Link
+                      as={Link}
+                      to="/registro"
+                      className="my-custom-link"
+                    >
+                      Registrarse
+                    </Nav.Link>
+                  </>
+                )}
               </Nav>
             </Navbar.Collapse>
           </Container>
