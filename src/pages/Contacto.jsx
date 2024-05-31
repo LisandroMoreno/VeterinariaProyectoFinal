@@ -1,5 +1,5 @@
-import React from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import { FaWhatsapp, FaFacebook, FaInstagram } from "react-icons/fa";
 import "../css/Contacto.css";
 import { titlePage } from "../helpers/titlePages";
@@ -7,18 +7,18 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 
 const validationSchema = yup.object().shape({
-  nombre: yup.string().required('Completa el campo vacío').min(8, "Mínimo 8 caracteres")
-  .max(15, "Máximo 15 caracteres")
-  .matches(
-    /^[a-zA-Z]+$/,
-    "El nombre de usuario solo puede contener letras."
-  ),
-  apellido: yup.string().required('Completa el campo vacío').min(8, "Mínimo 8 caracteres")
-  .max(15, "Máximo 15 caracteres")
-  .matches(
-    /^[a-zA-Z]+$/,
-    "El nombre de usuario solo puede contener letras."
-  ),
+  nombre: yup.string().required('Completa el campo vacío').min(2, "Mínimo 2 caracteres")
+    .max(50, "Máximo 50 caracteres")
+    .matches(
+      /^[a-zA-Z]+$/,
+      "El nombre solo puede contener letras."
+    ),
+  apellido: yup.string().required('Completa el campo vacío').min(2, "Mínimo 2 caracteres")
+    .max(15, "Máximo 15 caracteres")
+    .matches(
+      /^[a-zA-Z]+$/,
+      "El apellido solo puede contener letras."
+    ),
   email: yup.string().email("Formato de email incorrecto. Por ejemplo: usuario@gmail.com").required('Completa el campo vacío'),
   mensaje: yup.string().required('Completa el campo vacío').min(10, 'Mínimo 10 caracteres'),
 });
@@ -26,10 +26,42 @@ const validationSchema = yup.object().shape({
 const Contacto = () => {
   titlePage("Contacto");
 
-  const handleSubmit = (values, actions) => {
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertVariant, setAlertVariant] = useState("success");
+
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     console.log(values);
-    actions.setSubmitting(false);
-    // Aquí puedes manejar el envío del formulario, como enviarlo a un servidor
+    try {
+      const response = await fetch('http://localhost:3001/api/contact/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (response.ok) {
+        setAlertMessage("Consulta enviada correctamente");
+        setAlertVariant("success");
+        resetForm();
+      } else {
+        setAlertMessage("Error al enviar la consulta");
+        setAlertVariant("danger");
+      }
+    } catch (error) {
+      setAlertMessage("Error al enviar la consulta");
+      setAlertVariant("danger");
+    }
+
+    setShowAlert(true);
+    setSubmitting(false);
+
+    // Ocultar la alerta después de 3 segundos y recargar la página
+    setTimeout(() => {
+      setShowAlert(false);
+      window.location.reload();
+    }, 3000);
   };
 
   return (
@@ -37,6 +69,11 @@ const Contacto = () => {
       <Row>
         <Col md={6} className="form-container">
           <h2>Contáctanos</h2>
+          {showAlert && (
+            <Alert variant={alertVariant} onClose={() => setShowAlert(false)} dismissible>
+              {alertMessage}
+            </Alert>
+          )}
           <Formik
             initialValues={{ nombre: '', apellido: '', email: '', mensaje: '' }}
             validationSchema={validationSchema}
@@ -128,11 +165,11 @@ const Contacto = () => {
             </a>
             <a href="/*" className="social-item">
               <FaInstagram size={30} className="icon instagram-icon" />
-              <span className="social-text">@PawsAndClaws</span>
+              <span className="social-text">@PatasyGarras</span>
             </a>
             <a href="/*" className="social-item">
               <FaFacebook size={30} className="icon facebook-icon" />
-              <span className="social-text">@PawsAndClaws</span>
+              <span className="social-text">@PatasyGarras</span>
             </a>
           </div>
           <div className="map-container mt-3">
