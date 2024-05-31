@@ -6,7 +6,6 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import ImageC from "./ImageC";
 import Pisadas from "./Pisadas";
-import { Button } from "react-bootstrap";
 import "../css/NavbarC.css";
 
 const NavbarC = () => {
@@ -51,13 +50,16 @@ const NavbarC = () => {
                     >
                       Sobre Nosotros
                     </Nav.Link>
+                    <Nav.Link
+                      as={Link}
+                      to="/contacto"
+                      className="my-custom-link"
+                    >
+                      Contactanos
+                    </Nav.Link>
                     <NavDropdown title="Servicios" id="basic-nav-dropdown">
                       <NavDropdown.Item as={Link} to="/planes">
                         Planes
-                      </NavDropdown.Item>
-                      <NavDropdown.Divider />
-                      <NavDropdown.Item as={Link} to="/productos">
-                        Productos
                       </NavDropdown.Item>
                       <NavDropdown.Divider />
                       <NavDropdown.Item as={Link} to="/reservaTurnos">
@@ -101,12 +103,21 @@ const NavbarC = () => {
                 {token && role === "user" ? (
                   <>
                     <div className="d-flex align-items-center d-none d-lg-flex">
-                      <Button className="me-2">
+                      <Nav.Link
+                        as={Link}
+                        to="/detalleCarrito"
+                        className="my-custom-link me-2"
+                      >
                         <i className="fa-solid fa-cart-shopping"></i>
-                      </Button>
-                      <Button>
+                      </Nav.Link>
+
+                      <Nav.Link
+                        as={Link}
+                        to="/detalleFavorito"
+                        className="my-custom-link me-2"
+                      >
                         <i className="fa-solid fa-heart fa-1x "></i>
-                      </Button>
+                      </Nav.Link>
                     </div>
 
                     <NavDropdown

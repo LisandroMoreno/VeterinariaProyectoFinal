@@ -84,8 +84,11 @@ const DetalleProducto = () => {
                   onChange={actualizarCantidad}
                 />
               </InputGroup>
-              <Button className="btn-primary mb-3">Comprar</Button>
-              <Button onClick={agregarCarrito} className="btn-primary mb-3">
+              <Button className="btn-customProduct mb-3">Comprar</Button>
+              <Button
+                onClick={agregarCarrito}
+                className="btn-customProduct mb-3"
+              >
                 <i className="fa-solid fa-cart-shopping"></i>
               </Button>
             </div>
