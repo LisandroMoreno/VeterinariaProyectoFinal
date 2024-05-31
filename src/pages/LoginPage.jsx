@@ -47,7 +47,7 @@ const LoginPage = () => {
 
         if (loginUser.data.role === "admin") {
           Swal.fire({
-            title: "Usuario Logueado",
+            title: "Administrador Logueado",
             text: "Bienvenido a Patas y Garras",
             icon: "success",
           }).then(() => {
