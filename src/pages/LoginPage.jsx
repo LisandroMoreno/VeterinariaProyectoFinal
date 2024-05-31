@@ -48,7 +48,7 @@ const LoginPage = () => {
           alert("Usuario Logueado");
           location.href = "/home-adminLog";
         } else {
-          location.href = "/home-userLog";
+          location.href = "/";
         }
       }
     } catch (error) {
@@ -79,7 +79,8 @@ const LoginPage = () => {
           validationSchema={yupSchemaLogin}
           onSubmit={(values, actions) => {
             handleSubmitForm(values, actions);
-          }}>
+          }}
+        >
           {({
             values,
             errors,
@@ -142,7 +143,8 @@ const LoginPage = () => {
                   variant="primary"
                   className="w-100 btnForm"
                   disabled={isSubmitting}
-                  onClick={handleGmailLogin}>
+                  onClick={handleGmailLogin}
+                >
                   Ingresar con Gmail
                 </Button>
               </div>
@@ -151,7 +153,8 @@ const LoginPage = () => {
                 variant="primary"
                 type="submit"
                 className="w-100 btnForm mt-3"
-                disabled={isSubmitting}>
+                disabled={isSubmitting}
+              >
                 Iniciar Sesion
               </Button>
             </Form>

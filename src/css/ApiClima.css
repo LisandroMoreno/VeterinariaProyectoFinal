@@ -188,7 +188,6 @@
   background-color: black;
 }
 
-
 /* Media queries para pantallas más pequeñas */
 @media (max-width: 400px) {
   .search-container {
@@ -205,4 +204,3 @@
     padding: 8px 15px; /* Reducir padding en pantallas más pequeñas */
   }
 }
-
