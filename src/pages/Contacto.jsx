@@ -3,24 +3,31 @@ import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import { FaWhatsapp, FaFacebook, FaInstagram } from "react-icons/fa";
 import "../css/Contacto.css";
 import { titlePage } from "../helpers/titlePages";
-import { Formik } from 'formik';
-import * as yup from 'yup';
+import { Formik } from "formik";
+import * as yup from "yup";
+import clienteAxios from "../helpers/clienteAxios";
 
 const validationSchema = yup.object().shape({
-  nombre: yup.string().required('Completa el campo vacío').min(2, "Mínimo 2 caracteres")
+  nombre: yup
+    .string()
+    .required("Completa el campo vacío")
+    .min(2, "Mínimo 2 caracteres")
     .max(50, "Máximo 50 caracteres")
-    .matches(
-      /^[a-zA-Z]+$/,
-      "El nombre solo puede contener letras."
-    ),
-  apellido: yup.string().required('Completa el campo vacío').min(2, "Mínimo 2 caracteres")
+    .matches(/^[a-zA-Z\s]+$/, "El nombre solo puede contener letras."),
+  apellido: yup
+    .string()
+    .required("Completa el campo vacío")
+    .min(2, "Mínimo 2 caracteres")
     .max(15, "Máximo 15 caracteres")
-    .matches(
-      /^[a-zA-Z]+$/,
-      "El apellido solo puede contener letras."
-    ),
-  email: yup.string().email("Formato de email incorrecto. Por ejemplo: usuario@gmail.com").required('Completa el campo vacío'),
-  mensaje: yup.string().required('Completa el campo vacío').min(10, 'Mínimo 10 caracteres'),
+    .matches(/^[a-zA-Z]+$/, "El apellido solo puede contener letras."),
+  email: yup
+    .string()
+    .email("Formato de email incorrecto. Por ejemplo: usuario@gmail.com")
+    .required("Completa el campo vacío"),
+  mensaje: yup
+    .string()
+    .required("Completa el campo vacío")
+    .min(10, "Mínimo 10 caracteres"),
 });
 
 const Contacto = () => {
@@ -33,15 +40,9 @@ const Contacto = () => {
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     console.log(values);
     try {
-      const response = await fetch('http://localhost:3001/api/contact/send', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
+      const response = await clienteAxios.post("/contact/send", values);
 
-      if (response.ok) {
+      if ((response.status = 200)) {
         setAlertMessage("Consulta enviada correctamente");
         setAlertVariant("success");
         resetForm();
@@ -70,16 +71,27 @@ const Contacto = () => {
         <Col md={6} className="form-container">
           <h2>Contáctanos</h2>
           {showAlert && (
-            <Alert variant={alertVariant} onClose={() => setShowAlert(false)} dismissible>
+            <Alert
+              variant={alertVariant}
+              onClose={() => setShowAlert(false)}
+              dismissible
+            >
               {alertMessage}
             </Alert>
           )}
           <Formik
-            initialValues={{ nombre: '', apellido: '', email: '', mensaje: '' }}
+            initialValues={{ nombre: "", apellido: "", email: "", mensaje: "" }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({ values, errors, touched, handleChange, handleSubmit, isSubmitting }) => (
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleSubmit,
+              isSubmitting,
+            }) => (
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
                   <Form.Label>Nombre</Form.Label>
