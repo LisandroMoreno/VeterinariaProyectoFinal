@@ -51,7 +51,7 @@
   }
 }
 
-.btn-primary {
+.btn-customProduct {
   background-color: black;
   border: none;
   color: #fff;
@@ -62,7 +62,7 @@
   text-decoration: none;
 }
 
-.btn-primary:hover {
+.btn-customProduct:hover {
   background-color: 3992cdec;
   color: white;
 }
