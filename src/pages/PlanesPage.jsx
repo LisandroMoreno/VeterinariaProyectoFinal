@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Alert from "react-bootstrap/Alert";
 import "../css/PlanesPage.css";
 import { titlePage } from "../helpers/titlePages";
 import { Formik } from "formik";
 import * as yup from "yup";
+import { Link } from "react-router-dom";
 
 const validationSchema = yup.object().shape({
   nombre: yup
     .string()
     .required("Completa el campo vacío")
-    .min(8, "Mínimo 8 caracteres")
-    .max(15, "Máximo 15 caracteres")
-    .matches(/^[a-zA-Z]+$/, "El nombre de usuario solo puede contener letras."),
+    .min(2, "Mínimo 2 caracteres")
+    .max(50, "Máximo 50 caracteres")
+    .matches(/^[a-zA-Z]+$/, "El nombre solo puede contener letras."),
   email: yup
     .string()
     .email("Formato de email incorrecto. Por ejemplo: usuario@gmail.com")
@@ -27,10 +29,40 @@ const validationSchema = yup.object().shape({
 const PlanesPage = () => {
   titlePage("Planes");
 
-  const handleSubmit = (values, actions) => {
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertVariant, setAlertVariant] = useState("success");
+
+  const handleSubmit = async (values, actions) => {
     console.log(values);
+    try {
+      const response = await fetch("http://localhost:3001/api/planes/send", {
+        // Cambia la URL aquí
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (response.ok) {
+        setAlertMessage("Consulta enviada correctamente.");
+        setAlertVariant("success");
+        actions.resetForm();
+      } else {
+        setAlertMessage("Error al enviar la consulta");
+        setAlertVariant("danger");
+      }
+    } catch (error) {
+      setAlertMessage("Error al enviar la consulta");
+      setAlertVariant("danger");
+    }
+
+    setShowAlert(true);
     actions.setSubmitting(false);
-    // Aquí puedes manejar el envío del formulario, como enviarlo a un servidor
+
+    // Ocultar la alerta después de 3 segundos
+    setTimeout(() => setShowAlert(false), 3000);
   };
 
   return (
@@ -60,11 +92,13 @@ const PlanesPage = () => {
                 una dieta saludable. <br /> <br />
                 ● Descuentos en Productos: Ofertas especiales en alimentos,
                 juguetes y accesorios. <br /> <br />
-                Costo Mensual: $xxxx
+                Costo Mensual: $3.000
               </p>
-              <Button variant="primary" className="button-custom mt-3">
-                Adquirir
-              </Button>
+              <Link to="/*">
+                <Button variant="primary" className="button-custom mt-3">
+                  Adquirir
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -92,11 +126,13 @@ const PlanesPage = () => {
                 artritis o la diabetes. <br /> <br />
                 ● Descuentos en Cirugías Electivas: Beneficios para
                 procedimientos como la esterilización. <br /> <br />
-                Costo Mensual: $xxxx
+                Costo Mensual: $5.000
               </p>
-              <Button variant="primary" className="button-custom mt-3">
-                Adquirir
-              </Button>
+              <Link to="/*">
+                <Button variant="primary" className="button-custom mt-3">
+                  Adquirir
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -111,12 +147,12 @@ const PlanesPage = () => {
             <h5 className="NombrePlan">
               <strong>
                 Plan “Adultos”
-                <p>(Mascotas de más de 10 años)</p>
+                <p>(Mascotas de 10 años)</p>
               </strong>
             </h5>
             <div className="PlanDescripcion">
               <p className="Descripcion">
-                ● Vacunas y Desparasitación: Protege a las mascotas jóvenes
+                ● Vacunas y Desparasitación: Protege a las mascotas adultas
                 contra enfermedades y parásitos. <br /> <br />
                 ● Atención Especializada: Enfoque en la salud de órganos vitales
                 y prevención de enfermedades. <br /> <br />
@@ -124,11 +160,13 @@ const PlanesPage = () => {
                 hepática y cardíaca. <br /> <br />
                 ● Descuentos en Medicamentos: Ayuda a los dueños a acceder a
                 tratamientos necesarios. <br /> <br />
-                Costo Mensual: $xxxx
+                Costo Mensual: $7.000
               </p>
-              <Button variant="primary" className="button-custom mt-3">
-                Adquirir
-              </Button>
+              <Link to="/*">
+                <Button variant="primary" className="button-custom mt-3">
+                  Adquirir
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -136,6 +174,15 @@ const PlanesPage = () => {
 
       <div className="formulario-container">
         <h2>Envianos tu consulta</h2>
+        {showAlert && (
+          <Alert
+            variant={alertVariant}
+            onClose={() => setShowAlert(false)}
+            dismissible
+          >
+            {alertMessage}
+          </Alert>
+        )}
         <Formik
           initialValues={{ nombre: "", email: "", asunto: "", mensaje: "" }}
           validationSchema={validationSchema}

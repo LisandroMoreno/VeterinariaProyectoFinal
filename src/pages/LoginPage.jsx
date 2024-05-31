@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 import "../css/Reg-Log.css";
+import Swal from "sweetalert2";
 
 const LoginPage = () => {
   titlePage("Iniciar Sesión");
@@ -45,22 +46,40 @@ const LoginPage = () => {
         sessionStorage.setItem("role", JSON.stringify(loginUser.data.role));
 
         if (loginUser.data.role === "admin") {
-          alert("Usuario Logueado");
-          location.href = "/home-adminLog";
+          Swal.fire({
+            title: "Usuario Logueado",
+            text: "Bienvenido a Patas y Garras",
+            icon: "success",
+          }).then(() => {
+            setTimeout(() => {
+              location.href = "/home-adminLog";
+            }, 2000);
+          });
         } else {
-          location.href = "/home-userLog";
         }
       }
     } catch (error) {
       if (error.response) {
         if (error.response.status === 403) {
-          alert("Usuario bloqueado. Hablar con el admin");
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Usuario bloqueado. Hablar con el admin",
+          });
         } else {
-          alert("Error al iniciar sesión. Usuario y/o contraseña equivocada.");
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Error al iniciar sesión. Usuario y/o contraseña equivocada.",
+          });
         }
       } else {
         console.error("Error:", error);
-        alert("Error al iniciar sesión. Intente nuevamente más tarde.");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Error al iniciar sesión. Intente nuevamente más tarde.",
+        });
       }
     } finally {
       actions.setSubmitting(false);
@@ -79,7 +98,8 @@ const LoginPage = () => {
           validationSchema={yupSchemaLogin}
           onSubmit={(values, actions) => {
             handleSubmitForm(values, actions);
-          }}>
+          }}
+        >
           {({
             values,
             errors,
@@ -142,7 +162,8 @@ const LoginPage = () => {
                   variant="primary"
                   className="w-100 btnForm"
                   disabled={isSubmitting}
-                  onClick={handleGmailLogin}>
+                  onClick={handleGmailLogin}
+                >
                   Ingresar con Gmail
                 </Button>
               </div>
@@ -151,7 +172,8 @@ const LoginPage = () => {
                 variant="primary"
                 type="submit"
                 className="w-100 btnForm mt-3"
-                disabled={isSubmitting}>
+                disabled={isSubmitting}
+              >
                 Iniciar Sesion
               </Button>
             </Form>

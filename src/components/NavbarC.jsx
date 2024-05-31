@@ -6,11 +6,22 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import ImageC from "./ImageC";
 import Pisadas from "./Pisadas";
+import { Button } from "react-bootstrap";
 import "../css/NavbarC.css";
 
 const NavbarC = () => {
+  const token = JSON.parse(sessionStorage.getItem("token"));
+  const role = JSON.parse(sessionStorage.getItem("role"));
+
+  const cerrarSesion = () => {
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("role");
+    location.reload();
+  };
+
   const url =
     "https://res.cloudinary.com/duexhxoyy/image/upload/v1714683325/hek6sf6ymtztchwpq7sr.jpg";
+
   return (
     <>
       <div className="navbar-container">
@@ -28,40 +39,119 @@ const NavbarC = () => {
               <Nav className="separator d-lg-none mt-4" />
               <Nav.Link className="text-white"> </Nav.Link>
               <Nav className="me-auto">
-                <Nav.Link as={Link} to="/" className="my-custom-link">
-                  Inicio
-                </Nav.Link>
-                <Nav.Link
-                  as={Link}
-                  to="/sobreNosotros"
-                  className="my-custom-link"
-                >
-                  Sobre Nosotros
-                </Nav.Link>
-                <NavDropdown title="Servicios" id="basic-nav-dropdown">
-                  <NavDropdown.Item as={Link} to="/planes">
-                    Planes
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item as={Link} to="/productos">
-                    Productos
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item as={Link} to="/reservaTurnos">
-                    Reserva de turnos
-                  </NavDropdown.Item>
-                </NavDropdown>
+                {!token || role !== "admin" ? (
+                  <>
+                    <Nav.Link as={Link} to="/" className="my-custom-link">
+                      Inicio
+                    </Nav.Link>
+                    <Nav.Link
+                      as={Link}
+                      to="/sobreNosotros"
+                      className="my-custom-link"
+                    >
+                      Sobre Nosotros
+                    </Nav.Link>
+                    <NavDropdown title="Servicios" id="basic-nav-dropdown">
+                      <NavDropdown.Item as={Link} to="/planes">
+                        Planes
+                      </NavDropdown.Item>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item as={Link} to="/productos">
+                        Productos
+                      </NavDropdown.Item>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item as={Link} to="/reservaTurnos">
+                        Reserva de turnos
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  </>
+                ) : (
+                  <>
+                    <Nav.Link as={Link} to="/" className="my-custom-link">
+                      Pacientes
+                    </Nav.Link>
+                    <Nav.Link
+                      as={Link}
+                      to="/sobreNosotros"
+                      className="my-custom-link"
+                    >
+                      Turnos
+                    </Nav.Link>
+                    <Nav.Link
+                      as={Link}
+                      to="/sobreNosotros"
+                      className="my-custom-link"
+                    >
+                      Productos
+                    </Nav.Link>
+                    <Nav.Link
+                      as={Link}
+                      to="/sobreNosotros"
+                      className="my-custom-link"
+                    >
+                      Usuarios
+                    </Nav.Link>
+                  </>
+                )}
               </Nav>
               <Nav className="separator d-lg-none">
                 <Nav.Link className="text-white"> </Nav.Link>
               </Nav>
               <Nav>
-                <Nav.Link as={Link} to="/login" className="my-custom-link">
-                  Iniciar Sesion
-                </Nav.Link>
-                <Nav.Link as={Link} to="/registro" className="my-custom-link">
-                  Registrarse
-                </Nav.Link>
+                {token && role === "user" ? (
+                  <>
+                    <div className="d-flex align-items-center d-none d-lg-flex">
+                      <Button className="me-2">
+                        <i className="fa-solid fa-cart-shopping"></i>
+                      </Button>
+                      <Button>
+                        <i className="fa-solid fa-heart fa-1x "></i>
+                      </Button>
+                    </div>
+
+                    <NavDropdown
+                      title="Mi Cuenta"
+                      id="account-nav-dropdown"
+                      className="my-custom-link me-5"
+                    >
+                      <NavDropdown.Item as={Link} to="/misReservas">
+                        Mis Reservas
+                      </NavDropdown.Item>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item as={Link} to="/misDatos">
+                        Mis Datos
+                      </NavDropdown.Item>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item as={Link} to="/" onClick={cerrarSesion}>
+                        Cerrar Sesión
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  </>
+                ) : token && role === "admin" ? (
+                  <>
+                    <Nav.Link
+                      as={Link}
+                      to="/"
+                      className="my-custom-link"
+                      onClick={cerrarSesion}
+                    >
+                      Cerrar Sesion
+                    </Nav.Link>
+                  </>
+                ) : (
+                  <>
+                    <Nav.Link as={Link} to="/login" className="my-custom-link">
+                      Iniciar Sesión
+                    </Nav.Link>
+                    <Nav.Link
+                      as={Link}
+                      to="/registro"
+                      className="my-custom-link"
+                    >
+                      Registrarse
+                    </Nav.Link>
+                  </>
+                )}
               </Nav>
             </Navbar.Collapse>
           </Container>
