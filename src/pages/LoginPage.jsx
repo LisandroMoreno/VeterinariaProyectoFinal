@@ -62,7 +62,7 @@ const LoginPage = () => {
             icon: "success",
           }).then(() => {
             setTimeout(() => {
-              location.href = "/home-userLog";
+              location.href = "/";
             }, 2000);
           });
         }
