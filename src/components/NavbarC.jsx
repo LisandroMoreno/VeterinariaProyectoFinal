@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -9,13 +9,14 @@ import Pisadas from "./Pisadas";
 import "../css/NavbarC.css";
 
 const NavbarC = () => {
+  const navigate = useNavigate();
   const token = JSON.parse(sessionStorage.getItem("token"));
   const role = JSON.parse(sessionStorage.getItem("role"));
 
   const cerrarSesion = () => {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("role");
-    location.reload();
+    navigate("/"); // Redirige a la página de inicio
   };
 
   const url =
@@ -27,7 +28,9 @@ const NavbarC = () => {
         <div className="pisadas-container"></div>
         <Navbar expand="lg" className="bg fixed-top">
           <Container fluid>
-            <Navbar.Brand as={Link} to="/">
+            <Navbar.Brand
+              as={Link}
+              to={role === "admin" ? "/home-adminLog" : "/"}>
               <ImageC urlImagen={url} ancho="50" alternativo="logo" />
             </Navbar.Brand>
             <Navbar.Toggle
@@ -46,15 +49,13 @@ const NavbarC = () => {
                     <Nav.Link
                       as={Link}
                       to="/sobreNosotros"
-                      className="my-custom-link"
-                    >
+                      className="my-custom-link">
                       Sobre Nosotros
                     </Nav.Link>
                     <Nav.Link
                       as={Link}
                       to="/contacto"
-                      className="my-custom-link"
-                    >
+                      className="my-custom-link">
                       Contactanos
                     </Nav.Link>
                     <NavDropdown title="Servicios" id="basic-nav-dropdown">
@@ -69,28 +70,25 @@ const NavbarC = () => {
                   </>
                 ) : (
                   <>
-                    <Nav.Link as={Link} to="/" className="my-custom-link">
-                      Pacientes
-                    </Nav.Link>
                     <Nav.Link
                       as={Link}
-                      to="/sobreNosotros"
-                      className="my-custom-link"
-                    >
+                      to="/pacientes"
+                      className="my-custom-link">
+                      Pacientes
+                    </Nav.Link>
+                    <Nav.Link as={Link} to="/turnos" className="my-custom-link">
                       Turnos
                     </Nav.Link>
                     <Nav.Link
                       as={Link}
-                      to="/sobreNosotros"
-                      className="my-custom-link"
-                    >
+                      to="/productos"
+                      className="my-custom-link">
                       Productos
                     </Nav.Link>
                     <Nav.Link
                       as={Link}
-                      to="/sobreNosotros"
-                      className="my-custom-link"
-                    >
+                      to="/usuarios"
+                      className="my-custom-link">
                       Usuarios
                     </Nav.Link>
                   </>
@@ -106,16 +104,14 @@ const NavbarC = () => {
                       <Nav.Link
                         as={Link}
                         to="/detalleCarrito"
-                        className="my-custom-link me-2"
-                      >
+                        className="my-custom-link me-2">
                         <i className="fa-solid fa-cart-shopping"></i>
                       </Nav.Link>
 
                       <Nav.Link
                         as={Link}
                         to="/detalleFavorito"
-                        className="my-custom-link me-2"
-                      >
+                        className="my-custom-link me-2">
                         <i className="fa-solid fa-heart fa-1x "></i>
                       </Nav.Link>
                     </div>
@@ -123,8 +119,7 @@ const NavbarC = () => {
                     <NavDropdown
                       title="Mi Cuenta"
                       id="account-nav-dropdown"
-                      className="my-custom-link me-5"
-                    >
+                      className="my-custom-link me-5">
                       <NavDropdown.Item as={Link} to="/misReservas">
                         Mis Reservas
                       </NavDropdown.Item>
@@ -144,8 +139,7 @@ const NavbarC = () => {
                       as={Link}
                       to="/"
                       className="my-custom-link"
-                      onClick={cerrarSesion}
-                    >
+                      onClick={cerrarSesion}>
                       Cerrar Sesion
                     </Nav.Link>
                   </>
@@ -157,8 +151,7 @@ const NavbarC = () => {
                     <Nav.Link
                       as={Link}
                       to="/registro"
-                      className="my-custom-link"
-                    >
+                      className="my-custom-link">
                       Registrarse
                     </Nav.Link>
                   </>
