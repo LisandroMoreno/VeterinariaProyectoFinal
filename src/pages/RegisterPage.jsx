@@ -72,8 +72,8 @@ const RegisterPage = () => {
         console.error("Error al registrar el usuario:", error);
         Swal.fire({
           icon: "error",
-          title: "Error",
-          text: "Error al registrar el usuario. Verifique los datos e intente nuevamente.",
+          title: "Error al registrar el usuario",
+          text: "El usuario y/o correo electronico no estan disponibles.",
         });
       }
     } else {
