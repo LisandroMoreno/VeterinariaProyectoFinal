@@ -21,7 +21,6 @@ const MainC = () => {
   );
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
   const navigate = useNavigate();
 
   const itemsPerPage = 10; // Número de productos por página
@@ -53,43 +52,30 @@ const MainC = () => {
 
   const handleCategoryClick = (categoria) => {
     setSelectedCategory(categoria);
-    getProducts(categoria, 2); // cargar productos cuando cambia la categoría
+    getProducts(categoria, 1); // cargar productos cuando cambia la categoría
   };
 
-  const handleSearch = (term) => {
-    setSearchTerm(term);
-  };
-
-  const filteredProducts = products.filter((product) => {
-    const matchesCategory =
-      selectedCategory === "Todas las categorias" ||
-      product.categoria.toLowerCase().includes(selectedCategory.toLowerCase());
-    const matchesSearchTerm = product.titulo
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    return matchesCategory && matchesSearchTerm;
-  });
-
-  const handleButtonClick = () => {
-    navigate("/planes");
-  };
+  const filteredProducts =
+    selectedCategory === "Todas las categorias"
+      ? products
+      : products.filter((product) =>
+          product.categoria
+            .toLowerCase()
+            .includes(selectedCategory.toLowerCase())
+        );
 
   useEffect(() => {
     getProducts(selectedCategory, 1);
   }, [selectedCategory]);
 
-  useEffect(() => {
-    const fetchFilteredProducts = async () => {
-      await getProducts(selectedCategory, currentPage);
-    };
-
-    fetchFilteredProducts();
-  }, [searchTerm]);
+  const handleButtonClick = () => {
+    navigate("/planes");
+  };
 
   return (
     <>
       <div className="ClimaSearch">
-        <ApiClima onSearch={handleSearch} />
+        <ApiClima />
       </div>
 
       <div className="text-center mt-2 mb-2">
@@ -203,10 +189,10 @@ const MainC = () => {
                 </a>
               </div>
             </div>
-            <div className="product-offer productH">
+            <div className="product-offer mb-30 productH">
               <ImageC
                 className="img-fluid"
-                urlImagen="https://cdn.ready-market.com.tw/78d8bdd7/Templates/pic/Cat-Toy-1.jpg"
+                urlImagen="https://cdn.ready-market.com.tw/78d8bdd7/Templates/pic/Dog-Toy-1.jpg"
                 alternativo="Descripción de la imagen derecha 2"
                 ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
               />
@@ -222,8 +208,19 @@ const MainC = () => {
         </div>
       </div>
 
-      <div className="container mt-5 text-center">
-        <div className="product-filter-container">
+      <div>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-12">
+              <h3 className="text-center">
+                <Pisadas />
+                PetMarket: Te ofrecemos nuestros productos para el cuidado y
+                bienestar de tu mascota
+              </h3>
+            </div>
+          </div>
+        </div>
+        <div className="container-fluid mb-30 mt-30 bg-btn">
           <div className="row d-flex justify-content-center">
             <div className="col-12 col-md-2 mtButton mb-30 d-flex justify-content-center">
               <Button

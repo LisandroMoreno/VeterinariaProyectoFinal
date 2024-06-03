@@ -1,9 +1,23 @@
 import { Button, Col, Container, Row } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { titlePage } from "../helpers/titlePages";
+import { useEffect, useState } from "react";
+import clienteAxios, { config } from "../helpers/clienteAxios";
 
 const DetalleCarrito = () => {
   titlePage("Detalle de Carrito");
+
+  const token = JSON.parse(sessionStorage.getItem("token")); // Obtén el token desde el almacenamiento de sesión
+  const [carts, setCart] = useState([]); // Inicializa el estado con un array vacío
+
+  const getAllCart = async () => {
+    const getCart = await clienteAxios.get("/carritos", config);
+    console.log(getCart.data.carrito.products);
+    setCart(getCart.data.carrito.products);
+  };
+  useEffect(() => {
+    getAllCart();
+  }, []);
   return (
     <>
       <div className="mt-3 mx-3">
