@@ -45,14 +45,14 @@ const DetalleProducto = () => {
     console.log("Agregado a favoritos:", product.titulo);
   };
 
-  const agregarCarrito = async (req, res) => {
+  const agregarCarrito = async () => {
     const token = JSON.parse(sessionStorage.getItem("token"));
 
     if (token) {
       try {
         const agregarProducto = await clienteAxios.post(
           `/carritos/${params.id}`,
-          {},
+          { cantidad }, // Enviar la cantidad seleccionada al backend
           config
         );
         console.log(agregarProducto);
@@ -121,7 +121,7 @@ const DetalleProducto = () => {
             </div>
             <div className="mt-3">
               <p>
-                <strong>Descripcion:</strong>
+                <strong>Descripción:</strong>
               </p>
               <p>{product.descripcion}</p>
             </div>
