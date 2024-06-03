@@ -9,7 +9,7 @@ import {
 import { titlePage } from "../helpers/titlePages";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import clienteAxios from "../helpers/clienteAxios";
+import clienteAxios, { config } from "../helpers/clienteAxios";
 import ImageC from "../components/ImageC";
 import "../css/DetalleProducto.css";
 
@@ -45,9 +45,36 @@ const DetalleProducto = () => {
     console.log("Agregado a favoritos:", product.titulo);
   };
 
-  const agregarCarrito = () => {
-    // Lógica para agregar al carrito
-    console.log("Agregado al carrito:", product.titulo);
+  const agregarCarrito = async () => {
+    const token = JSON.parse(sessionStorage.getItem("token"));
+
+    if (token) {
+      try {
+        const agregarProducto = await clienteAxios.post(
+          `/carritos/${params.id}`,
+          { cantidad }, // Enviar la cantidad seleccionada al backend
+          config
+        );
+        console.log(agregarProducto);
+
+        switch (agregarProducto.status) {
+          case 200:
+            alert("Producto enviado a Carrito");
+            break;
+          case 422:
+            alert("El Producto ya está en el Carrito");
+            break;
+          default:
+            alert("El Producto ya no está disponible");
+            break;
+        }
+      } catch (error) {
+        console.error("Error al agregar el producto al carrito", error);
+        alert("Error al agregar el producto al carrito");
+      }
+    } else {
+      location.href = "/login";
+    }
   };
 
   return (
@@ -94,7 +121,7 @@ const DetalleProducto = () => {
             </div>
             <div className="mt-3">
               <p>
-                <strong>Descripcion:</strong>
+                <strong>Descripción:</strong>
               </p>
               <p>{product.descripcion}</p>
             </div>
