@@ -1,6 +1,7 @@
 import { titlePage } from "../helpers/titlePages";
 import { Formik } from "formik";
 import * as yup from "yup";
+import Swal from "sweetalert2";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import clienteAxios, { config } from "../helpers/clienteAxios";
@@ -51,25 +52,41 @@ const RegisterPage = () => {
         );
 
         if (res.status === 201) {
-          alert("Usuario registrado");
-          location.href = "/login";
+          Swal.fire({
+            title: "Usuario Registrado",
+            text: "Bienvenido a Patas y Garras",
+            icon: "success",
+          }).then(() => {
+            setTimeout(() => {
+              location.href = "/login";
+            }, 2000);
+          });
         } else {
-          alert("Error en el registro. Intente nuevamente.");
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Error en el registro. Intente nuevamente.",
+          });
         }
       } catch (error) {
         console.error("Error al registrar el usuario:", error);
-        alert(
-          "Error al registrar el usuario. Verifique los datos e intente nuevamente."
-        );
+        Swal.fire({
+          icon: "error",
+          title: "Error al registrar el usuario",
+          text: "El usuario y/o correo electronico no estan disponibles.",
+        });
       }
     } else {
-      alert("Las contraseñas no coinciden");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Las contraseñas no coinciden",
+      });
     }
     actions.setSubmitting(false);
   };
 
   const handleGmailLogin = () => {
-    // Redirigir a una página inexistente para mostrar el error 404
     location.href = "/*";
   };
 

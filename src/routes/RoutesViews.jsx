@@ -10,6 +10,7 @@ import Error404 from "../pages/Error404";
 import PlanesPage from "../pages/PlanesPage";
 import Contacto from "../pages/Contacto";
 import DetalleCarrito from "../pages/DetalleCarrito";
+import AdminPage from "../pages/AdminPage";
 
 /* Todas las rutas del proyecto - Path / element  */
 
@@ -26,6 +27,7 @@ const RoutesViews = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegisterPage />} />
         <Route path="/detalleCarrito" element={<DetalleCarrito />} />
+        <Route path="/home-adminLog" element={<AdminPage />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
       <FooterC />

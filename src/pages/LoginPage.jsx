@@ -47,7 +47,7 @@ const LoginPage = () => {
 
         if (loginUser.data.role === "admin") {
           Swal.fire({
-            title: "Usuario Logueado",
+            title: "Administrador Logueado",
             text: "Bienvenido a Patas y Garras",
             icon: "success",
           }).then(() => {
@@ -56,6 +56,15 @@ const LoginPage = () => {
             }, 2000);
           });
         } else {
+          Swal.fire({
+            title: "Usuario Logueado",
+            text: "Bienvenido a Patas y Garras",
+            icon: "success",
+          }).then(() => {
+            setTimeout(() => {
+              location.href = "/";
+            }, 2000);
+          });
         }
       }
     } catch (error) {
@@ -98,8 +107,7 @@ const LoginPage = () => {
           validationSchema={yupSchemaLogin}
           onSubmit={(values, actions) => {
             handleSubmitForm(values, actions);
-          }}
-        >
+          }}>
           {({
             values,
             errors,
@@ -162,8 +170,7 @@ const LoginPage = () => {
                   variant="primary"
                   className="w-100 btnForm"
                   disabled={isSubmitting}
-                  onClick={handleGmailLogin}
-                >
+                  onClick={handleGmailLogin}>
                   Ingresar con Gmail
                 </Button>
               </div>
@@ -172,8 +179,7 @@ const LoginPage = () => {
                 variant="primary"
                 type="submit"
                 className="w-100 btnForm mt-3"
-                disabled={isSubmitting}
-              >
+                disabled={isSubmitting}>
                 Iniciar Sesion
               </Button>
             </Form>
