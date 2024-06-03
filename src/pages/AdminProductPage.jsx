@@ -39,7 +39,7 @@ const AdminProductsPage = () => {
       formData.append("titulo", editProd.titulo);
       formData.append("precio", editProd.precio);
       formData.append("descripcion", editProd.descripcion);
-      formData.append("categoria", editProd.nombre);
+      formData.append("categoria", editProd.categoria);
       formData.append("image", image);
 
       const updateProd = await clienteAxios.put(
@@ -71,8 +71,8 @@ const AdminProductsPage = () => {
     }
   };
 
-  const getProducts = async () => {
-    const allProducts = await clienteAxios.get("/productos");
+  const getProductosAdmin = async () => {
+    const allProducts = await clienteAxios.get("/productos/admin");
     setProducts(allProducts.data.products);
   };
 
@@ -101,7 +101,7 @@ const AdminProductsPage = () => {
   };
 
   useEffect(() => {
-    getProducts();
+    getProductosAdmin();
   }, []);
 
   return (
@@ -139,7 +139,7 @@ const AdminProductsPage = () => {
 
                   <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
-                      <Modal.Title>Modal heading</Modal.Title>
+                      <Modal.Title>Editar Producto</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                       <Form>
