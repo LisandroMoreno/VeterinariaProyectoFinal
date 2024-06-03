@@ -13,4 +13,11 @@ export const config = {
   },
 };
 
+export const configImg = {
+  headers: {
+    "content-type": "multipart/form-data",
+    auth: `Bearer ${token}`,
+  },
+};
+
 export default clienteAxios;
