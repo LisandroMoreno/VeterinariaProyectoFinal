@@ -13,6 +13,7 @@ import DetalleCarrito from "../pages/DetalleCarrito";
 import AdminPage from "../pages/AdminPage";
 import AdminProductsPage from "../pages/AdminProductPage";
 import ProfesionalesPage from "../pages/ProfesionalesPage";
+import AdminUsersPage from "../pages/AdminUsersPage";
 
 
 /* Todas las rutas del proyecto - Path / element  */
@@ -25,7 +26,7 @@ const RoutesViews = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/contacto" element={<Contacto />} />
         <Route path="/planes" element={<PlanesPage />} />
-        <Route path="/reservaTurnos" element={<ProfesionalesPage/>} />
+        <Route path="/reservaTurnos" element={<ProfesionalesPage />} />
         <Route path="/productos/:id" element={<DetalleProducto />} />
         <Route path="/sobreNosotros" element={<SobreNosotros />} />
         <Route path="/login" element={<LoginPage />} />
@@ -33,6 +34,7 @@ const RoutesViews = () => {
         <Route path="/detalleCarrito" element={<DetalleCarrito />} />
         <Route path="/home-adminLog" element={<AdminPage />} />
         <Route path="/productos" element={<AdminProductsPage />} />
+        <Route path="/usuarios" element={<AdminUsersPage />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
       <FooterC />
