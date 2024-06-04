@@ -30,7 +30,8 @@ const NavbarC = () => {
           <Container fluid>
             <Navbar.Brand
               as={Link}
-              to={role === "admin" ? "/home-adminLog" : "/"}>
+              to={role === "admin" ? "/home-adminLog" : "/"}
+            >
               <ImageC urlImagen={url} ancho="50" alternativo="logo" />
             </Navbar.Brand>
             <Navbar.Toggle
@@ -49,13 +50,15 @@ const NavbarC = () => {
                     <Nav.Link
                       as={Link}
                       to="/sobreNosotros"
-                      className="my-custom-link">
+                      className="my-custom-link"
+                    >
                       Sobre Nosotros
                     </Nav.Link>
                     <Nav.Link
                       as={Link}
                       to="/contacto"
-                      className="my-custom-link">
+                      className="my-custom-link"
+                    >
                       Contactanos
                     </Nav.Link>
                     <NavDropdown title="Servicios" id="basic-nav-dropdown">
@@ -73,7 +76,8 @@ const NavbarC = () => {
                     <Nav.Link
                       as={Link}
                       to="/pacientes"
-                      className="my-custom-link">
+                      className="my-custom-link"
+                    >
                       Pacientes
                     </Nav.Link>
                     <Nav.Link as={Link} to="/turnos" className="my-custom-link">
@@ -82,13 +86,15 @@ const NavbarC = () => {
                     <Nav.Link
                       as={Link}
                       to="/productos"
-                      className="my-custom-link">
+                      className="my-custom-link"
+                    >
                       Productos
                     </Nav.Link>
                     <Nav.Link
                       as={Link}
                       to="/usuarios"
-                      className="my-custom-link">
+                      className="my-custom-link"
+                    >
                       Usuarios
                     </Nav.Link>
                   </>
@@ -104,14 +110,16 @@ const NavbarC = () => {
                       <Nav.Link
                         as={Link}
                         to="/detalleCarrito"
-                        className="my-custom-link me-2">
+                        className="my-custom-link me-2"
+                      >
                         <i className="fa-solid fa-cart-shopping"></i>
                       </Nav.Link>
 
                       <Nav.Link
                         as={Link}
                         to="/detalleFavorito"
-                        className="my-custom-link me-2">
+                        className="my-custom-link me-2"
+                      >
                         <i className="fa-solid fa-heart fa-1x "></i>
                       </Nav.Link>
                     </div>
@@ -119,7 +127,8 @@ const NavbarC = () => {
                     <NavDropdown
                       title="Mi Cuenta"
                       id="account-nav-dropdown"
-                      className="my-custom-link me-5">
+                      className="my-custom-link me-5"
+                    >
                       <NavDropdown.Item as={Link} to="/misReservas">
                         Mis Reservas
                       </NavDropdown.Item>
@@ -139,7 +148,8 @@ const NavbarC = () => {
                       as={Link}
                       to="/"
                       className="my-custom-link"
-                      onClick={cerrarSesion}>
+                      onClick={cerrarSesion}
+                    >
                       Cerrar Sesion
                     </Nav.Link>
                   </>
@@ -151,7 +161,8 @@ const NavbarC = () => {
                     <Nav.Link
                       as={Link}
                       to="/registro"
-                      className="my-custom-link">
+                      className="my-custom-link"
+                    >
                       Registrarse
                     </Nav.Link>
                   </>

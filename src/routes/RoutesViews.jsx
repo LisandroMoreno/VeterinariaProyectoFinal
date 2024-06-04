@@ -11,10 +11,10 @@ import PlanesPage from "../pages/PlanesPage";
 import Contacto from "../pages/Contacto";
 import DetalleCarrito from "../pages/DetalleCarrito";
 import AdminPage from "../pages/AdminPage";
+import DetalleFavorito from "../pages/DetalleFavorito";
 import AdminProductsPage from "../pages/AdminProductPage";
 import ProfesionalesPage from "../pages/ProfesionalesPage";
 import AdminUsersPage from "../pages/AdminUsersPage";
-
 
 /* Todas las rutas del proyecto - Path / element  */
 
@@ -32,6 +32,7 @@ const RoutesViews = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegisterPage />} />
         <Route path="/detalleCarrito" element={<DetalleCarrito />} />
+        <Route path="/detalleFavorito" element={<DetalleFavorito />} />
         <Route path="/home-adminLog" element={<AdminPage />} />
         <Route path="/productos" element={<AdminProductsPage />} />
         <Route path="/usuarios" element={<AdminUsersPage />} />

@@ -50,7 +50,7 @@
   white-space: nowrap;
 }
 
-.card-vet .btn-primary {
+.card-vet .btn-card {
   background-color: black;
   border: none;
   color: #fff;
@@ -61,7 +61,7 @@
   text-decoration: none;
 }
 
-.card-vet .btn-primary:hover {
+.card-vet .btn-card:hover {
   background-color: white;
   color: black;
 }
@@ -75,4 +75,19 @@
   .card-vet .card-img-top img {
     height: 200px; /* Ajustar la altura de la imagen para dispositivos móviles */
   }
+}
+.btn-card {
+  margin-right: 10px;
+}
+.btn-card-borrar {
+  background-color: red;
+  color: white;
+  border: none;
+}
+.btn-card-borrar .fa-trash {
+  color: white;
+}
+.btn-card,
+.btn-card-borrar {
+  margin-bottom: 5px;
 }

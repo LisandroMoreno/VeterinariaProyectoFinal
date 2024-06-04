@@ -87,9 +87,7 @@ const DetalleCarrito = () => {
                     <tr key={index}>
                       <td>
                         <img
-                          src={
-                            product.image || "https://via.placeholder.com/150"
-                          }
+                          src={product.image || ""}
                           alt={product.titulo}
                           style={{ width: "50px", height: "50px" }}
                         />
