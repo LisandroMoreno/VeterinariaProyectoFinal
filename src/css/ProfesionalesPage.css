@@ -1,0 +1,68 @@
+.descripcion-Profesionales {
+  font-weight: 450;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 30px;
+  padding: auto;
+}
+
+.Circulo {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  margin: 0 auto 40px auto;
+  border: 1px solid #000000;
+  position: relative;
+  border-radius: 50%;
+}
+
+.Circulo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profesional {
+  margin: 0 3%;
+  flex: 1; 
+}
+
+.info-Profesional {
+  border: 2px solid #125291;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 2% 12px 3%;
+}
+
+.NombreProfesional {
+  text-align: center;
+  font-size: 30px;
+  margin: 25px 0 5px 0;
+  padding: auto;
+}
+
+.ProfesionalDescripcion {
+  text-align: center;
+}
+
+.Profesionales-container {
+  display: flex;
+  flex-wrap: wrap; /* Añadimos flex-wrap para que los contenedores se ajusten en varias filas */
+  justify-content: center; /* Centramos los contenedores horizontalmente */
+}
+
+@media (max-width: 768px) {
+  .profesional {
+    margin: 0 3%;
+  }
+}
+
+@media (max-width: 600px) {
+  .profesional {
+    margin: 10px 10px;
+    width: 100%; /* Cambiamos el ancho para que ocupen todo el ancho disponible */
+    max-width: none; /* Quitamos el ancho máximo para que puedan expandirse completamente */
+  }
+}
