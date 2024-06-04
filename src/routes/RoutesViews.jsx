@@ -12,6 +12,8 @@ import Contacto from "../pages/Contacto";
 import DetalleCarrito from "../pages/DetalleCarrito";
 import AdminPage from "../pages/AdminPage";
 import AdminProductsPage from "../pages/AdminProductPage";
+import ProfesionalesPage from "../pages/ProfesionalesPage";
+
 
 /* Todas las rutas del proyecto - Path / element  */
 
@@ -23,6 +25,7 @@ const RoutesViews = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/contacto" element={<Contacto />} />
         <Route path="/planes" element={<PlanesPage />} />
+        <Route path="/reservaTurnos" element={<ProfesionalesPage/>} />
         <Route path="/productos/:id" element={<DetalleProducto />} />
         <Route path="/sobreNosotros" element={<SobreNosotros />} />
         <Route path="/login" element={<LoginPage />} />
