@@ -11,6 +11,7 @@ import PlanesPage from "../pages/PlanesPage";
 import Contacto from "../pages/Contacto";
 import DetalleCarrito from "../pages/DetalleCarrito";
 import AdminPage from "../pages/AdminPage";
+import DetalleFavorito from "../pages/DetalleFavorito";
 
 /* Todas las rutas del proyecto - Path / element  */
 
@@ -27,6 +28,7 @@ const RoutesViews = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegisterPage />} />
         <Route path="/detalleCarrito" element={<DetalleCarrito />} />
+        <Route path="/detalleFavorito" element={<DetalleFavorito />} />
         <Route path="/home-adminLog" element={<AdminPage />} />
         <Route path="*" element={<Error404 />} />
       </Routes>

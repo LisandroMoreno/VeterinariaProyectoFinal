@@ -40,9 +40,36 @@ const DetalleProducto = () => {
     setPrecioTotal(nuevaCantidad * product.precio);
   };
 
-  const agregarFavoritos = () => {
-    // Lógica para agregar a favoritos
-    console.log("Agregado a favoritos:", product.titulo);
+  const agregarFavoritos = async () => {
+    const token = JSON.parse(sessionStorage.getItem("token"));
+
+    if (token) {
+      try {
+        const agregarProducto = await clienteAxios.post(
+          `/favoritos/${params.id}`,
+          { cantidad }, // Enviar la cantidad seleccionada al backend
+          config
+        );
+        console.log(agregarProducto);
+
+        switch (agregarProducto.status) {
+          case 200:
+            alert("Producto enviado a Favoritos");
+            break;
+          case 422:
+            alert("El Producto ya está en el Favoritos");
+            break;
+          default:
+            alert("El Producto ya no está disponible");
+            break;
+        }
+      } catch (error) {
+        console.error("Error al agregar el producto al favoritos", error);
+        alert("Error al agregar el producto al favoritos");
+      }
+    } else {
+      location.href = "/login";
+    }
   };
 
   const agregarCarrito = async () => {
@@ -90,7 +117,7 @@ const DetalleProducto = () => {
         </Col>
         <Col xs="12" md="6">
           <div className="text-end mt-4">
-            <a href="" onClick={agregarFavoritos}>
+            <a onClick={agregarFavoritos}>
               <i className="fa-solid fa-heart fa-2x icono-favorito"></i>
             </a>
           </div>
