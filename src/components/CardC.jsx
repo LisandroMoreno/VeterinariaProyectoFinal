@@ -1,22 +1,42 @@
-import React, { useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 import "../css/Card.css";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 
-const CardC = ({ idProd, titulo, image, precio, descripcion, getAllCart }) => {
+const CardC = ({
+  idProd,
+  titulo,
+  image,
+  precio,
+  descripcion,
+  getAllFavoritos,
+}) => {
   const location = useLocation();
   const isDetalleFavorito = location.pathname.includes("detalleFavorito");
 
   const eliminarProducto = async (id) => {
     try {
       const response = await clienteAxios.delete(`/favoritos/${id}`, config);
-      console.log("Producto eliminado:", response.data);
-      // Actualiza el estado favs eliminando el producto
-      getAllCart(); // Llama a getAllCart para actualizar los favoritos en DetalleFavorito
+      Swal.fire({
+        icon: "success",
+        title: "Producto eliminado",
+        text: "El producto ha sido eliminado de tus favoritos.",
+      });
+      getAllFavoritos();
     } catch (error) {
-      console.error("Error al eliminar el producto del carrito:", error);
+      mostrarError("Error al eliminar el producto de favoritos", error);
     }
+  };
+
+  const mostrarError = (titulo, error) => {
+    Swal.fire({
+      icon: "error",
+      title: titulo,
+      text: "Hubo un problema al eliminar el producto de tus favoritos. Por favor, intenta nuevamente.",
+      footer: `<a href="mailto:soporte@PawsAndClaws.com">Contactar soporte</a>`,
+    });
+    console.error(titulo, error);
   };
 
   return (

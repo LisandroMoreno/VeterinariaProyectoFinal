@@ -1,27 +1,37 @@
 import React, { useEffect, useState } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 import CardC from "../components/CardC";
-import { Col, Container, Row } from "react-bootstrap";
 import { titlePage } from "../helpers/titlePages";
+import Swal from "sweetalert2";
 
 const DetalleFavorito = () => {
   titlePage(`Detalle de Favoritos`);
 
-  const [favs, setFavs] = useState([]); // Inicializa el estado con un array vacío
+  const [favs, setFavs] = useState([]);
 
-  const getAllCart = async () => {
+  const getAllFavoritos = async () => {
     try {
-      const getFavs = await clienteAxios.get(`/favoritos`, config);
-      console.log(getFavs.data.favorito.products);
-      setFavs(getFavs.data.favorito.products);
+      const response = await clienteAxios.get(`/favoritos`, config);
+      setFavs(response.data.favorito.products);
     } catch (error) {
-      console.error("Error al obtener el carrito:", error);
+      mostrarError("Error al obtener los favoritos", error);
     }
   };
 
   useEffect(() => {
-    getAllCart();
+    getAllFavoritos();
   }, []);
+
+  const mostrarError = (titulo, error) => {
+    Swal.fire({
+      icon: "error",
+      title: titulo,
+      text: "Hubo un problema al obtener la información de tus favoritos. Por favor, intenta nuevamente.",
+      footer: `<a href="mailto:soporte@PawsAndClaws.com">Contactar soporte</a>`,
+    });
+    console.error(titulo, error);
+  };
 
   return (
     <>
@@ -38,7 +48,7 @@ const DetalleFavorito = () => {
                 titulo={product.titulo}
                 descripcion={product.descripcion}
                 precio={product.precio}
-                getAllCart={getAllCart} // Pasa getAllCart como prop
+                getAllFavoritos={getAllFavoritos}
               />
             </Col>
           ))}
