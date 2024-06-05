@@ -102,7 +102,7 @@ const DetalleCarrito = () => {
                     <th>Cantidad</th>
                     <th>Precio</th>
                     <th>Subtotal</th>
-                    <th>Editar</th>
+                    <th>Borrar</th>
                   </tr>
                 </thead>
                 <tbody>
