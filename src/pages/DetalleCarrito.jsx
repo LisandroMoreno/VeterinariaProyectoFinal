@@ -2,21 +2,34 @@ import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import { titlePage } from "../helpers/titlePages";
 import { useEffect, useState } from "react";
 import clienteAxios, { config } from "../helpers/clienteAxios";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import "../css/DetalleCarrito.css";
 
 const DetalleCarrito = () => {
   titlePage("Detalle de Carrito");
 
-  const token = JSON.parse(sessionStorage.getItem("token")); // Obtén el token desde el almacenamiento de sesión
-  const [carts, setCart] = useState([]); // Inicializa el estado con un array vacío
+  const navigate = useNavigate();
+
+  const [carts, setCart] = useState([]);
 
   const getAllCart = async () => {
     try {
       const getCart = await clienteAxios.get("/carritos", config);
-      console.log(getCart.data.cart.products);
       setCart(getCart.data.cart.products);
     } catch (error) {
-      console.error("Error al obtener el carrito:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error al cargar el carrito",
+        text: "Hubo un problema al obtener la información de tu carrito. Por favor, intenta nuevamente. Si el problema persiste, contacta a nuestro soporte técnico.",
+        footer: `<a href="mailto:soporte@PawsAndClaws.com">Contactar soporte</a>`,
+      });
+      registrarError("Error al obtener el carrito:", error);
     }
+  };
+
+  const handlePagar = () => {
+    navigate("/*");
   };
 
   useEffect(() => {
@@ -30,8 +43,6 @@ const DetalleCarrito = () => {
         { cantidad },
         config
       );
-      console.log("Actualización de cantidad:", response.data);
-      // Actualiza la cantidad en el estado carts
       setCart((prevCarts) =>
         prevCarts.map((cartItem) => {
           if (cartItem._id === id) {
@@ -44,22 +55,34 @@ const DetalleCarrito = () => {
         })
       );
     } catch (error) {
-      console.error("Error al actualizar la cantidad del producto:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error al actualizar la cantidad",
+        text: "No se pudo actualizar la cantidad del producto. Por favor, intenta nuevamente.",
+        footer: `<a href="mailto:soporte@PawsAndClaws.com">Contactar soporte</a>`,
+      });
+      registrarError("Error al actualizar la cantidad del producto:", error);
     }
   };
 
   const eliminarProducto = async (id) => {
     try {
-      const response = await clienteAxios.delete(`/carritos/${id}`, config);
-      console.log("Producto eliminado:", response.data);
-      // Actualiza el estado carts eliminando el producto
+      await clienteAxios.delete(`/carritos/${id}`, config);
       setCart((prevCarts) =>
         prevCarts.filter((cartItem) => cartItem._id !== id)
       );
     } catch (error) {
-      console.error("Error al eliminar el producto del carrito:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error al eliminar el producto",
+        text: "No se pudo eliminar el producto del carrito. Por favor, intenta nuevamente.",
+        footer: `<a href="mailto:soporte@PawsAndClaws.com">Contactar soporte</a>`,
+      });
+      registrarError("Error al eliminar el producto del carrito:", error);
     }
   };
+
+  const registrarError = (mensaje, error) => {};
 
   return (
     <>
@@ -151,7 +174,9 @@ const DetalleCarrito = () => {
               </Table>
             </div>
             <div className="d-flex justify-content-center justify-content-md-end my-3">
-              <Button className="">Pagar</Button>
+              <Button className="btnForm" onClick={handlePagar}>
+                Pagar
+              </Button>
             </div>
           </Col>
         </Row>

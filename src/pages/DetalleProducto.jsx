@@ -79,15 +79,16 @@ const DetalleProducto = () => {
         });
       } else {
         mostrarError("Error al agregar el producto a favoritos", error);
+      location.href = "/login";
+      return;
       }
     }
   };
 
   const agregarCarrito = async () => {
     const token = JSON.parse(sessionStorage.getItem("token"));
-
     if (!token) {
-      window.location.href = "/login";
+      location.href = "/login";
       return;
     }
 
