@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Col,
   Container,
@@ -6,14 +7,15 @@ import {
   InputGroup,
   FormControl,
 } from "react-bootstrap";
-import { titlePage } from "../helpers/titlePages";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 import ImageC from "../components/ImageC";
+import Swal from "sweetalert2";
+import { titlePage } from "../helpers/titlePages";
 import "../css/DetalleProducto.css";
 
 const DetalleProducto = () => {
+  const navigate = useNavigate();
   const params = useParams();
   const [product, setProduct] = useState({});
   const [cantidad, setCantidad] = useState(1);
@@ -26,7 +28,7 @@ const DetalleProducto = () => {
       setPrecioTotal(response.data.product.precio);
       titlePage(`${response.data.product.titulo}`);
     } catch (error) {
-      console.error("Error al obtener el producto:", error);
+      mostrarError("Error al obtener el producto", error);
     }
   };
 
@@ -43,65 +45,97 @@ const DetalleProducto = () => {
   const agregarFavoritos = async () => {
     const token = JSON.parse(sessionStorage.getItem("token"));
 
-    if (token) {
-      try {
-        const agregarProducto = await clienteAxios.post(
-          `/favoritos/${params.id}`,
-          { cantidad }, // Enviar la cantidad seleccionada al backend
-          config
-        );
-        console.log(agregarProducto);
+    if (!token) {
+      window.location.href = "/login";
+      return;
+    }
 
-        switch (agregarProducto.status) {
-          case 200:
-            alert("Producto enviado a Favoritos");
-            break;
-          case 422:
-            alert("El Producto ya está en el Favoritos");
-            break;
-          default:
-            alert("El Producto ya no está disponible");
-            break;
-        }
-      } catch (error) {
-        console.error("Error al agregar el producto al favoritos", error);
-        alert("Error al agregar el producto al favoritos");
+    try {
+      const agregarProducto = await clienteAxios.post(
+        `/favoritos/${params.id}`,
+        { cantidad },
+        config
+      );
+
+      if (agregarProducto.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Producto agregado a favoritos",
+          text: "El producto fue enviado a tus favoritos.",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Producto no disponible",
+          text: "El producto seleccionado no está disponible.",
+        });
       }
-    } else {
-      location.href = "/login";
+    } catch (error) {
+      if (error.response.status === 422) {
+        Swal.fire({
+          icon: "warning",
+          title: "Producto ya existe en favoritos",
+          text: "Este producto ya está en tus favoritos.",
+        });
+      } else {
+        mostrarError("Error al agregar el producto a favoritos", error);
+      }
     }
   };
 
   const agregarCarrito = async () => {
     const token = JSON.parse(sessionStorage.getItem("token"));
 
-    if (token) {
-      try {
-        const agregarProducto = await clienteAxios.post(
-          `/carritos/${params.id}`,
-          { cantidad }, // Enviar la cantidad seleccionada al backend
-          config
-        );
-        console.log(agregarProducto);
-
-        switch (agregarProducto.status) {
-          case 200:
-            alert("Producto enviado a Carrito");
-            break;
-          case 422:
-            alert("El Producto ya está en el Carrito");
-            break;
-          default:
-            alert("El Producto ya no está disponible");
-            break;
-        }
-      } catch (error) {
-        console.error("Error al agregar el producto al carrito", error);
-        alert("Error al agregar el producto al carrito");
-      }
-    } else {
-      location.href = "/login";
+    if (!token) {
+      window.location.href = "/login";
+      return;
     }
+
+    try {
+      const agregarProducto = await clienteAxios.post(
+        `/carritos/${params.id}`,
+        { cantidad },
+        config
+      );
+
+      if (agregarProducto.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Producto agregado al carrito",
+          text: "El producto fue enviado a tu carrito.",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Producto no disponible",
+          text: "El producto seleccionado no está disponible.",
+        });
+      }
+    } catch (error) {
+      if (error.response.status === 422) {
+        Swal.fire({
+          icon: "warning",
+          title: "Producto ya existe en el carrito",
+          text: "Este producto ya está en tu carrito.",
+        });
+      } else {
+        mostrarError("Error al agregar el producto al carrito", error);
+      }
+    }
+  };
+
+  const mostrarError = (titulo, error) => {
+    Swal.fire({
+      icon: "error",
+      title: titulo,
+      text: "Hubo un problema al realizar esta acción. Por favor, intenta nuevamente.",
+      footer: `<a href="mailto:soporte@PawsAndClaws.com">Contactar soporte</a>`,
+    });
+    console.error(titulo, error);
+  };
+
+  const handleComprar = () => {
+    navigate("/*");
   };
 
   return (
@@ -138,7 +172,12 @@ const DetalleProducto = () => {
                   onChange={actualizarCantidad}
                 />
               </InputGroup>
-              <Button className="btn-customProduct mb-3">Comprar</Button>
+              <Button
+                className="btn-customProduct mb-3"
+                onClick={handleComprar}
+              >
+                Comprar
+              </Button>
               <Button
                 onClick={agregarCarrito}
                 className="btn-customProduct mb-3"
