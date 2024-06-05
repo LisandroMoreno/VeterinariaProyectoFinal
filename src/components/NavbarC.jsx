@@ -16,7 +16,7 @@ const NavbarC = () => {
   const cerrarSesion = () => {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("role");
-    navigate("/"); // Redirige a la página de inicio
+    navigate("/");
   };
 
   const url =
@@ -27,18 +27,37 @@ const NavbarC = () => {
       <div className="navbar-container">
         <div className="pisadas-container"></div>
         <Navbar expand="lg" className="bg fixed-top">
-          <Container fluid>
+          <Container fluid className="d-flex align-items-center">
             <Navbar.Brand
               as={Link}
               to={role === "admin" ? "/home-adminLog" : "/"}
+              className="me-auto"
             >
               <ImageC urlImagen={url} ancho="50" alternativo="logo" />
             </Navbar.Brand>
+            {token && role === "user" && (
+              <div className="d-flex justify-content-center mx-2 order-lg-2 d-lg-none d-block">
+                <Nav.Link
+                  as={Link}
+                  to="/detalleCarrito"
+                  className="my-custom-link me-4"
+                >
+                  <i className="fa-solid fa-cart-shopping fa-2x"></i>
+                </Nav.Link>
+                <Nav.Link
+                  as={Link}
+                  to="/detalleFavorito"
+                  className="my-custom-link"
+                >
+                  <i className="fa-solid fa-heart fa-2x"></i>
+                </Nav.Link>
+              </div>
+            )}
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
-              className="custom-border"
+              className="custom-border ms-auto order-3"
             />
-            <Navbar.Collapse id="basic-navbar-nav">
+            <Navbar.Collapse id="basic-navbar-nav" className="order-lg-2">
               <Nav className="separator d-lg-none mt-4" />
               <Nav.Link className="text-white"> </Nav.Link>
               <Nav className="me-auto">
@@ -103,26 +122,24 @@ const NavbarC = () => {
               <Nav className="separator d-lg-none">
                 <Nav.Link className="text-white"> </Nav.Link>
               </Nav>
-              <Nav>
+              <Nav className="d-none d-lg-flex">
                 {token && role === "user" ? (
                   <>
-                    <div className="d-flex align-items-center d-none d-lg-flex">
-                      <Nav.Link
-                        as={Link}
-                        to="/detalleCarrito"
-                        className="my-custom-link me-2"
-                      >
-                        <i className="fa-solid fa-cart-shopping"></i>
-                      </Nav.Link>
+                    <Nav.Link
+                      as={Link}
+                      to="/detalleCarrito"
+                      className="my-custom-link me-2"
+                    >
+                      <i className="fa-solid fa-cart-shopping"></i>
+                    </Nav.Link>
 
-                      <Nav.Link
-                        as={Link}
-                        to="/detalleFavorito"
-                        className="my-custom-link me-2"
-                      >
-                        <i className="fa-solid fa-heart fa-1x "></i>
-                      </Nav.Link>
-                    </div>
+                    <Nav.Link
+                      as={Link}
+                      to="/detalleFavorito"
+                      className="my-custom-link me-2"
+                    >
+                      <i className="fa-solid fa-heart fa-1x "></i>
+                    </Nav.Link>
 
                     <NavDropdown
                       title="Mi Cuenta"
