@@ -43,64 +43,67 @@ const DetalleProducto = () => {
   const agregarFavoritos = async () => {
     const token = JSON.parse(sessionStorage.getItem("token"));
 
+    if (!token) {
+      location.href = "/login";
+      return;
+    }
+
     if (token) {
       try {
         const agregarProducto = await clienteAxios.post(
           `/favoritos/${params.id}`,
-          { cantidad }, // Enviar la cantidad seleccionada al backend
+          { cantidad },
           config
         );
-        console.log(agregarProducto);
 
-        switch (agregarProducto.status) {
-          case 200:
-            alert("Producto enviado a Favoritos");
-            break;
-          case 422:
-            alert("El Producto ya está en el Favoritos");
-            break;
-          default:
-            alert("El Producto ya no está disponible");
-            break;
+        if (agregarProducto.status === 200) {
+          alert("El producto fue enviado al favoritos");
+          return;
+        } else {
+          alert("Producto no disponible");
+          return;
         }
       } catch (error) {
-        console.error("Error al agregar el producto al favoritos", error);
+        if (error.response.status === 422) {
+          alert("Producto ya existe en el favoritos");
+          return;
+        } else
+          console.error("Error al agregar el producto al favoritos", error);
         alert("Error al agregar el producto al favoritos");
+        return;
       }
-    } else {
-      location.href = "/login";
     }
   };
 
   const agregarCarrito = async () => {
     const token = JSON.parse(sessionStorage.getItem("token"));
+    if (!token) {
+      location.href = "/login";
+      return;
+    }
 
     if (token) {
       try {
         const agregarProducto = await clienteAxios.post(
           `/carritos/${params.id}`,
-          { cantidad }, // Enviar la cantidad seleccionada al backend
+          { cantidad },
           config
         );
-        console.log(agregarProducto);
-
-        switch (agregarProducto.status) {
-          case 200:
-            alert("Producto enviado a Carrito");
-            break;
-          case 422:
-            alert("El Producto ya está en el Carrito");
-            break;
-          default:
-            alert("El Producto ya no está disponible");
-            break;
+        if (agregarProducto.status === 200) {
+          alert("El producto fue enviado al carrito");
+          return;
+        } else {
+          alert("Producto no disponible");
+          return;
         }
       } catch (error) {
-        console.error("Error al agregar el producto al carrito", error);
+        if (error.response.status === 422) {
+          alert("Producto ya existe en el carrito");
+          return;
+        } else console.error("Error al agregar el producto al carrito", error);
         alert("Error al agregar el producto al carrito");
+        return;
       }
-    } else {
-      location.href = "/login";
     }
   };
 
