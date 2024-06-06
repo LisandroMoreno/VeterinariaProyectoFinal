@@ -72,9 +72,7 @@ const AdminUsersPage = () => {
   const handleClickStatus = async (idUser) => {
     try {
       const confirmAction = confirm(
-        `Estás seguro de que quieres ${
-          userEdit.deleted ? "habilitar" : "deshabilitar"
-        } a este usuario?`
+        `Estás seguro de que quieres modificar el estado de este usuario?`
       );
 
       if (confirmAction) {

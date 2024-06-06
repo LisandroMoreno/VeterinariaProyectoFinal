@@ -5,7 +5,6 @@ import { titlePage } from "../helpers/titlePages";
 const Error404 = () => {
   titlePage("Error404");
   const atras = () => {
-    // Navega a la página anterior en el historial del navegador
     window.history.back();
   };
 

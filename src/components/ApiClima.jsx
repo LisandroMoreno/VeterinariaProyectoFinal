@@ -45,7 +45,7 @@ const ApiClima = ({ onSearch }) => {
   };
 
   useEffect(() => {
-    // Fetch current weather data
+
     axios
       .get(currentWeatherApiUrl)
       .then((response) => {
@@ -57,7 +57,7 @@ const ApiClima = ({ onSearch }) => {
         console.error("Error fetching current weather data:", error);
       });
 
-    // Fetch forecast data to get min and max temperatures of the day
+
     axios
       .get(forecastApiUrl)
       .then((response) => {

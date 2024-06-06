@@ -8,7 +8,7 @@
   align-items: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  margin: 0 auto; /* Centramos el contenedor */
+  margin: 0 auto;
   box-sizing: border-box;
   transition: all 0.3s ease;
 }
@@ -82,10 +82,9 @@
   font-size: 17px;
 }
 
-/* Media queries para pantallas más pequeñas */
 @media only screen and (max-width: 650px) {
   #weatherWrapper {
-    width: 80%; /* Ajusta el ancho para pantallas más pequeñas */
+    width: 80%;
     max-width: none;
   }
 
@@ -150,57 +149,54 @@
   }
 }
 
-/* SEARCH */
-
 .search-container {
   display: flex;
   align-items: center;
   position: relative;
-  background-color: #f8f8f8; /* Color de fondo más claro para un aspecto limpio */
-  padding: 8px; /* Reducir padding para un diseño más compacto */
-  border-radius: 25px; /* Bordes más redondeados para un diseño moderno */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  max-width: 600px; /* Ajusta este valor según tus necesidades */
-  width: 100%; /* Centra el contenedor horizontalmente y añade margen superior e inferior */
-  box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
+  background-color: #f8f8f8;
+  padding: 8px;
+  border-radius: 25px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .search-input {
-  border: none; /* Eliminar el borde para un diseño más limpio */
-  border-radius: 25px 0 0 25px; /* Bordes redondeados solo en el lado izquierdo */
-  padding: 10px 15px; /* Padding ajustado */
+  border: none;
+  border-radius: 25px 0 0 25px;
+  padding: 10px 15px;
   font-size: 16px;
   flex: 1;
-  outline: none; /* Eliminar el borde de enfoque predeterminado */
+  outline: none;
 }
 
 .search-button {
   background-color: #3992cdec;
-  border: none; /* Eliminar el borde */
+  border: none;
   color: white;
   padding: 10px 20px;
-  border-radius: 0 25px 25px 0; /* Bordes redondeados solo en el lado derecho */
+  border-radius: 0 25px 25px 0;
   cursor: pointer;
-  transition: background-color 0.3s ease; /* Transición suave para el hover */
+  transition: background-color 0.3s ease;
 }
 
 .search-button:hover {
   background-color: black;
 }
 
-/* Media queries para pantallas más pequeñas */
 @media (max-width: 400px) {
   .search-container {
-    padding: 5px; /* Reducir padding en pantallas más pequeñas */
-    border-radius: 15px; /* Bordes menos redondeados en pantallas más pequeñas */
+    padding: 5px;
+    border-radius: 15px;
   }
 
   .search-input {
-    padding: 8px 10px; /* Reducir padding en pantallas más pequeñas */
-    font-size: 14px; /* Reducir tamaño de fuente en pantallas más pequeñas */
+    padding: 8px 10px;
+    font-size: 14px;
   }
 
   .search-button {
-    padding: 8px 15px; /* Reducir padding en pantallas más pequeñas */
+    padding: 8px 15px;
   }
 }

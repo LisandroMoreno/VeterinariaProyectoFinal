@@ -17,8 +17,6 @@ import ProfesionalesPage from "../pages/ProfesionalesPage";
 import AdminUsersPage from "../pages/AdminUsersPage";
 import TurnosPage from "../pages/TurnosPage";
 
-/* Todas las rutas del proyecto - Path / element  */
-
 const RoutesViews = () => {
   return (
     <>

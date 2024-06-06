@@ -37,7 +37,6 @@ const PlanesPage = () => {
     console.log(values);
     try {
       const response = await fetch("http://localhost:3001/api/planes/send", {
-        // Cambia la URL aquí
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +60,6 @@ const PlanesPage = () => {
     setShowAlert(true);
     actions.setSubmitting(false);
 
-    // Ocultar la alerta después de 3 segundos
     setTimeout(() => setShowAlert(false), 3000);
   };
 
@@ -178,16 +176,14 @@ const PlanesPage = () => {
           <Alert
             variant={alertVariant}
             onClose={() => setShowAlert(false)}
-            dismissible
-          >
+            dismissible>
             {alertMessage}
           </Alert>
         )}
         <Formik
           initialValues={{ nombre: "", email: "", asunto: "", mensaje: "" }}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-        >
+          onSubmit={handleSubmit}>
           {({
             values,
             errors,
@@ -233,8 +229,7 @@ const PlanesPage = () => {
                   name="asunto"
                   value={values.asunto}
                   onChange={handleChange}
-                  isInvalid={touched.asunto && !!errors.asunto}
-                >
+                  isInvalid={touched.asunto && !!errors.asunto}>
                   <option value="">Selecciona un asunto</option>
                   <option value="Primeros Pasos">Plan "Primeros pasos"</option>
                   <option value="Madurando">Plan "Madurando"</option>
@@ -266,8 +261,7 @@ const PlanesPage = () => {
                   variant="primary"
                   type="submit"
                   className="button-custom mt-3"
-                  disabled={isSubmitting}
-                >
+                  disabled={isSubmitting}>
                   Enviar
                 </Button>
               </div>

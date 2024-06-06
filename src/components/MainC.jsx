@@ -23,7 +23,7 @@ const MainC = () => {
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
 
-  const itemsPerPage = 10; // Número de productos por página
+  const itemsPerPage = 10; 
 
   const getProducts = async (categoria, page) => {
     try {
@@ -52,7 +52,7 @@ const MainC = () => {
 
   const handleCategoryClick = (categoria) => {
     setSelectedCategory(categoria);
-    getProducts(categoria, 1); // cargar productos cuando cambia la categoría
+    getProducts(categoria, 1);
   };
 
   const filteredProducts =
@@ -91,7 +91,7 @@ const MainC = () => {
                   <ImageC
                     urlImagen="https://www.animalshealth.es/fileuploads/news/mesa-de-trabajo-11_790.jpg"
                     alternativo="Descripción de la primera imagen"
-                    ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
+                    ancho={"100%"} 
                   />
                 </div>
                 <Carousel.Caption>
@@ -120,7 +120,7 @@ const MainC = () => {
                   <ImageC
                     urlImagen="https://res.cloudinary.com/duexhxoyy/image/upload/v1717648174/foto_modif_cvfkhr.jpg"
                     alternativo="Descripción de la segunda imagen"
-                    ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
+                    ancho={"100%"} 
                   />
                 </div>
                 <Carousel.Caption>
@@ -148,7 +148,7 @@ const MainC = () => {
                   <ImageC
                     urlImagen="https://res.cloudinary.com/duexhxoyy/image/upload/v1717648485/foto_pet_jntf4t.png"
                     alternativo="Descripción de la tercera imagen"
-                    ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
+                    ancho={"100%"} 
                   />
                 </div>
                 <Carousel.Caption>
@@ -179,7 +179,8 @@ const MainC = () => {
                 className="img-fluid"
                 urlImagen="https://cdn.ready-market.com.tw/78d8bdd7/Templates/pic/Dog-Toy-1.jpg"
                 alternativo="Descripción de la imagen derecha 1"
-                ancho={"100%"}
+                ancho={"100%"} 
+
               />
               <div className="offer-text">
                 <h6 className="text-white text-uppercase">Descuento 20%</h6>
@@ -195,6 +196,7 @@ const MainC = () => {
                 urlImagen="https://cdn.ready-market.com.tw/78d8bdd7/Templates/pic/Dog-Toy-1.jpg"
                 alternativo="Descripción de la imagen derecha 2"
                 ancho={"100%"}
+
               />
               <div className="offer-text">
                 <h6 className="text-white text-uppercase">Descuento 20%</h6>

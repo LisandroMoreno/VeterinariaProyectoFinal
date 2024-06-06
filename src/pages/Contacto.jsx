@@ -58,7 +58,7 @@ const Contacto = () => {
     setShowAlert(true);
     setSubmitting(false);
 
-    // Ocultar la alerta después de 3 segundos y recargar la página
+    
     setTimeout(() => {
       setShowAlert(false);
       window.location.reload();

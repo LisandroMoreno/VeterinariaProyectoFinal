@@ -25,7 +25,7 @@
 
 .profesional {
   margin: 0 3%;
-  flex: 1; 
+  flex: 1;
 }
 
 .info-Profesional {
@@ -49,8 +49,8 @@
 
 .Profesionales-container {
   display: flex;
-  flex-wrap: wrap; /* Añadimos flex-wrap para que los contenedores se ajusten en varias filas */
-  justify-content: center; /* Centramos los contenedores horizontalmente */
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 @media (max-width: 768px) {
@@ -62,7 +62,7 @@
 @media (max-width: 600px) {
   .profesional {
     margin: 10px 10px;
-    width: 100%; /* Cambiamos el ancho para que ocupen todo el ancho disponible */
-    max-width: none; /* Quitamos el ancho máximo para que puedan expandirse completamente */
+    width: 100%;
+    max-width: none;
   }
 }
