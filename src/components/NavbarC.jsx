@@ -122,6 +122,27 @@ const NavbarC = () => {
               <Nav className="separator d-lg-none">
                 <Nav.Link className="text-white"> </Nav.Link>
               </Nav>
+              <Nav className="d-flex d-lg-none">
+                {token && role === "user" && (
+                  <NavDropdown
+                    title="Mi Cuenta"
+                    id="account-nav-dropdown"
+                    className="my-custom-link me-5"
+                  >
+                    <NavDropdown.Item as={Link} to="/misReservas">
+                      Mis Reservas
+                    </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item as={Link} to="/misDatos">
+                      Mis Datos
+                    </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item as={Link} to="/" onClick={cerrarSesion}>
+                      Cerrar Sesión
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                )}
+              </Nav>
               <Nav className="d-none d-lg-flex">
                 {token && role === "user" ? (
                   <>
