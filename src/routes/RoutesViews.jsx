@@ -16,6 +16,7 @@ import AdminProductsPage from "../pages/AdminProductPage";
 import ProfesionalesPage from "../pages/ProfesionalesPage";
 import AdminUsersPage from "../pages/AdminUsersPage";
 import TurnosPage from "../pages/TurnosPage";
+import PrivateRoute from "../components/PrivateRoute";
 
 const RoutesViews = () => {
   return (
@@ -30,11 +31,39 @@ const RoutesViews = () => {
         <Route path="/sobreNosotros" element={<SobreNosotros />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegisterPage />} />
-        <Route path="/detalleCarrito" element={<DetalleCarrito />} />
-        <Route path="/detalleFavorito" element={<DetalleFavorito />} />
-        <Route path="/home-adminLog" element={<AdminPage />} />
-        <Route path="/productos" element={<AdminProductsPage />} />
-        <Route path="/usuarios" element={<AdminUsersPage />} />
+        <Route path="/detalleCarrito" element={
+         <PrivateRoute role={"user"}>
+          <DetalleCarrito />
+         </PrivateRoute>
+        } />
+
+
+        <Route path="/detalleFavorito" element={
+          <PrivateRoute role={"user"}>
+            <DetalleFavorito />
+          </PrivateRoute>
+        } />
+       
+        <Route path="/home-adminLog" element={
+         <PrivateRoute role={"admin"}>
+          <AdminPage /> 
+          </PrivateRoute>
+        } />
+        
+        <Route path="/productos" element={ 
+          <PrivateRoute role={"admin"}>
+            <AdminProductsPage />
+          </PrivateRoute>
+        } />
+
+         
+        <Route path="/usuarios" element={
+          <PrivateRoute role={"admin"}>
+            <AdminUsersPage />
+          </PrivateRoute>
+        } />
+          
+
         <Route path="/Turnos" element={<TurnosPage />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
