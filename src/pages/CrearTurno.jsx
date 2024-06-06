@@ -79,24 +79,24 @@ const CrearTurno = ({ agregarTurno }) => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/turnos`, formData);
-      agregarTurno(res.data);
-      setFormData({
-        detalleCita: detallesCita[0],
-        veterinario: veterinarios[0].nombre,
-        mascota: '',
-        fecha: new Date(),
-        hora: opcionesTiempo[0]
-      });
-      setFotoVet(veterinarios[0].foto);
-      setTurnosSeleccionados([...turnosSeleccionados, formData.hora]);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/turnos`, formData);
+    agregarTurno(res.data);
+    setFormData({
+      detalleCita: detallesCita[0],
+      veterinario: veterinarios[0].nombre,
+      mascota: '',
+      fecha: new Date(),
+      hora: opcionesTiempo[0]
+    });
+    setFotoVet(veterinarios[0].foto);
+    setTurnosSeleccionados([...turnosSeleccionados, formData.hora]);
+  } catch (err) {
+    console.error('Error al crear el turno:', err);
+  }
+};
 
   const isWeekday = (date) => {
     const day = date.getDay();
@@ -159,7 +159,7 @@ const CrearTurno = ({ agregarTurno }) => {
               ))}
             </select>
           </div>
-
+          
           <button type="submit">Agendar</button>
         </form>
       </div>

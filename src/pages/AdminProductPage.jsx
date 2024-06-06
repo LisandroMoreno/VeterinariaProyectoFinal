@@ -78,7 +78,7 @@ const AdminProductsPage = () => {
         location.reload();
       }
 
-      console.log(updateProd);
+      
     } catch (error) {
       console.log(error);
     }

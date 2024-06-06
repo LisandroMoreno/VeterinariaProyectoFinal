@@ -77,7 +77,7 @@ const LoginPage = () => {
           });
         } else {
           Swal.fire({
-            icon: "error",
+            icon: "error",      
             title: "Error",
             text: "Error al iniciar sesión. Usuario y/o contraseña equivocada.",
           });

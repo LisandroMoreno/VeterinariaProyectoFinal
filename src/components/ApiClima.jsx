@@ -57,6 +57,7 @@ const ApiClima = ({ onSearch }) => {
         console.error("Error fetching current weather data:", error);
       });
 
+      
 
     axios
       .get(forecastApiUrl)
