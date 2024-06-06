@@ -3,10 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { titlePage } from "../helpers/titlePages";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import Spinner from 'react-bootstrap/Spinner';
 
 const AdminPage = () => {
   titlePage("AdminPage");
   const navigate = useNavigate();
+
+  const token = JSON.parse (sessionStorage.getItem("token"));
+  const role = JSON.parse (sessionStorage.getItem("role"));
 
   const cardsAdmin = [
     {
@@ -28,6 +32,17 @@ const AdminPage = () => {
   ];
 
   return (
+ <>
+    { 
+      !token && role !== 'admin '? (
+   <Spinner animation="border" role="status">
+         <span className="visually-hidden">Loading...</span>
+       </Spinner> 
+         ) : (
+      <h2>Admin Page</h2>
+     )}
+    
+    
     <Container
       fluid
       className="d-flex justify-content-center align-items-center vh-75">
@@ -47,6 +62,7 @@ const AdminPage = () => {
         ))}
       </Row>
     </Container>
+    </>
   );
 };
 
