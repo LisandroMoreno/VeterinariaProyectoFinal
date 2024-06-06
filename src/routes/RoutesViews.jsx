@@ -16,8 +16,6 @@ import AdminProductsPage from "../pages/AdminProductPage";
 import ProfesionalesPage from "../pages/ProfesionalesPage";
 import AdminUsersPage from "../pages/AdminUsersPage";
 
-/* Todas las rutas del proyecto - Path / element  */
-
 const RoutesViews = () => {
   return (
     <>

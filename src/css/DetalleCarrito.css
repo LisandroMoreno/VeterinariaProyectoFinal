@@ -9,10 +9,10 @@
 }
 
 .btnForm:hover {
-  background-color: #2a7dc3; /* Color de fondo al pasar el cursor */
+  background-color: #2a7dc3;
 }
 
 .btnForm:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(54, 150, 246, 0.25); /* Sombra de enfoque */
+  box-shadow: 0 0 0 3px rgba(54, 150, 246, 0.25);
 }
