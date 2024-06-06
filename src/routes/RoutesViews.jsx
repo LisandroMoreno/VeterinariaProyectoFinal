@@ -15,6 +15,7 @@ import DetalleFavorito from "../pages/DetalleFavorito";
 import AdminProductsPage from "../pages/AdminProductPage";
 import ProfesionalesPage from "../pages/ProfesionalesPage";
 import AdminUsersPage from "../pages/AdminUsersPage";
+import TurnosPage from "../pages/TurnosPage";
 
 /* Todas las rutas del proyecto - Path / element  */
 
@@ -36,6 +37,7 @@ const RoutesViews = () => {
         <Route path="/home-adminLog" element={<AdminPage />} />
         <Route path="/productos" element={<AdminProductsPage />} />
         <Route path="/usuarios" element={<AdminUsersPage />} />
+        <Route path="/Turnos" element={<TurnosPage />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
       <FooterC />
