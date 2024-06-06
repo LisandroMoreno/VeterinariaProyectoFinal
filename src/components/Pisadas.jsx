@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "./ImageC";
-import "../css/Pisadas.css"; // Archivo de estilos CSS para las pisadas
+import "../css/Pisadas.css";
 import ImageC from "./ImageC";
 
 const Pisadas = () => {

@@ -6,7 +6,7 @@
   padding: 20px;
   background-color: #f8f9fa;
   border-radius: 8px;
-  max-width: 100%; /* Asegúrate de que el contenedor no desborde */
+  max-width: 100%;
 }
 
 .info-container {
@@ -14,7 +14,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 100%; /* Asegúrate de que el contenedor no desborde */
+  max-width: 100%;
 }
 
 .social-icons {
@@ -55,21 +55,19 @@
 
 iframe {
   width: 100%;
-  max-width: 100%; /* Asegúrate de que el iframe no desborde */
+  max-width: 100%;
   height: 300px;
   border: none;
 }
 
-
 body {
   margin: 0;
   padding: 0;
- overflow-x: hidden; 
+  overflow-x: hidden;
 }
-
 
 @media (max-width: 768px) {
   .social-icons {
-    align-items: center; 
+    align-items: center;
   }
 }

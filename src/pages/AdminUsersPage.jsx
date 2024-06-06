@@ -13,8 +13,8 @@ const AdminUsersPage = () => {
   const [userEdit, setUserEdit] = useState({});
 
   const getUsers = async () => {
-    const allUsers = await clienteAxios.get("/users/enabledUser");
-    setUsers(allUsers.data.getUsersDelFalse);
+    const allUsers = await clienteAxios.get("/users", config);
+    setUsers(allUsers.data.getUsers);
   };
 
   const handleClose = () => setShow(false);
@@ -47,7 +47,7 @@ const AdminUsersPage = () => {
         location.reload();
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error al actualizar el usuario", error);
     }
   };
 
@@ -57,12 +57,38 @@ const AdminUsersPage = () => {
     );
 
     if (confirmDelUser) {
-      const deleteUser = await clienteAxios.delete(`/users/${idUser}`, config);
+      const deleteUser = await clienteAxios.delete(
+        `/users/users/${idUser}`,
+        config
+      );
 
       if (deleteUser.status === 200) {
         alert("Usuario borrado");
         location.reload();
       }
+    }
+  };
+
+  const handleClickStatus = async (idUser) => {
+    try {
+      const confirmAction = confirm(
+        `Estás seguro de que quieres modificar el estado de este usuario?`
+      );
+
+      if (confirmAction) {
+        const statusUser = await clienteAxios.delete(
+          `/users/${idUser}`,
+          config
+        );
+
+        if (statusUser.status === 200) {
+          alert("Estado del usuario actualizado");
+          getUsers();
+        }
+      }
+    } catch (error) {
+      console.error("Error al actualizar el estado del usuario:", error);
+      alert("Error al actualizar el estado del usuario");
     }
   };
 
@@ -73,7 +99,7 @@ const AdminUsersPage = () => {
   return (
     <>
       <div className="d-flex justify-content-center">
-        <div className="table-responsive w-75 mt-5">
+        <div className="table-responsive w-100 mt-5">
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -81,7 +107,8 @@ const AdminUsersPage = () => {
                 <th>Usuario</th>
                 <th>Email</th>
                 <th>Role</th>
-                <th>Editar/Eliminar</th>
+
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -91,9 +118,16 @@ const AdminUsersPage = () => {
                   <td>{user.nombreUsuario}</td>
                   <td>{user.emailUsuario}</td>
                   <td>{user.role === "user" ? "Usuario" : "Administrador"}</td>
+
                   <td>
                     <Button variant="warning" onClick={() => editUser(user)}>
                       Editar
+                    </Button>
+                    <Button
+                      variant={user.deleted ? "success" : "dark"}
+                      onClick={() => handleClickStatus(user._id, user.deleted)}
+                      disabled={user.role === "admin" && true}>
+                      {user.deleted ? "Habilitar" : "Deshabilitar"}
                     </Button>
 
                     <Modal show={show} onHide={handleClose}>
@@ -155,7 +189,7 @@ const AdminUsersPage = () => {
                       className="btn btn-danger"
                       onClick={() => handleClickDel(user._id)}
                       disabled={user.role === "admin" && true}>
-                      Eliminar
+                      <i className="fa-solid fa-trash"></i>
                     </button>
                   </td>
                 </tr>

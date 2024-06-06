@@ -1,19 +1,9 @@
-/* .formImg {
-  background-image: url("https://www.experta.com.ar/blogg/wp-content/uploads/sites/2/2019/01/mascotas.jpg");
+.formImg {
+  position: relative;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   height: 50%;
-  margin: 0;
-  font-family: Arial, sans-serif;
-} */
-
-.formImg {
-  position: relative; /* Necesario para el pseudo-elemento */
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 50%; /* Ajusta la altura según sea necesario */
   margin: 0;
 }
 
@@ -26,8 +16,8 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  opacity: 0.5; /* Ajusta este valor para hacer la imagen más opaca */
-  z-index: -1; /* Asegura que el contenido esté por encima de la imagen */
+  opacity: 0.5;
+  z-index: -1;
 }
 
 .btnForm {

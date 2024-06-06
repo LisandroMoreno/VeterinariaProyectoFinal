@@ -23,7 +23,7 @@ const MainC = () => {
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
 
-  const itemsPerPage = 10; // Número de productos por página
+  const itemsPerPage = 10; 
 
   const getProducts = async (categoria, page) => {
     try {
@@ -52,7 +52,7 @@ const MainC = () => {
 
   const handleCategoryClick = (categoria) => {
     setSelectedCategory(categoria);
-    getProducts(categoria, 1); // cargar productos cuando cambia la categoría
+    getProducts(categoria, 1);
   };
 
   const filteredProducts =
@@ -89,9 +89,9 @@ const MainC = () => {
               <Carousel.Item>
                 <div className="productH2">
                   <ImageC
-                    urlImagen="https://cdn.euroinnova.edu.es/img/subidasEditor/curso-1612925686.webp"
+                    urlImagen="https://www.animalshealth.es/fileuploads/news/mesa-de-trabajo-11_790.jpg"
                     alternativo="Descripción de la primera imagen"
-                    ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
+                    ancho={"100%"} 
                   />
                 </div>
                 <Carousel.Caption>
@@ -107,7 +107,7 @@ const MainC = () => {
                       </p>
                       <a
                         className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInDown"
-                        href="/profesionales"
+                        href="/reservaTurnos"
                       >
                         Ver más
                       </a>
@@ -118,9 +118,9 @@ const MainC = () => {
               <Carousel.Item>
                 <div className="productH2">
                   <ImageC
-                    urlImagen="https://www.animalshealth.es/fileuploads/news/mesa-de-trabajo-11_790.jpg"
+                    urlImagen="https://res.cloudinary.com/duexhxoyy/image/upload/v1717648174/foto_modif_cvfkhr.jpg"
                     alternativo="Descripción de la segunda imagen"
-                    ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
+                    ancho={"100%"} 
                   />
                 </div>
                 <Carousel.Caption>
@@ -135,7 +135,7 @@ const MainC = () => {
                       </p>
                       <a
                         className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInDown"
-                        href="/detallePlanes"
+                        href="/planes"
                       >
                         Ver más
                       </a>
@@ -146,9 +146,9 @@ const MainC = () => {
               <Carousel.Item>
                 <div className="productH2">
                   <ImageC
-                    urlImagen="https://www.animalshealth.es/fileuploads/news/mesa-de-trabajo-11_790.jpg"
+                    urlImagen="https://res.cloudinary.com/duexhxoyy/image/upload/v1717648485/foto_pet_jntf4t.png"
                     alternativo="Descripción de la tercera imagen"
-                    ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
+                    ancho={"100%"} 
                   />
                 </div>
                 <Carousel.Caption>
@@ -163,7 +163,7 @@ const MainC = () => {
                       </p>
                       <a
                         className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInDown"
-                        href="#"
+                        href="#products-section"
                       >
                         Ver más
                       </a>
@@ -179,12 +179,13 @@ const MainC = () => {
                 className="img-fluid"
                 urlImagen="https://cdn.ready-market.com.tw/78d8bdd7/Templates/pic/Dog-Toy-1.jpg"
                 alternativo="Descripción de la imagen derecha 1"
-                ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
+                ancho={"100%"} 
+
               />
               <div className="offer-text">
                 <h6 className="text-white text-uppercase">Descuento 20%</h6>
                 <h3 className="text-white mb-3">Oferta especial</h3>
-                <a href="#" className="btn btn-outline-light py-2 px-4 mt-3">
+                <a href="*" className="btn btn-outline-light py-2 px-4 mt-3">
                   Ver más
                 </a>
               </div>
@@ -194,12 +195,13 @@ const MainC = () => {
                 className="img-fluid"
                 urlImagen="https://cdn.ready-market.com.tw/78d8bdd7/Templates/pic/Dog-Toy-1.jpg"
                 alternativo="Descripción de la imagen derecha 2"
-                ancho={"100%"} // Ancho de la imagen, puedes ajustarlo según tus necesidades
+                ancho={"100%"}
+
               />
               <div className="offer-text">
                 <h6 className="text-white text-uppercase">Descuento 20%</h6>
                 <h3 className="text-white mb-3">Oferta especial</h3>
-                <a href="#" className="btn btn-outline-light py-2 px-4 mt-3">
+                <a href="*" className="btn btn-outline-light py-2 px-4 mt-3">
                   Ver más
                 </a>
               </div>
@@ -220,7 +222,10 @@ const MainC = () => {
             </div>
           </div>
         </div>
-        <div className="container-fluid mb-30 mt-30 bg-btn">
+        <div
+          className="container-fluid mb-30 mt-30 bg-btn"
+          id="products-section"
+        >
           <div className="row d-flex justify-content-center">
             <div className="col-12 col-md-2 mtButton mb-30 d-flex justify-content-center">
               <Button
@@ -260,21 +265,24 @@ const MainC = () => {
             </div>
           </div>
         </div>
-        <Container className="mt-5">
-          <Row className="justify-content-center text-center">
-            {filteredProducts.map((product) => (
-              <Col sm="12" md="6" lg="3" className="my-3" key={product._id}>
-                <CardC
-                  idProd={product._id}
-                  image={product.image}
-                  titulo={product.titulo}
-                  descripcion={product.descripcion}
-                  precio={product.precio}
-                />
-              </Col>
-            ))}
-          </Row>
-        </Container>
+        <div>
+          <Container className="mt-5">
+            <Row className="justify-content-center text-center">
+              {filteredProducts.map((product) => (
+                <Col sm="12" md="6" lg="3" className="my-3" key={product._id}>
+                  <CardC
+                    idProd={product._id}
+                    image={product.image}
+                    titulo={product.titulo}
+                    descripcion={product.descripcion}
+                    precio={product.precio}
+                  />
+                </Col>
+              ))}
+            </Row>
+          </Container>
+        </div>
+
         <div className="d-flex justify-content-center">
           <Pagination size="sm">
             {Array.from({ length: totalPages }, (_, index) => (
