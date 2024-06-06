@@ -92,6 +92,9 @@ const NavbarC = () => {
                   </>
                 ) : (
                   <>
+                    <Nav.Link as={Link} to="/" className="my-custom-link">
+                      Inicio
+                    </Nav.Link>
                     <Nav.Link
                       as={Link}
                       to="/pacientes"
@@ -141,6 +144,20 @@ const NavbarC = () => {
                       Cerrar Sesión
                     </NavDropdown.Item>
                   </NavDropdown>
+                )}
+                {!token && (
+                  <>
+                    <Nav.Link as={Link} to="/login" className="my-custom-link">
+                      Iniciar Sesión
+                    </Nav.Link>
+                    <Nav.Link
+                      as={Link}
+                      to="/registro"
+                      className="my-custom-link"
+                    >
+                      Registrarse
+                    </Nav.Link>
+                  </>
                 )}
               </Nav>
               <Nav className="d-none d-lg-flex">
