@@ -79,8 +79,6 @@ const DetalleProducto = () => {
         });
       } else {
         mostrarError("Error al agregar el producto a favoritos", error);
-      location.href = "/login";
-      return;
       }
     }
   };
