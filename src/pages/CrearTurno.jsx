@@ -1,22 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import DatePicker, { registerLocale } from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import es from 'date-fns/locale/es';
-import '../css/CrearTurno.css';
+import React, { useState, useEffect } from "react";
+import DatePicker, { registerLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import es from "date-fns/locale/es";
+import clienteAxios, { config } from "../helpers/clienteAxios";
+import "../css/CrearTurno.css";
 
-registerLocale('es', es);
+registerLocale("es", es);
 
 const veterinarios = [
-  { nombre: 'Dra. Maria Rodriguez', foto: '../src/img/Profesional1.jpg' },
-  { nombre: 'Dr. Juan Perez Torasso', foto: '../src/img/Profesional2.jpg' }
+  { nombre: "Dra. Maria Rodriguez", foto: "../src/img/Profesional1.jpg" },
+  { nombre: "Dr. Juan Perez Torasso", foto: "../src/img/Profesional2.jpg" },
 ];
 
-const detallesCita = [
-  'Consulta de rutina',
-  'Vacunación',
-  'Cirugía menor'
-];
+const detallesCita = ["Consulta de rutina", "Vacunación", "Cirugía menor"];
 
 const generarOpcionesTiempo = () => {
   const opciones = [];
@@ -25,7 +21,9 @@ const generarOpcionesTiempo = () => {
   for (let i = inicio; i < fin; i += 20) {
     const horas = Math.floor(i / 60);
     const minutos = i % 60;
-    const horaFormateada = `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}`;
+    const horaFormateada = `${horas.toString().padStart(2, "0")}:${minutos
+      .toString()
+      .padStart(2, "0")}`;
     opciones.push(horaFormateada);
   }
   return opciones;
@@ -37,9 +35,9 @@ const CrearTurno = ({ agregarTurno }) => {
   const [formData, setFormData] = useState({
     detalleCita: detallesCita[0],
     veterinario: veterinarios[0].nombre,
-    mascota: '',
+    mascota: "",
     fecha: new Date(),
-    hora: opcionesTiempo[0]
+    hora: opcionesTiempo[0],
   });
 
   const [fotoVet, setFotoVet] = useState(veterinarios[0].foto);
@@ -48,8 +46,8 @@ const CrearTurno = ({ agregarTurno }) => {
   useEffect(() => {
     const fetchTurnos = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/turnos`);
-        const turnos = res.data.map(turno => turno.hora);
+        const res = await clienteAxios.get("/turnos", config);
+        const turnos = res.data.map((turno) => turno.hora);
         setTurnosSeleccionados(turnos);
       } catch (error) {
         console.error(error);
@@ -63,11 +61,11 @@ const CrearTurno = ({ agregarTurno }) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
 
-    if (name === 'veterinario') {
-      const selectedVet = veterinarios.find(vet => vet.nombre === value);
+    if (name === "veterinario") {
+      const selectedVet = veterinarios.find((vet) => vet.nombre === value);
       setFotoVet(selectedVet.foto);
     }
   };
@@ -75,55 +73,75 @@ const CrearTurno = ({ agregarTurno }) => {
   const handleDateChange = (date) => {
     setFormData({
       ...formData,
-      fecha: date
+      fecha: date,
     });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/turnos`, formData);
-    agregarTurno(res.data);
-    setFormData({
-      detalleCita: detallesCita[0],
-      veterinario: veterinarios[0].nombre,
-      mascota: '',
-      fecha: new Date(),
-      hora: opcionesTiempo[0]
-    });
-    setFotoVet(veterinarios[0].foto);
-    setTurnosSeleccionados([...turnosSeleccionados, formData.hora]);
-  } catch (err) {
-    console.error('Error al crear el turno:', err);
-  }
-};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await clienteAxios.post("/turnos", formData, config);
+      agregarTurno(res.data);
+      setFormData({
+        detalleCita: detallesCita[0],
+        veterinario: veterinarios[0].nombre,
+        mascota: "",
+        fecha: new Date(),
+        hora: opcionesTiempo[0],
+      });
+      setFotoVet(veterinarios[0].foto);
+      setTurnosSeleccionados([...turnosSeleccionados, formData.hora]);
+      alert("Turno creado exitosamente");
+    } catch (err) {
+      console.error("Error al crear el turno:", err);
+      alert("Hubo un error al crear el turno");
+    }
+  };
 
   const isWeekday = (date) => {
     const day = date.getDay();
     return day !== 0 && day !== 6; // 0 es domingo, 6 es sábado
   };
 
-  const opcionesTiempoDisponibles = opcionesTiempo.filter(hora => !turnosSeleccionados.includes(hora));
+  const opcionesTiempoDisponibles = opcionesTiempo.filter(
+    (hora) => !turnosSeleccionados.includes(hora)
+  );
 
   return (
     <div className="crear-turno-container">
       <div className="veterinario-info">
-        <img src={fotoVet} alt={formData.veterinario} className="veterinario-foto" />
+        <img
+          src={fotoVet}
+          alt={formData.veterinario}
+          className="veterinario-foto"
+        />
         <form onSubmit={handleSubmit} className="formulario">
           <div className="form-group">
             <label htmlFor="detalleCita">Detalle de la Cita</label>
-            <select name="detalleCita" value={formData.detalleCita} onChange={handleChange}>
+            <select
+              name="detalleCita"
+              value={formData.detalleCita}
+              onChange={handleChange}
+            >
               {detallesCita.map((detalle, index) => (
-                <option key={index} value={detalle}>{detalle}</option>
+                <option key={index} value={detalle}>
+                  {detalle}
+                </option>
               ))}
             </select>
           </div>
 
           <div className="form-group">
             <label htmlFor="veterinario">Veterinario</label>
-            <select name="veterinario" value={formData.veterinario} onChange={handleChange}>
+            <select
+              name="veterinario"
+              value={formData.veterinario}
+              onChange={handleChange}
+            >
               {veterinarios.map((vet) => (
-                <option key={vet.nombre} value={vet.nombre}>{vet.nombre}</option>
+                <option key={vet.nombre} value={vet.nombre}>
+                  {vet.nombre}
+                </option>
               ))}
             </select>
           </div>
@@ -146,7 +164,7 @@ const handleSubmit = async (e) => {
               dateFormat="yyyy-MM-dd"
               className="date-picker"
               locale="es"
-              minDate={new Date()}  // Deshabilitar fechas anteriores a hoy
+              minDate={new Date()} // Deshabilitar fechas anteriores a hoy
               filterDate={isWeekday} // Deshabilitar sábados y domingos
             />
           </div>
@@ -155,11 +173,13 @@ const handleSubmit = async (e) => {
             <label htmlFor="hora">Hora</label>
             <select name="hora" value={formData.hora} onChange={handleChange}>
               {opcionesTiempoDisponibles.map((hora, index) => (
-                <option key={index} value={hora}>{hora}</option>
+                <option key={index} value={hora}>
+                  {hora}
+                </option>
               ))}
             </select>
           </div>
-          
+
           <button type="submit">Agendar</button>
         </form>
       </div>

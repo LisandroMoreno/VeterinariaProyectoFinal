@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import clienteAxios, { config } from "../helpers/clienteAxios";
 
 const TurnosList = () => {
   const [turnos, setTurnos] = useState([]);
@@ -7,10 +8,10 @@ const TurnosList = () => {
   useEffect(() => {
     const fetchTurnos = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/turnos`);
+        const response = await clienteAxios.get("/turnos", config);
         setTurnos(response.data);
       } catch (error) {
-        console.error('Error al obtener los turnos:', error);
+        console.error("Error al obtener los turnos:", error);
       }
     };
 
@@ -21,9 +22,10 @@ const TurnosList = () => {
     <div>
       <h1>Lista de Turnos</h1>
       <ul>
-        {turnos.map(turno => (
+        {turnos.map((turno) => (
           <li key={turno._id}>
-            <strong>{turno.mascota}</strong> con {turno.veterinario} el {new Date(turno.fecha).toLocaleDateString()} a las {turno.hora}
+            <strong>{turno.mascota}</strong> con {turno.veterinario} el{" "}
+            {new Date(turno.fecha).toLocaleDateString()} a las {turno.hora}
           </li>
         ))}
       </ul>
