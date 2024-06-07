@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import CrearTurno from '../pages/CrearTurno';
-import TurnosList from '../pages/TurnosList';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import CrearTurno from "../pages/CrearTurno";
+import TurnosList from "../pages/TurnosList";
+import clienteAxios, { config } from "../helpers/clienteAxios";
 
 const TurnosPage = () => {
   const [turnos, setTurnos] = useState([]);
 
   useEffect(() => {
     const fetchTurnos = async () => {
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/turnos`);
+      const res = await clienteAxios.get(`/turnos`, config);
       setTurnos(res.data);
     };
     fetchTurnos();
