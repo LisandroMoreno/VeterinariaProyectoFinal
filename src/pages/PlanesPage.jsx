@@ -34,7 +34,7 @@ const PlanesPage = () => {
   const [alertVariant, setAlertVariant] = useState("success");
 
   const handleSubmit = async (values, actions) => {
-    console.log(values);
+    
     try {
       const response = await fetch("http://localhost:3001/api/planes/send", {
         method: "POST",

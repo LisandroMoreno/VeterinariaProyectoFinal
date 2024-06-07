@@ -38,7 +38,7 @@ const Contacto = () => {
   const [alertVariant, setAlertVariant] = useState("success");
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    console.log(values);
+   
     try {
       const response = await clienteAxios.post("/contact/send", values);
 

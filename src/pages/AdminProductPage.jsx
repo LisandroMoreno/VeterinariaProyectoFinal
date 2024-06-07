@@ -78,9 +78,9 @@ const AdminProductsPage = () => {
         location.reload();
       }
 
-      console.log(updateProd);
+      
     } catch (error) {
-      console.log(error);
+      console.error("Error al añadir imagen", error);
     }
   };
 
@@ -110,7 +110,7 @@ const AdminProductsPage = () => {
         }
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error al eliminar el producto", error);
     }
   };
 
@@ -137,7 +137,7 @@ const AdminProductsPage = () => {
         location.reload();
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error al crear el producto", error);
     }
   };
 
@@ -148,7 +148,7 @@ const AdminProductsPage = () => {
   return (
     <>
       <div className="d-flex justify-content-center">
-        <div className="table-responsive w-75 mt-5">
+        <div className="table-responsive w-100 mt-5">
           <Table striped bordered hover>
             <thead>
               <tr>
