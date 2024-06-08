@@ -31,7 +31,7 @@ const generarOpcionesTiempo = () => {
 
 const opcionesTiempo = generarOpcionesTiempo();
 
-const CrearTurno = ({ agregarTurno }) => {
+const CrearTurno = () => {
   const [formData, setFormData] = useState({
     detalleCita: detallesCita[0],
     veterinario: veterinarios[0].nombre,
@@ -47,8 +47,9 @@ const CrearTurno = ({ agregarTurno }) => {
     const fetchTurnos = async () => {
       try {
         const res = await clienteAxios.get("/turnos", config);
-        const turnos = res.data.map((turno) => turno.hora);
-        setTurnosSeleccionados(turnos);
+        const turnos = res.data.map((turno) => turno.reservas);
+        const flattenTurnos = [].concat.apply([], turnos);
+        setTurnosSeleccionados(flattenTurnos);
       } catch (error) {
         console.error(error);
       }
@@ -81,7 +82,6 @@ const CrearTurno = ({ agregarTurno }) => {
     e.preventDefault();
     try {
       const res = await clienteAxios.post("/turnos", formData, config);
-      agregarTurno(res.data);
       setFormData({
         detalleCita: detallesCita[0],
         veterinario: veterinarios[0].nombre,
@@ -103,12 +103,25 @@ const CrearTurno = ({ agregarTurno }) => {
     return day !== 0 && day !== 6; // 0 es domingo, 6 es sábado
   };
 
+  const obtenerTurnosVet = (veterinario, fecha) => {
+    return turnosSeleccionados
+      .filter(
+        (reserva) =>
+          reserva.veterinario === veterinario &&
+          new Date(reserva.fecha).toDateString() ===
+            new Date(fecha).toDateString()
+      )
+      .map((reserva) => reserva.hora);
+  };
+
   const opcionesTiempoDisponibles = opcionesTiempo.filter(
-    (hora) => !turnosSeleccionados.includes(hora)
+    (hora) =>
+      !obtenerTurnosVet(formData.veterinario, formData.fecha).includes(hora)
   );
 
   return (
     <div className="crear-turno-container">
+      <h1>Agendar Turno</h1>
       <div className="veterinario-info">
         <img
           src={fotoVet}

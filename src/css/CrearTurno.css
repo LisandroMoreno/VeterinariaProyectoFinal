@@ -42,7 +42,9 @@ label {
   font-weight: bold;
 }
 
-select, input, .date-picker {
+select,
+input,
+.date-picker {
   padding: 10px;
   font-size: 16px;
   margin-top: 5px;
