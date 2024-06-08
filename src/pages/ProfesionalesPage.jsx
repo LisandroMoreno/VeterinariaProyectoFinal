@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "../css/ProfesionalesPage.css";
+import { titlePage } from "../helpers/titlePages";
+
+titlePage("Profesionales");
 
 const ProfesionalesPage = () => {
   const token = sessionStorage.getItem("token");
