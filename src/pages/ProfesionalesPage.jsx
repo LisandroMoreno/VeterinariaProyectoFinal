@@ -4,6 +4,8 @@ import { Button } from "react-bootstrap";
 import "../css/ProfesionalesPage.css";
 
 const ProfesionalesPage = () => {
+  const token = sessionStorage.getItem("token");
+
   return (
     <div className="descripcion-Profesionales">
       <div className="Profesionales-container">
@@ -27,7 +29,7 @@ const ProfesionalesPage = () => {
                 ● Diagnosticar enfermedades y establecer el mejor tratamiento.
                 <br /> <br />
                 ● Realizar intervenciones quirurgicos, como cirugias de
-                estirilización y demas. <br /> <br /> 
+                estirilización y demas. <br /> <br />
                 ● Asesorar a los propietarios de mascotas sobre nutricion y
                 cuidados generales <br />
               </p>
@@ -64,7 +66,7 @@ const ProfesionalesPage = () => {
                 ● Asesorar a los propietarios de mascotas sobre enfermedades y
                 tratamientos. <br />
               </p>
-              <Link to="/Turnos">
+              <Link to={token ? "/Turnos" : "/login"}>
                 <Button variant="primary" className="button-custom mt-3">
                   Reservar turno
                 </Button>
