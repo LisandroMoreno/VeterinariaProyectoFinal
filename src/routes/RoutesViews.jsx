@@ -17,6 +17,7 @@ import ProfesionalesPage from "../pages/ProfesionalesPage";
 import AdminUsersPage from "../pages/AdminUsersPage";
 import PrivateRoute from "../components/PrivateRoute";
 import CrearTurno from "../pages/CrearTurno";
+import DetalleMisReservas from "../pages/DetalleMisReservas";
 
 const RoutesViews = () => {
   return (
@@ -78,6 +79,7 @@ const RoutesViews = () => {
 
         <Route path="*" element={<Error404 />} />
         <Route path="/turnos" element={<CrearTurno />} />
+        <Route path="/misReservas" element={<DetalleMisReservas />} />
       </Routes>
       <FooterC />
     </>
