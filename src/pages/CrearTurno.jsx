@@ -4,15 +4,24 @@ import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 import "../css/CrearTurno.css";
+import { titlePage } from "../helpers/titlePages";
 
 registerLocale("es", es);
 
+titlePage("Reserva de turnos");
+
 const veterinarios = [
+  { nombre: "Seleccione el veterinario", foto: "" },
   { nombre: "Dra. Maria Rodriguez", foto: "../src/img/Profesional1.jpg" },
   { nombre: "Dr. Juan Perez Torasso", foto: "../src/img/Profesional2.jpg" },
 ];
 
-const detallesCita = ["Consulta de rutina", "Vacunación", "Cirugía menor"];
+const detallesCita = [
+  "Seleccione la consulta",
+  "Consulta de rutina",
+  "Vacunación",
+  "Cirugía menor",
+];
 
 const generarOpcionesTiempo = () => {
   const opciones = [];
@@ -33,14 +42,14 @@ const opcionesTiempo = generarOpcionesTiempo();
 
 const CrearTurno = () => {
   const [formData, setFormData] = useState({
-    detalleCita: detallesCita[0],
-    veterinario: veterinarios[0].nombre,
+    detalleCita: "Seleccione la consulta",
+    veterinario: "Seleccione el veterinario",
     mascota: "",
     fecha: new Date(),
     hora: opcionesTiempo[0],
   });
 
-  const [fotoVet, setFotoVet] = useState(veterinarios[0].foto);
+  const [fotoVet, setFotoVet] = useState("");
   const [turnosSeleccionados, setTurnosSeleccionados] = useState([]);
 
   useEffect(() => {
@@ -67,7 +76,7 @@ const CrearTurno = () => {
 
     if (name === "veterinario") {
       const selectedVet = veterinarios.find((vet) => vet.nombre === value);
-      setFotoVet(selectedVet.foto);
+      setFotoVet(selectedVet ? selectedVet.foto : "");
     }
   };
 
@@ -83,14 +92,14 @@ const CrearTurno = () => {
     try {
       const res = await clienteAxios.post("/turnos", formData, config);
       setFormData({
-        detalleCita: detallesCita[0],
-        veterinario: veterinarios[0].nombre,
+        detalleCita: "Seleccione la consulta",
+        veterinario: "Seleccione el veterinario",
         mascota: "",
         fecha: new Date(),
         hora: opcionesTiempo[0],
       });
-      setFotoVet(veterinarios[0].foto);
-      setTurnosSeleccionados([...turnosSeleccionados, formData.hora]);
+      setFotoVet("");
+      setTurnosSeleccionados([...turnosSeleccionados, formData]);
       alert("Turno creado exitosamente");
     } catch (err) {
       console.error("Error al crear el turno:", err);
@@ -123,11 +132,13 @@ const CrearTurno = () => {
     <div className="crear-turno-container">
       <h1>Agendar Turno</h1>
       <div className="veterinario-info">
-        <img
-          src={fotoVet}
-          alt={formData.veterinario}
-          className="veterinario-foto"
-        />
+        {fotoVet && (
+          <img
+            src={fotoVet}
+            alt={formData.veterinario}
+            className="veterinario-foto"
+          />
+        )}
         <form onSubmit={handleSubmit} className="formulario">
           <div className="form-group">
             <label htmlFor="detalleCita">Detalle de la Cita</label>
