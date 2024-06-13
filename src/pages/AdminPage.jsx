@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { titlePage } from "../helpers/titlePages";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import Spinner from 'react-bootstrap/Spinner';
+import Spinner from "react-bootstrap/Spinner";
 
 const AdminPage = () => {
   titlePage("AdminPage");
   const navigate = useNavigate();
 
-  const token = JSON.parse (sessionStorage.getItem("token"));
-  const role = JSON.parse (sessionStorage.getItem("role"));
+  const token = JSON.parse(sessionStorage.getItem("token"));
+  const role = JSON.parse(sessionStorage.getItem("role"));
 
   const cardsAdmin = [
     {
@@ -32,36 +32,26 @@ const AdminPage = () => {
   ];
 
   return (
- <>
-    { 
-      !token && role !== 'admin '? (
-   <Spinner animation="border" role="status">
-         <span className="visually-hidden">Loading...</span>
-       </Spinner> 
-         ) : (
-      <h2>Admin Page</h2>
-     )}
-    
-    
-    <Container
-      fluid
-      className="d-flex justify-content-center align-items-center vh-75">
-      <Row className="justify-content-center text-center w-100 mt-5 mx-0">
-        {cardsAdmin.map((card, index) => (
-          <Col xs="12" sm="6" md="4" lg="3" className="my-3" key={index}>
-            <Card>
-              <Card.Body>
-                <Card.Title>{card.title}</Card.Title>
-                <Card.Text>{card.text}</Card.Text>
-                <Button variant="dark" onClick={() => navigate(card.path)}>
-                  Administrar {card.title}
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </Container>
+    <>
+      <Container
+        fluid
+        className="d-flex justify-content-center align-items-center vh-75">
+        <Row className="justify-content-center text-center w-100 mt-5 mx-0">
+          {cardsAdmin.map((card, index) => (
+            <Col xs="12" sm="6" md="4" lg="3" className="my-3" key={index}>
+              <Card>
+                <Card.Body>
+                  <Card.Title>{card.title}</Card.Title>
+                  <Card.Text>{card.text}</Card.Text>
+                  <Button variant="dark" onClick={() => navigate(card.path)}>
+                    Administrar {card.title}
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
     </>
   );
 };
