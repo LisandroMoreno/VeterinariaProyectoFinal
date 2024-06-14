@@ -55,30 +55,56 @@ const AdminUsersPage = () => {
       }
     } catch (error) {
       console.error("Error al actualizar el usuario", error);
+      Swal.fire({
+        title: "Error al actualizar el usuario",
+        icon: "error",
+      }).then(() => {
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      });
     }
   };
 
   const handleClickDel = async (idUser) => {
-    const confirmDelUser = confirm(
-      "Estas seguro de que quieres eliminar a este usuario?"
-    );
+    try {
+      const result = await Swal.fire({
+        title: "¿Estás seguro que quieres eliminar este usuario?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, eliminarlo",
+        cancelButtonText: "Cancelar",
+      });
 
-    if (confirmDelUser) {
-      const deleteUser = await clienteAxios.delete(
-        `/users/users/${idUser}`,
-        config
-      );
+      if (result.isConfirmed) {
+        const deleteUser = await clienteAxios.delete(
+          `/users/users/${idUser}`,
+          config
+        );
 
-      if (deleteUser.status === 200) {
-        Swal.fire({
-          title: "Usuario eliminado",
-          icon: "success",
-        }).then(() => {
-          setTimeout(() => {
-            location.reload();
-          }, 1000);
-        });
+        if (deleteUser.status === 200) {
+          Swal.fire({
+            title: "Usuario eliminado",
+            icon: "success",
+          }).then(() => {
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
+          });
+        }
       }
+    } catch (error) {
+      console.error("Error al eliminar el usuario", error);
+      Swal.fire({
+        title: "Error al eliminar el usuario",
+        icon: "error",
+      }).then(() => {
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      });
     }
   };
 
@@ -107,7 +133,14 @@ const AdminUsersPage = () => {
       }
     } catch (error) {
       console.error("Error al actualizar el estado del usuario:", error);
-      alert("Error al actualizar el estado del usuario");
+      Swal.fire({
+        title: "Error al actualizar el estado del usuario",
+        icon: "error",
+      }).then(() => {
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      });
     }
   };
 
