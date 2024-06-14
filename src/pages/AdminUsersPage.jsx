@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 import { titlePage } from "../helpers/titlePages";
+import Swal from "sweetalert2";
 
 const AdminUsersPage = () => {
   titlePage("Usuarios");
@@ -43,8 +44,14 @@ const AdminUsersPage = () => {
       );
       if (updateUser.status === 200) {
         handleClose();
-        alert("Usuario actualizado");
-        location.reload();
+        Swal.fire({
+          title: "Usuario actualizado",
+          icon: "success",
+        }).then(() => {
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
+        });
       }
     } catch (error) {
       console.error("Error al actualizar el usuario", error);
@@ -63,8 +70,14 @@ const AdminUsersPage = () => {
       );
 
       if (deleteUser.status === 200) {
-        alert("Usuario borrado");
-        location.reload();
+        Swal.fire({
+          title: "Usuario eliminado",
+          icon: "success",
+        }).then(() => {
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
+        });
       }
     }
   };
@@ -82,8 +95,14 @@ const AdminUsersPage = () => {
         );
 
         if (statusUser.status === 200) {
-          alert("Estado del usuario actualizado");
-          getUsers();
+          Swal.fire({
+            title: "Estado del usuario actualizado",
+            icon: "success",
+          }).then(() => {
+            setTimeout(() => {
+              getUsers();
+            }, 1000);
+          });
         }
       }
     } catch (error) {
@@ -107,7 +126,6 @@ const AdminUsersPage = () => {
                 <th>Usuario</th>
                 <th>Email</th>
                 <th>Role</th>
-
                 <th>Acciones</th>
               </tr>
             </thead>
@@ -162,18 +180,18 @@ const AdminUsersPage = () => {
                             />
                           </Form.Group>
 
-                          <Form.Group
-                            className="mb-3"
-                            controlId="formBasicPassword">
+                          <Form.Group className="mb-3">
                             <Form.Label>Role</Form.Label>
-                            <Form.Control
-                              type="text"
-                              value={userEdit.role}
-                              placeholder="Por EJ: Administrador"
+                            <Form.Select
                               name="role"
-                              onChange={handleChange}
-                            />
+                              value={userEdit.role}
+                              onChange={handleChange}>
+                              <option value="">Selecciona un role</option>
+                              <option value="admin">Administrador</option>
+                              <option value="user">Usuario</option>
+                            </Form.Select>
                           </Form.Group>
+
                           <div className="d-flex justify-content-center">
                             <Button
                               variant="success"
