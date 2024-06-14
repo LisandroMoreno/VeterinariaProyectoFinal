@@ -35,16 +35,33 @@ const DetalleMisReservas = () => {
 
   const handleBorrarReserva = async (idReserva) => {
     try {
-      await clienteAxios.delete(`/turnos/${idReserva}`, config);
-      Swal.fire({
-        icon: "success",
-        title: "Reserva eliminada",
-        text: "La reserva ha sido eliminada correctamente.",
+      const result = await Swal.fire({
+        title: "¿Estás seguro?",
+        text: "¡No podrás revertir esto!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar",
       });
-      // Actualizamos la lista de reservas después de borrar
-      getAllReservas();
+
+      if (result.isConfirmed) {
+        await clienteAxios.delete(`/turnos/${idReserva}`, config);
+        Swal.fire({
+          icon: "success",
+          title: "Reserva eliminada",
+          text: "La reserva ha sido eliminada correctamente.",
+        });
+        getAllReservas();
+      }
     } catch (error) {
-      mostrarError("Error al eliminar la reserva", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Error al eliminar la reserva",
+      });
+      console.error("Error al eliminar la reserva:", error);
     }
   };
 
@@ -76,10 +93,7 @@ const DetalleMisReservas = () => {
                     <strong>Mascota:</strong> {reserva.mascota}
                   </p>
                   <p>
-                    <strong>Fecha:</strong>{" "}
-                    {moment
-                      .tz(reserva.fecha, "America/Argentina/Buenos_Aires")
-                      .format("YYYY-MM-DD")}
+                    <strong>Fecha:</strong> {reserva.fecha.split("T")[0]}
                   </p>
                   <p>
                     <strong>Hora:</strong> {reserva.hora}
