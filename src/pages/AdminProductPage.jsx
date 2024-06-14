@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import clienteAxios, { config, configImg } from "../helpers/clienteAxios";
 import { titlePage } from "../helpers/titlePages";
+import Swal from "sweetalert2";
 
 const AdminProductsPage = () => {
   titlePage("Productos");
@@ -63,8 +64,14 @@ const AdminProductsPage = () => {
 
       if (updateProd.status === 200) {
         handleCloseEditModal();
-        alert("Producto actualizado");
-        location.reload();
+        Swal.fire({
+          title: "Producto actualizado",
+          icon: "success",
+        }).then(() => {
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
+        });
       }
 
       const addImageProd = await clienteAxios.post(
@@ -77,8 +84,6 @@ const AdminProductsPage = () => {
         handleCloseEditModal();
         location.reload();
       }
-
-      
     } catch (error) {
       console.error("Error al añadir imagen", error);
     }
@@ -94,19 +99,31 @@ const AdminProductsPage = () => {
 
   const handleClickDel = async (idProd) => {
     try {
-      const confirmDel = confirm(
-        "Estas seguro de que quieres eliminar este producto?"
-      );
+      const result = await Swal.fire({
+        title: "¿Estás seguro que quieres eliminar este producto?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, eliminarlo",
+        cancelButtonText: "Cancelar",
+      });
 
-      if (confirmDel) {
+      if (result.isConfirmed) {
         const delProd = await clienteAxios.delete(
           `/productos/${idProd}`,
           config
         );
         if (delProd.status === 200) {
           handleCloseEditModal();
-          alert("Producto eliminado");
-          location.reload();
+          Swal.fire({
+            title: "Producto eliminado",
+            icon: "success",
+          }).then(() => {
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
+          });
         }
       }
     } catch (error) {
@@ -133,8 +150,14 @@ const AdminProductsPage = () => {
 
       if (createProdRes.status === 201) {
         handleCloseCreateModal();
-        alert("Producto creado correctamente");
-        location.reload();
+        Swal.fire({
+          title: "Producto creado",
+          icon: "success",
+        }).then(() => {
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
+        });
       }
     } catch (error) {
       console.error("Error al crear el producto", error);
@@ -147,8 +170,13 @@ const AdminProductsPage = () => {
 
   return (
     <>
+      <div className="d-flex justify-content-center mt-2">
+        <Button variant="success" onClick={() => setShowCreateModal(true)}>
+          Crear Producto
+        </Button>
+      </div>
       <div className="d-flex justify-content-center">
-        <div className="table-responsive w-100 mt-5">
+        <div className="table-responsive w-100 mt-3">
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -187,15 +215,6 @@ const AdminProductsPage = () => {
                   </td>
                 </tr>
               ))}
-              <tr>
-                <td colSpan="7" className="text-center">
-                  <Button
-                    variant="success"
-                    onClick={() => setShowCreateModal(true)}>
-                    Crear Producto
-                  </Button>
-                </td>
-              </tr>
             </tbody>
           </Table>
         </div>
@@ -242,13 +261,16 @@ const AdminProductsPage = () => {
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Categoria</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese la categoria"
+
+              <Form.Select
                 name="categoria"
                 value={editProd.categoria}
-                onChange={handleChange}
-              />
+                onChange={handleChange}>
+                <option value="">Selecciona una categoria</option>
+                <option value="Accesorios">Accesorios</option>
+                <option value="Alimentación">Alimentación</option>
+                <option value="Cuidados/Limpieza">Cuidados/Limpieza</option>
+              </Form.Select>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -308,13 +330,16 @@ const AdminProductsPage = () => {
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Categoria</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese la categoria"
+
+              <Form.Select
                 name="categoria"
                 value={newProd.categoria}
-                onChange={handleChangeNew}
-              />
+                onChange={handleChangeNew}>
+                <option value="">Selecciona una categoria</option>
+                <option value="Accesorios">Accesorios</option>
+                <option value="Alimentación">Alimentación</option>
+                <option value="Cuidados/Limpieza">Cuidados/Limpieza</option>
+              </Form.Select>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
