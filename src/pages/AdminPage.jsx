@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { titlePage } from "../helpers/titlePages";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import Spinner from "react-bootstrap/Spinner";
 
 const AdminPage = () => {
   titlePage("AdminPage");

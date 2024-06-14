@@ -99,11 +99,17 @@ const AdminProductsPage = () => {
 
   const handleClickDel = async (idProd) => {
     try {
-      const confirmDel = confirm(
-        "Estas seguro de que quieres eliminar este producto?"
-      );
+      const result = await Swal.fire({
+        title: "¿Estás seguro que quieres eliminar este producto?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, eliminarlo",
+        cancelButtonText: "Cancelar",
+      });
 
-      if (confirmDel) {
+      if (result.isConfirmed) {
         const delProd = await clienteAxios.delete(
           `/productos/${idProd}`,
           config
