@@ -74,7 +74,7 @@ const AdminProductsPage = () => {
         });
       }
 
-      const addImageProd = await clienteAxios.post(
+      /*      const addImageProd = await clienteAxios.post(
         `/productos/addImage/${editProd._id}`,
         formData,
         configImg
@@ -83,9 +83,17 @@ const AdminProductsPage = () => {
       if (addImageProd.status === 200) {
         handleCloseEditModal();
         location.reload();
-      }
+      } */
     } catch (error) {
-      console.error("Error al añadir imagen", error);
+      console.error("Error al actualizar el producto", error);
+      Swal.fire({
+        title: "Error al actualizar el producto",
+        icon: "error",
+      }).then(() => {
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      });
     }
   };
 
@@ -128,6 +136,14 @@ const AdminProductsPage = () => {
       }
     } catch (error) {
       console.error("Error al eliminar el producto", error);
+      Swal.fire({
+        title: "Error al eliminar el producto",
+        icon: "error",
+      }).then(() => {
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      });
     }
   };
 
@@ -161,6 +177,14 @@ const AdminProductsPage = () => {
       }
     } catch (error) {
       console.error("Error al crear el producto", error);
+      Swal.fire({
+        title: "Error al crear el producto",
+        icon: "error",
+      }).then(() => {
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      });
     }
   };
 
