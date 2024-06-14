@@ -3,6 +3,7 @@ import { titlePage } from "../helpers/titlePages";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 import Swal from "sweetalert2";
+import moment from "moment-timezone";
 
 const DetalleMisReservas = () => {
   titlePage(`Detalle de Reservas`);
@@ -76,7 +77,9 @@ const DetalleMisReservas = () => {
                   </p>
                   <p>
                     <strong>Fecha:</strong>{" "}
-                    {new Date(reserva.fecha).toLocaleDateString()}
+                    {moment
+                      .tz(reserva.fecha, "America/Argentina/Buenos_Aires")
+                      .format("YYYY-MM-DD")}
                   </p>
                   <p>
                     <strong>Hora:</strong> {reserva.hora}
