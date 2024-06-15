@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Container } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import "../css/ProfesionalesPage.css";
 import { titlePage } from "../helpers/titlePages";
 import clienteAxios from "../helpers/clienteAxios";
-
-titlePage("Profesionales");
 
 const ProfesionalesPage = () => {
   const token = sessionStorage.getItem("token");
@@ -23,6 +21,7 @@ const ProfesionalesPage = () => {
   };
 
   useEffect(() => {
+    titlePage("Profesionales");
     getProfesionales();
   }, []);
 

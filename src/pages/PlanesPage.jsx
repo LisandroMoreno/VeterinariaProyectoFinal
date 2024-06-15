@@ -8,6 +8,8 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
 
+titlePage("Planes");
+
 const validationSchema = yup.object().shape({
   nombre: yup
     .string()
@@ -34,7 +36,6 @@ const PlanesPage = () => {
   const [alertVariant, setAlertVariant] = useState("success");
 
   const handleSubmit = async (values, actions) => {
-    
     try {
       const response = await fetch("http://localhost:3001/api/planes/send", {
         method: "POST",
@@ -176,14 +177,16 @@ const PlanesPage = () => {
           <Alert
             variant={alertVariant}
             onClose={() => setShowAlert(false)}
-            dismissible>
+            dismissible
+          >
             {alertMessage}
           </Alert>
         )}
         <Formik
           initialValues={{ nombre: "", email: "", asunto: "", mensaje: "" }}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}>
+          onSubmit={handleSubmit}
+        >
           {({
             values,
             errors,
@@ -229,7 +232,8 @@ const PlanesPage = () => {
                   name="asunto"
                   value={values.asunto}
                   onChange={handleChange}
-                  isInvalid={touched.asunto && !!errors.asunto}>
+                  isInvalid={touched.asunto && !!errors.asunto}
+                >
                   <option value="">Selecciona un asunto</option>
                   <option value="Primeros Pasos">Plan "Primeros pasos"</option>
                   <option value="Madurando">Plan "Madurando"</option>
@@ -261,7 +265,8 @@ const PlanesPage = () => {
                   variant="primary"
                   type="submit"
                   className="button-custom mt-3"
-                  disabled={isSubmitting}>
+                  disabled={isSubmitting}
+                >
                   Enviar
                 </Button>
               </div>
