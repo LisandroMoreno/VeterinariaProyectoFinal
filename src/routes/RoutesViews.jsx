@@ -19,6 +19,7 @@ import PrivateRoute from "../components/PrivateRoute";
 import CrearTurno from "../pages/CrearTurno";
 import DetalleMisReservas from "../pages/DetalleMisReservas";
 import AdminPageProfesionales from "../pages/AdminPageProfesionales";
+import MisDatosPage from "../pages/MisDatosPage";
 
 const RoutesViews = () => {
   return (
@@ -85,6 +86,7 @@ const RoutesViews = () => {
           path="/AdminProfesionales"
           element={<AdminPageProfesionales />}
         />
+        <Route path="/misDatos" element={<MisDatosPage />} />
       </Routes>
       <FooterC />
     </>
