@@ -3,7 +3,6 @@ import { titlePage } from "../helpers/titlePages";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 import Swal from "sweetalert2";
-import moment from "moment-timezone";
 
 const DetalleMisReservas = () => {
   titlePage(`Detalle de Reservas`);

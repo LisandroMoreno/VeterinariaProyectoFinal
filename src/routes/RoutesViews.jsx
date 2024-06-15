@@ -28,7 +28,7 @@ const RoutesViews = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/contacto" element={<Contacto />} />
         <Route path="/planes" element={<PlanesPage />} />
-        <Route path="/reservaTurnos" element={<ProfesionalesPage />} />
+        <Route path="/profesionales" element={<ProfesionalesPage />} />
         <Route path="/productos/:id" element={<DetalleProducto />} />
         <Route path="/sobreNosotros" element={<SobreNosotros />} />
         <Route path="/login" element={<LoginPage />} />

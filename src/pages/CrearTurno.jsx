@@ -5,6 +5,7 @@ import es from "date-fns/locale/es";
 import moment from "moment-timezone";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 import "../css/CrearTurno.css";
+import { titlePage } from "../helpers/titlePages";
 
 registerLocale("es", es);
 
@@ -111,6 +112,7 @@ const CrearTurno = () => {
   };
 
   useEffect(() => {
+    titlePage("Reserva de turnos");
     const fetchVeterinarios = async () => {
       try {
         const res = await clienteAxios.get(
@@ -151,7 +153,7 @@ const CrearTurno = () => {
               <option value="" disabled>
                 Seleccione la consulta
               </option>
-              {["Consulta de rutina", "Vacunación", "Cirugía menor"].map(
+              {["Consulta general", "Vacunación", "Cirugías", "Curaciones"].map(
                 (detalle, index) => (
                   <option key={index} value={detalle}>
                     {detalle}

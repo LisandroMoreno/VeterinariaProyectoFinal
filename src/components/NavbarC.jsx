@@ -85,7 +85,7 @@ const NavbarC = () => {
                         Planes
                       </NavDropdown.Item>
                       <NavDropdown.Divider />
-                      <NavDropdown.Item as={Link} to="/reservaTurnos">
+                      <NavDropdown.Item as={Link} to="/profesionales">
                         Reserva de turnos
                       </NavDropdown.Item>
                     </NavDropdown>
@@ -159,7 +159,6 @@ const NavbarC = () => {
                     </Nav.Link>
                   </>
                 )}
-
               </Nav>
               <Nav className="d-none d-lg-flex">
                 {token && role === "user" ? (
