@@ -33,7 +33,7 @@ const FooterC = () => {
           </Nav>
 
           <div className="col-12 col-md-6 col-lg-3 justify-content-center align-items-center d-flex flex-column">
-            <h6 className="mb-3 mt-4">Redes Sociales</h6>
+            <h6 className="mt-4">Redes Sociales</h6>
             <div className="d-flex flex-row footer-link">
               <a
                 href="https://www.facebook.com/RollingCodeSchool/"
@@ -70,6 +70,11 @@ const FooterC = () => {
               <h6 className="mb-3 text-black">Información de Contacto</h6>
               <p>Dirección: Gral. Paz 576</p>
               <p>Teléfono: +1234567890</p>
+            </div>
+          </div>
+          <div className="col-12 col-md-6 col-lg-3 ">
+            <div className="text-white">
+              <p>© Todos los derechos reservados Patas y Garras</p>
             </div>
           </div>
         </div>

@@ -24,6 +24,7 @@ import MisDatosPage from "../pages/MisDatosPage";
 const RoutesViews = () => {
   return (
     <>
+      <NavbarC />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/contacto" element={<Contacto />} />
@@ -87,6 +88,7 @@ const RoutesViews = () => {
         />
         <Route path="/misDatos" element={<MisDatosPage />} />
       </Routes>
+      <FooterC />
     </>
   );
 };
