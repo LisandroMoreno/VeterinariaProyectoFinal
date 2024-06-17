@@ -1,0 +1,63 @@
+.mtButton {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.bg-btn {
+  background-color: #dcdddb;
+}
+
+.btn-categoria {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease 0s;
+  box-sizing: border-box;
+}
+
+.btn-categoria:hover {
+  background-color: white;
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .btn-categoria {
+    padding: 10px 14px;
+    font-size: 14px;
+    margin: 3px 1px;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-categoria {
+    padding: 10px 14px;
+    font-size: 12px;
+    margin: 2px;
+  }
+
+  .btn-categoria {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 5px 0;
+  }
+}
+
+.custom-pagination-item {
+  background-color: black;
+  color: white;
+}
+
+.custom-pagination-item.active {
+  background-color: #3992cd;
+  color: white;
+}

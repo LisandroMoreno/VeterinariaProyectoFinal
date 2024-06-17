@@ -1,19 +1,15 @@
 import { titlePage } from "../helpers/titlePages";
 import { Formik } from "formik";
 import * as yup from "yup";
-import Swal from "sweetalert2";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 import "../css/Reg-Log.css";
+import Swal from "sweetalert2";
 
-const RegisterPage = () => {
-  titlePage("Registro");
-  const yupSchemaRegister = yup.object().shape({
-    user: yup
-      .string()
-      .required("Completa el campo vacío")
-      .email("Formato de email incorrecto. Por ejemplo: usuario@gmail.com"),
+const LoginPage = () => {
+  titlePage("Iniciar Sesión");
+  const yupSchemaLogin = yup.object().shape({
     userName: yup
       .string()
       .required("Completa el campo vacío")
@@ -32,58 +28,71 @@ const RegisterPage = () => {
         /^[a-zA-Z0-9]+$/,
         "La contraseña solo puede contener letras y números."
       ),
-    rpass: yup
-      .string()
-      .required("Completa el campo vacío")
-      .oneOf([yup.ref("pass"), null], "Las contraseñas deben coincidir."),
   });
 
   const handleSubmitForm = async (values, actions) => {
-    if (values.pass === values.rpass) {
-      try {
-        const res = await clienteAxios.post(
-          "/users/register",
-          {
-            nombreUsuario: values.userName,
-            contrasenia: values.pass,
-            emailUsuario: values.user,
-          },
-          config
-        );
+    try {
+      const loginUser = await clienteAxios.post(
+        "/users/login",
+        {
+          nombreUsuario: values.userName,
+          contrasenia: values.pass,
+        },
+        config
+      );
 
-        if (res.status === 201) {
+      if (loginUser.status === 200) {
+        sessionStorage.setItem("token", JSON.stringify(loginUser.data.token));
+        sessionStorage.setItem("role", JSON.stringify(loginUser.data.role));
+
+        if (loginUser.data.role === "admin") {
           Swal.fire({
-            title: "Usuario Registrado",
+            title: "Administrador Logueado",
             text: "Bienvenido a Patas y Garras",
             icon: "success",
           }).then(() => {
             setTimeout(() => {
-              location.href = "/login";
+              location.href = "/home-adminLog";
             }, 2000);
           });
         } else {
           Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "Error en el registro. Intente nuevamente.",
+            title: "Usuario Logueado",
+            text: "Bienvenido a Patas y Garras",
+            icon: "success",
+          }).then(() => {
+            setTimeout(() => {
+              location.href = "/";
+            }, 2000);
           });
         }
-      } catch (error) {
-        console.error("Error al registrar el usuario:", error);
+      }
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 403) {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Usuario bloqueado. Hablar con el admin",
+          });
+        } else {
+          Swal.fire({
+            icon: "error",      
+            title: "Error",
+            text: "Error al iniciar sesión. Usuario y/o contraseña equivocada.",
+          });
+        }
+      } else {
+        console.error("Error:", error);
         Swal.fire({
           icon: "error",
-          title: "Error al registrar el usuario",
-          text: "El usuario y/o correo electronico no estan disponibles.",
+          title: "Error",
+          text: "Error al iniciar sesión. Intente nuevamente más tarde.",
         });
       }
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Las contraseñas no coinciden",
-      });
+    } finally {
+      actions.setSubmitting(false);
     }
-    actions.setSubmitting(false);
   };
 
   const handleGmailLogin = () => {
@@ -94,8 +103,8 @@ const RegisterPage = () => {
     <div className="formImg">
       <div className="d-flex justify-content-center my-5 ">
         <Formik
-          initialValues={{ user: "", userName: "", pass: "", rpass: "" }}
-          validationSchema={yupSchemaRegister}
+          initialValues={{ userName: "", pass: "" }}
+          validationSchema={yupSchemaLogin}
           onSubmit={(values, actions) => {
             handleSubmitForm(values, actions);
           }}>
@@ -108,25 +117,6 @@ const RegisterPage = () => {
             isSubmitting,
           }) => (
             <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Correo Electrónico</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Por ej: usuario@gmail.com"
-                  value={values.user}
-                  name="user"
-                  onChange={handleChange}
-                  className={
-                    errors.user && touched.user
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
-                />
-                <p className="text-danger">
-                  {errors.user && touched.user && errors.user}
-                </p>
-              </Form.Group>
-
               <Form.Group className="mb-3" controlId="formBasicUser">
                 <Form.Label>Usuario</Form.Label>
                 <Form.Control
@@ -136,7 +126,7 @@ const RegisterPage = () => {
                   name="userName"
                   onChange={handleChange}
                   className={
-                    errors.user && touched.user
+                    errors.userName && touched.userName
                       ? "form-control is-invalid"
                       : "form-control"
                   }
@@ -165,27 +155,14 @@ const RegisterPage = () => {
                 </p>
               </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formBasicRPassword">
-                <Form.Label>Repetir Contraseña</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  value={values.rpass}
-                  name="rpass"
-                  onChange={handleChange}
-                  className={
-                    errors.rpass && touched.rpass
-                      ? "form-control is-invalid"
-                      : "form-control"
-                  }
-                />
-                <p className="text-danger">
-                  {errors.rpass && touched.rpass && errors.rpass}
-                </p>
-              </Form.Group>
+              <p className="text-center ">
+                <a className="text-black" href="/*">
+                  ¿Olvidaste tu contraseña?
+                </a>{" "}
+              </p>
 
               <p className="text-center">
-                Si tienes una cuenta haz click <a href="/login">aquí</a>
+                Si no tienes una cuenta haz click <a href="/registro">aquí</a>
               </p>
 
               <div>
@@ -194,7 +171,7 @@ const RegisterPage = () => {
                   className="w-100 btnForm"
                   disabled={isSubmitting}
                   onClick={handleGmailLogin}>
-                  Registrarse con Gmail
+                  Ingresar con Gmail
                 </Button>
               </div>
 
@@ -203,7 +180,7 @@ const RegisterPage = () => {
                 type="submit"
                 className="w-100 btnForm mt-3"
                 disabled={isSubmitting}>
-                Registrarse
+                Iniciar Sesion
               </Button>
             </Form>
           )}
@@ -213,4 +190,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default LoginPage;

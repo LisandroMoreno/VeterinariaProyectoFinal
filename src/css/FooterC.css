@@ -1,3 +1,25 @@
 .bg {
   background-color: #3992cdec;
 }
+
+.footer-link a :hover {
+  color: black;
+}
+
+.my-custom-link:hover,
+.my-custom-link:focus,
+.my-custom-link:active {
+  color: black;
+}
+.nav-link {
+  color: white;
+}
+
+.nav-menu .my-custom-link {
+  margin: 0;
+  padding: 0;
+}
+
+.social-icon {
+  font-size: 1.5rem;
+}

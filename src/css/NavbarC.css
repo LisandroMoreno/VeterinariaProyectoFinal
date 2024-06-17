@@ -1,6 +1,10 @@
 .bg {
   background-color: #3992cdec;
 }
+.dropdown-item:hover {
+  background-color: #3992cdec;
+  color: white;
+}
 
 .navbar-toggler {
   border-color: white;
