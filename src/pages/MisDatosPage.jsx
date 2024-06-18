@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import clienteAxios from "../helpers/clienteAxios";
 import { titlePage } from "../helpers/titlePages";
+import Swal from "sweetalert2";
 
 const MisDatosPage = () => {
   titlePage("Mis Datos");
@@ -60,8 +61,22 @@ const MisDatosPage = () => {
         misDatos,
       });
       console.log("Datos personales guardados:", response.data);
+
+      // Mostrar SweetAlert de éxito
+      Swal.fire({
+        icon: "success",
+        title: "¡Datos personales guardados!",
+        text: "Se han guardado exitosamente los datos personales.",
+      });
     } catch (error) {
       console.error("Error al guardar los datos personales:", error);
+
+      // Mostrar SweetAlert de error
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Hubo un error al guardar los datos personales.",
+      });
     }
   };
 
@@ -73,8 +88,22 @@ const MisDatosPage = () => {
         idUser: misDatos.idUser,
       });
       console.log("Datos de la mascota guardados:", response.data);
+
+      // Mostrar SweetAlert de éxito
+      Swal.fire({
+        icon: "success",
+        title: "¡Datos de la mascota guardados!",
+        text: "Se han guardado exitosamente los datos de la mascota.",
+      });
     } catch (error) {
       console.error("Error al guardar los datos de la mascota:", error);
+
+      // Mostrar SweetAlert de error
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Hubo un error al guardar los datos de la mascota.",
+      });
     }
   };
 
