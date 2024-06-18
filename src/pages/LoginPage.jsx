@@ -126,6 +126,8 @@ const LoginPage = () => {
                   placeholder="Por ej: usuario123"
                   value={values.userName}
                   name="userName"
+                  minLength={8}
+                  maxLength={15}
                   onChange={handleChange}
                   className={
                     errors.userName && touched.userName
@@ -145,6 +147,8 @@ const LoginPage = () => {
                   placeholder="Password"
                   value={values.pass}
                   name="pass"
+                  minLength={8}
+                  maxLength={15}
                   onChange={handleChange}
                   className={
                     errors.pass && touched.pass
