@@ -13,6 +13,8 @@ const RegisterPage = () => {
     user: yup
       .string()
       .required("Completa el campo vacío")
+      .min(8, "Mínimo 8 caracteres")
+      .max(50, "Máximo 50 caracteres")
       .email("Formato de email incorrecto. Por ejemplo: usuario@gmail.com"),
     userName: yup
       .string()
@@ -35,6 +37,8 @@ const RegisterPage = () => {
     rpass: yup
       .string()
       .required("Completa el campo vacío")
+      .min(8, "Mínimo 8 caracteres")
+      .max(15, "Máximo 15 caracteres")
       .oneOf([yup.ref("pass"), null], "Las contraseñas deben coincidir."),
   });
 
@@ -115,6 +119,8 @@ const RegisterPage = () => {
                   placeholder="Por ej: usuario@gmail.com"
                   value={values.user}
                   name="user"
+                  minLength={8}
+                  maxLength={50}
                   onChange={handleChange}
                   className={
                     errors.user && touched.user
@@ -134,6 +140,8 @@ const RegisterPage = () => {
                   placeholder="Por ej: usuario123"
                   value={values.userName}
                   name="userName"
+                  minLength={8}
+                  maxLength={15}
                   onChange={handleChange}
                   className={
                     errors.user && touched.user
@@ -153,6 +161,8 @@ const RegisterPage = () => {
                   placeholder="Password"
                   value={values.pass}
                   name="pass"
+                  minLength={8}
+                  maxLength={15}
                   onChange={handleChange}
                   className={
                     errors.pass && touched.pass
@@ -172,6 +182,8 @@ const RegisterPage = () => {
                   placeholder="Password"
                   value={values.rpass}
                   name="rpass"
+                  minLength={8}
+                  maxLength={15}
                   onChange={handleChange}
                   className={
                     errors.rpass && touched.rpass
