@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import clienteAxios from "../helpers/clienteAxios";
 import { titlePage } from "../helpers/titlePages";
 
 const MisDatosPage = () => {
   titlePage("Mis Datos");
+
+  const id = JSON.parse(sessionStorage.getItem("id"));
   const [misDatos, setMisDatos] = useState({
+    idUser: id,
     nombre: "",
     apellido: "",
     mail: "",
@@ -14,6 +17,22 @@ const MisDatosPage = () => {
   const [mascotas, setMascotas] = useState([
     { nombreMascota: "", especie: "", raza: "" },
   ]);
+
+  useEffect(() => {
+    const fetchDatos = async () => {
+      try {
+        const response = await clienteAxios.get(`/misDatos/${misDatos.idUser}`);
+        if (response.data) {
+          setMisDatos(response.data);
+          setMascotas(response.data.mascota);
+        }
+      } catch (error) {
+        console.error("Error al obtener los datos personales:", error);
+      }
+    };
+
+    fetchDatos();
+  }, [misDatos.idUser]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -37,7 +56,7 @@ const MisDatosPage = () => {
   const handleSubmitMisDatos = async (e) => {
     e.preventDefault();
     try {
-      const response = await clienteAxios.post("/misdatos", {
+      const response = await clienteAxios.put(`/misDatos/${misDatos.idUser}`, {
         misDatos,
       });
       console.log("Datos personales guardados:", response.data);
@@ -49,8 +68,9 @@ const MisDatosPage = () => {
   const handleSubmitMascota = async (index, e) => {
     e.preventDefault();
     try {
-      const response = await clienteAxios.post("/misdatos/mascota", {
+      const response = await clienteAxios.post(`/misDatos/mascota`, {
         mascota: mascotas[index],
+        idUser: misDatos.idUser,
       });
       console.log("Datos de la mascota guardados:", response.data);
     } catch (error) {
@@ -83,7 +103,6 @@ const MisDatosPage = () => {
                   onChange={handleInputChange}
                 />
                 <input
-                  className=""
                   type="text"
                   name="apellido"
                   placeholder="Apellido"
@@ -98,7 +117,6 @@ const MisDatosPage = () => {
                   onChange={handleInputChange}
                 />
                 <input
-                  className=""
                   type="text"
                   name="telefono"
                   placeholder="Teléfono"
@@ -125,7 +143,6 @@ const MisDatosPage = () => {
                     onChange={(e) => handleMascotaChange(index, e)}
                   />
                   <input
-                    className=""
                     type="text"
                     name="especie"
                     placeholder="Especie"

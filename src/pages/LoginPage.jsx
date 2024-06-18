@@ -44,6 +44,7 @@ const LoginPage = () => {
       if (loginUser.status === 200) {
         sessionStorage.setItem("token", JSON.stringify(loginUser.data.token));
         sessionStorage.setItem("role", JSON.stringify(loginUser.data.role));
+        sessionStorage.setItem("id", JSON.stringify(loginUser.data.id));
 
         if (loginUser.data.role === "admin") {
           Swal.fire({
@@ -77,7 +78,7 @@ const LoginPage = () => {
           });
         } else {
           Swal.fire({
-            icon: "error",      
+            icon: "error",
             title: "Error",
             text: "Error al iniciar sesión. Usuario y/o contraseña equivocada.",
           });
@@ -107,7 +108,8 @@ const LoginPage = () => {
           validationSchema={yupSchemaLogin}
           onSubmit={(values, actions) => {
             handleSubmitForm(values, actions);
-          }}>
+          }}
+        >
           {({
             values,
             errors,
@@ -174,7 +176,8 @@ const LoginPage = () => {
                   variant="primary"
                   className="w-100 btnForm"
                   disabled={isSubmitting}
-                  onClick={handleGmailLogin}>
+                  onClick={handleGmailLogin}
+                >
                   Ingresar con Gmail
                 </Button>
               </div>
@@ -183,7 +186,8 @@ const LoginPage = () => {
                 variant="primary"
                 type="submit"
                 className="w-100 btnForm mt-3"
-                disabled={isSubmitting}>
+                disabled={isSubmitting}
+              >
                 Iniciar Sesion
               </Button>
             </Form>
