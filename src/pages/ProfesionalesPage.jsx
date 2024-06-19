@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "../css/ProfesionalesPage.css";
@@ -83,8 +83,37 @@ const ProfesionalesPage = () => {
           ))}
         </div>
       </div>
+      <div className="reseñas container mt-5">
+        <h3 className="text-center">Reseñas de nuestros clientes</h3>
+        <div className="row">
+          <div className="col-md-4">
+            <div className="resena">
+              <p>"Excelente atención y cuidado a mi mascota. Altamente recomendados."</p>
+              <p><strong>- Juan Pérez</strong></p>
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div className="resena">
+              <p>"Profesionales muy capacitados y amables. Volveré sin duda."</p>
+              <p><strong>- María García</strong></p>
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div className="resena">
+              <p>"Gran servicio y dedicación. Mi perro está en buenas manos."</p>
+              <p><strong>- Carlos López</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
 
 export default ProfesionalesPage;
+
+
+
+
+
+

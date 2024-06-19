@@ -1,7 +1,7 @@
 .descripcion-Profesionales {
   padding: 20px;
   background-color: #f8f9fa;
-  overflow-x: hidden; /* Evita el scroll horizontal */
+  overflow-x: hidden; 
 }
 
 .Profesionales-container {
@@ -64,18 +64,51 @@
   margin-right: 8px;
 }
 
-/* Media Queries */
+
+@media (max-width: 1400px) {
+  .profesional {
+    margin: 20px auto; 
+    max-width: 90%;
+  }
+
+  .col-lg-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .profesional {
-    margin: 20px auto; /* Centra el contenedor */
-    max-width: 90%; /* Ajusta el ancho para móviles */
+    margin: 20px auto; 
+    max-width: 90%;
   }
 }
 
 @media (max-width: 600px) {
   .profesional {
-    margin: 10px auto; /* Centra el contenedor */
+    margin: 10px auto; 
     width: 100%;
-    max-width: 90%; /* Ajusta el ancho para móviles */
+    max-width: 90%; 
   }
+}
+
+
+.reseñas {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reseñas .resena {
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reseñas .resena p {
+  margin: 0;
 }
