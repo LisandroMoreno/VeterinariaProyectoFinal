@@ -1,0 +1,27 @@
+.icono-borrado {
+  color: black;
+  transition: color 0.3s ease;
+}
+
+.icono-borrado:hover {
+  color: red;
+}
+
+.btn-customMisDatos {
+  background-color: #3696f6;
+  border-color: #3696f6;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-customMisDatos:hover {
+  background-color: #2670c3;
+  border-color: #2670c3;
+}
+
+@media (max-width: 768px) {
+  /* Estilo para el botón "Agregar Mascota" en dispositivos móviles */
+  .btn-customMisDatos {
+    width: 100%;
+  }
+}
