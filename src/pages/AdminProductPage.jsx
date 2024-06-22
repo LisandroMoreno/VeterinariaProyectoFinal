@@ -19,7 +19,7 @@ const AdminProductsPage = () => {
     descripcion: "",
     categoria: "",
   });
-  const [image, setImage] = useState();
+  const [image, setImage] = useState(null);
   const [newProd, setNewProd] = useState({
     titulo: "",
     precio: "",
@@ -37,6 +37,10 @@ const AdminProductsPage = () => {
     setImage(ev.target.files[0]);
   };
 
+  const handleChangeNewImage = (ev) => {
+    setNewProd({ ...newProd, image: ev.target.files[0] });
+  };
+
   const handleChange = (ev) => {
     setEditProd({ ...editProd, [ev.target.name]: ev.target.value });
   };
@@ -46,26 +50,47 @@ const AdminProductsPage = () => {
   };
 
   const handleClickEdit = async (ev) => {
+    ev.preventDefault();
     try {
-      ev.preventDefault();
-
-      const formData = new FormData();
-      formData.append("titulo", editProd.titulo);
-      formData.append("precio", editProd.precio);
-      formData.append("descripcion", editProd.descripcion);
-      formData.append("categoria", editProd.categoria);
-      formData.append("image", image);
-
       const updateProd = await clienteAxios.put(
         `/productos/${editProd._id}`,
-        formData,
+        {
+          titulo: editProd.titulo,
+          precio: editProd.precio,
+          descripcion: editProd.descripcion,
+          categoria: editProd.categoria,
+        },
         config
       );
+      console.log(updateProd);
+      console.log(image);
+      if (updateProd.status === 200 && image) {
+        console.log("entra en el if");
+        const formData = new FormData();
+        formData.append("image", image);
 
-      if (updateProd.status === 200) {
+        const addImageProduct = await clienteAxios.post(
+          `/productos/addImage/${updateProd.data.updateProduct._id}`,
+          formData,
+          configImg
+        );
+
+        if (addImageProduct.status === 200) {
+          handleCloseEditModal();
+          Swal.fire({
+            title: "Producto actualizado. IMAGEN",
+            icon: "success",
+          }).then(() => {
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
+          });
+        }
+      } else {
+        console.log("entra en el else");
         handleCloseEditModal();
         Swal.fire({
-          title: "Producto actualizado",
+          title: "Producto actualizado. SIN IMAGEN",
           icon: "success",
         }).then(() => {
           setTimeout(() => {
@@ -73,17 +98,6 @@ const AdminProductsPage = () => {
           }, 1000);
         });
       }
-
-      /*      const addImageProd = await clienteAxios.post(
-        `/productos/addImage/${editProd._id}`,
-        formData,
-        configImg
-      );
-
-      if (addImageProd.status === 200) {
-        handleCloseEditModal();
-        location.reload();
-      } */
     } catch (error) {
       console.error("Error al actualizar el producto", error);
       Swal.fire({
@@ -148,26 +162,65 @@ const AdminProductsPage = () => {
   };
 
   const handleCreateProd = async (ev) => {
+    ev.preventDefault();
     try {
-      ev.preventDefault();
-
-      const formData = new FormData();
-      formData.append("titulo", newProd.titulo);
-      formData.append("precio", newProd.precio);
-      formData.append("descripcion", newProd.descripcion);
-      formData.append("categoria", newProd.categoria);
-      formData.append("image", newProd.image);
-
+      // Crear el producto sin imagen primero
       const createProdRes = await clienteAxios.post(
         "/productos",
-        formData,
+        {
+          titulo: newProd.titulo,
+          precio: newProd.precio,
+          descripcion: newProd.descripcion,
+          categoria: newProd.categoria,
+        },
         config
       );
 
-      if (createProdRes.status === 201) {
+      console.log("Respuesta de creación del producto:", createProdRes);
+      console.log("Estado de respuesta:", createProdRes.status);
+      console.log("Datos de respuesta:", createProdRes.data);
+
+      // Asegurarse de obtener el ID del producto correctamente
+      const productId =
+        createProdRes.data.newProduct?._id || createProdRes.data._id;
+
+      console.log("ID del producto creado:", productId);
+      console.log("Imagen:", newProd.image);
+
+      // Verificar si el producto se creó correctamente y si hay una imagen para subir
+      if (createProdRes.status === 201 && newProd.image) {
+        console.log("Entrando en el bloque de subida de imagen");
+
+        const formData = new FormData();
+        formData.append("image", newProd.image);
+        console.log("FormData con imagen:", formData.get("image"));
+
+        // Subir la imagen para el producto creado
+        const addImageProduct = await clienteAxios.post(
+          `/productos/addImage/${productId}`,
+          formData,
+          configImg
+        );
+
+        console.log("Respuesta de añadir imagen:", addImageProduct);
+
+        // Verificar si la imagen se subió correctamente
+        if (addImageProduct.status === 200) {
+          handleCloseCreateModal();
+          Swal.fire({
+            title: "Producto creado. IMAGEN",
+            icon: "success",
+          }).then(() => {
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
+          });
+        }
+      } else {
+        console.log("Entrando en el bloque de producto creado sin imagen");
         handleCloseCreateModal();
         Swal.fire({
-          title: "Producto creado",
+          title: "Producto creado. SIN IMAGEN",
           icon: "success",
         }).then(() => {
           setTimeout(() => {
@@ -254,35 +307,32 @@ const AdminProductsPage = () => {
               <Form.Label>Titulo</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Ingrese el titulo"
+                placeholder="Ingrese titulo"
                 name="titulo"
                 value={editProd.titulo}
                 onChange={handleChange}
               />
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Precio</Form.Label>
               <Form.Control
                 type="number"
-                placeholder="Ingrese el precio"
+                placeholder="Ingrese precio"
                 name="precio"
                 value={editProd.precio}
                 onChange={handleChange}
               />
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Descripcion</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Ingrese la descripcion"
+                placeholder="Ingrese descripcion"
                 name="descripcion"
                 value={editProd.descripcion}
                 onChange={handleChange}
               />
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Categoria</Form.Label>
 
@@ -296,18 +346,17 @@ const AdminProductsPage = () => {
                 <option value="Cuidados/Limpieza">Cuidados/Limpieza</option>
               </Form.Select>
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Imagen</Form.Label>
               <Form.Control
                 type="file"
-                placeholder="Seleccione una imagen"
+                placeholder="Ingrese imagen"
                 name="image"
                 onChange={handleChangeImage}
               />
             </Form.Group>
             <Button variant="primary" type="submit" onClick={handleClickEdit}>
-              Guardar
+              Editar Producto
             </Button>
           </Form>
         </Modal.Body>
@@ -315,7 +364,7 @@ const AdminProductsPage = () => {
 
       <Modal show={showCreateModal} onHide={handleCloseCreateModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Crear Nuevo Producto</Modal.Title>
+          <Modal.Title>Crear Producto</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -323,35 +372,32 @@ const AdminProductsPage = () => {
               <Form.Label>Titulo</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Ingrese el titulo"
+                placeholder="Ingrese titulo"
                 name="titulo"
                 value={newProd.titulo}
                 onChange={handleChangeNew}
               />
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Precio</Form.Label>
               <Form.Control
                 type="number"
-                placeholder="Ingrese el precio"
+                placeholder="Ingrese precio"
                 name="precio"
                 value={newProd.precio}
                 onChange={handleChangeNew}
               />
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Descripcion</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Ingrese la descripcion"
+                placeholder="Ingrese descripcion"
                 name="descripcion"
                 value={newProd.descripcion}
                 onChange={handleChangeNew}
               />
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Categoria</Form.Label>
 
@@ -365,16 +411,13 @@ const AdminProductsPage = () => {
                 <option value="Cuidados/Limpieza">Cuidados/Limpieza</option>
               </Form.Select>
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Imagen</Form.Label>
               <Form.Control
                 type="file"
                 placeholder="Seleccione una imagen"
                 name="image"
-                onChange={(e) =>
-                  setNewProd({ ...newProd, image: e.target.files[0] })
-                }
+                onChange={handleChangeNewImage}
               />
             </Form.Group>
             <Button variant="primary" type="submit" onClick={handleCreateProd}>
