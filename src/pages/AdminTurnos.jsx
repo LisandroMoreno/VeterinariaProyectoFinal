@@ -3,10 +3,11 @@ import TablaC from "../components/TablaC";
 import "bootstrap/dist/css/bootstrap.min.css";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 import Swal from "sweetalert2";
+import { titlePage } from "../helpers/titlePages";
 
 const AdminTurnosPage = () => {
+  titlePage("Lista de Turnos");
   const [turnos, setTurnos] = useState([]);
-  const [usuarios, setUsuarios] = useState({});
 
   useEffect(() => {
     const fetchTurnos = async () => {
@@ -71,7 +72,7 @@ const AdminTurnosPage = () => {
       detalleCita: reserva.detalleCita,
       veterinario: reserva.veterinario,
       mascota: reserva.mascota,
-      fecha: new Date(reserva.fecha).toLocaleDateString(),
+      fecha: new Date(reserva.fecha).toISOString().slice(0, 10),
       hora: reserva.hora,
       _id: reserva._id,
     }))

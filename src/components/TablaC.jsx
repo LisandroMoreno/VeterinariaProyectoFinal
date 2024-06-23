@@ -23,7 +23,7 @@ const TablaC = ({ columns, data, handleDelete }) => {
             {handleDelete && (
               <td className="align-middle">
                 <Button variant="danger" onClick={() => handleDelete(row._id)}>
-                  Borrar
+                  <i className="fa-solid fa-trash"></i>
                 </Button>
               </td>
             )}

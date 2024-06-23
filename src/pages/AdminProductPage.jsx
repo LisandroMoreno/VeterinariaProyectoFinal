@@ -8,7 +8,7 @@ import { titlePage } from "../helpers/titlePages";
 import Swal from "sweetalert2";
 
 const AdminProductsPage = () => {
-  titlePage("Productos");
+  titlePage("Lista de Productos");
   const [products, setProducts] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -194,7 +194,8 @@ const AdminProductsPage = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-center mt-2">
+      <h2 className="mt-4 text-center">Administracion de Productos</h2>
+      <div className="d-flex justify-content-start mt-2 mx-3">
         <Button variant="success" onClick={() => setShowCreateModal(true)}>
           Crear Producto
         </Button>
@@ -227,13 +228,15 @@ const AdminProductsPage = () => {
                   <td>
                     <Button
                       variant="warning"
-                      onClick={() => editProduct(product)}>
+                      onClick={() => editProduct(product)}
+                    >
                       Editar
                     </Button>
 
                     <button
                       className="btn btn-danger"
-                      onClick={() => handleClickDel(product._id)}>
+                      onClick={() => handleClickDel(product._id)}
+                    >
                       Eliminar
                     </button>
                   </td>
@@ -289,7 +292,8 @@ const AdminProductsPage = () => {
               <Form.Select
                 name="categoria"
                 value={editProd.categoria}
-                onChange={handleChange}>
+                onChange={handleChange}
+              >
                 <option value="">Selecciona una categoria</option>
                 <option value="Accesorios">Accesorios</option>
                 <option value="Alimentación">Alimentación</option>
@@ -358,7 +362,8 @@ const AdminProductsPage = () => {
               <Form.Select
                 name="categoria"
                 value={newProd.categoria}
-                onChange={handleChangeNew}>
+                onChange={handleChangeNew}
+              >
                 <option value="">Selecciona una categoria</option>
                 <option value="Accesorios">Accesorios</option>
                 <option value="Alimentación">Alimentación</option>

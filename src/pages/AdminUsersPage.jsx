@@ -274,7 +274,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const AdminUsersPage = () => {
-  titlePage("Usuarios");
+  titlePage("Lista de Usuarios");
   const [users, setUsers] = useState([]);
   const [show, setShow] = useState(false);
   const [userEdit, setUserEdit] = useState({});
@@ -442,6 +442,7 @@ const AdminUsersPage = () => {
 
   return (
     <>
+      <h2 className="mt-4 text-center">Administracion de Usuarios</h2>
       <div className="d-flex justify-content-center">
         <div className="table-responsive w-100 mt-5">
           <Table striped bordered hover>
@@ -469,7 +470,8 @@ const AdminUsersPage = () => {
                     <Button
                       variant={user.deleted ? "success" : "dark"}
                       onClick={() => handleClickStatus(user._id, user.deleted)}
-                      disabled={user.role === "admin" && true}>
+                      disabled={user.role === "admin" && true}
+                    >
                       {user.deleted ? "Habilitar" : "Deshabilitar"}
                     </Button>
 
@@ -481,7 +483,8 @@ const AdminUsersPage = () => {
                         <Form onSubmit={formik.handleSubmit}>
                           <Form.Group
                             className="mb-3"
-                            controlId="formBasicEmail">
+                            controlId="formBasicEmail"
+                          >
                             <Form.Label>Usuario</Form.Label>
                             <Form.Control
                               type="text"
@@ -503,7 +506,8 @@ const AdminUsersPage = () => {
 
                           <Form.Group
                             className="mb-3"
-                            controlId="formBasicPassword">
+                            controlId="formBasicPassword"
+                          >
                             <Form.Label>Email</Form.Label>
                             <Form.Control
                               type="text"
@@ -531,7 +535,8 @@ const AdminUsersPage = () => {
                               onChange={formik.handleChange}
                               isInvalid={
                                 !!formik.errors.role && formik.touched.role
-                              }>
+                              }
+                            >
                               <option value="">Selecciona un role</option>
                               <option value="admin">Administrador</option>
                               <option value="user">Usuario</option>
@@ -552,7 +557,8 @@ const AdminUsersPage = () => {
                     <button
                       className="btn btn-danger"
                       onClick={() => handleClickDel(user._id)}
-                      disabled={user.role === "admin" && true}>
+                      disabled={user.role === "admin" && true}
+                    >
                       <i className="fa-solid fa-trash"></i>
                     </button>
                   </td>
