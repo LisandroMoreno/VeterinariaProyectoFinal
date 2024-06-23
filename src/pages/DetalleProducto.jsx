@@ -23,7 +23,7 @@ const DetalleProducto = () => {
 
   const obtenerProducto = async () => {
     try {
-      const response = await clienteAxios.get(`/productos/${params.id}`);
+      const response = await clienteAxios.get(`/api/productos/${params.id}`);
       setProduct(response.data.product);
       setPrecioTotal(response.data.product.precio);
       titlePage(`${response.data.product.titulo}`);
@@ -173,14 +173,12 @@ const DetalleProducto = () => {
               </InputGroup>
               <Button
                 className="btn-customProduct mb-3"
-                onClick={handleComprar}
-              >
+                onClick={handleComprar}>
                 Comprar
               </Button>
               <Button
                 onClick={agregarCarrito}
-                className="btn-customProduct mb-3"
-              >
+                className="btn-customProduct mb-3">
                 <i className="fa-solid fa-cart-shopping"></i>
               </Button>
             </div>
