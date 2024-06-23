@@ -20,6 +20,7 @@ import CrearTurno from "../pages/CrearTurno";
 import DetalleMisReservas from "../pages/DetalleMisReservas";
 import AdminPageProfesionales from "../pages/AdminPageProfesionales";
 import MisDatosPage from "../pages/MisDatosPage";
+import AdminTurnos from "../pages/AdminTurnos";
 
 const RoutesViews = () => {
   return (
@@ -87,6 +88,7 @@ const RoutesViews = () => {
           element={<AdminPageProfesionales />}
         />
         <Route path="/misDatos" element={<MisDatosPage />} />
+        <Route path="/AdminTurnos" element={<AdminTurnos />} />
       </Routes>
       <FooterC />
     </>

@@ -102,7 +102,11 @@ const NavbarC = () => {
                     >
                       Pacientes
                     </Nav.Link>
-                    <Nav.Link as={Link} to="/turnos" className="my-custom-link">
+                    <Nav.Link
+                      as={Link}
+                      to="/AdminTurnos"
+                      className="my-custom-link"
+                    >
                       Turnos
                     </Nav.Link>
                     <Nav.Link
