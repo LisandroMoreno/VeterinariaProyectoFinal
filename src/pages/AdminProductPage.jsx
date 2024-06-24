@@ -6,6 +6,8 @@ import Form from "react-bootstrap/Form";
 import clienteAxios, { config, configImg } from "../helpers/clienteAxios";
 import { titlePage } from "../helpers/titlePages";
 import Swal from "sweetalert2";
+import TablaC from "../components/TablaC";
+import { InputGroup } from "react-bootstrap";
 
 const AdminProductsPage = () => {
   titlePage("Lista de Productos");
@@ -241,6 +243,18 @@ const AdminProductsPage = () => {
     }
   };
 
+  const columns = [
+    { key: "_id", header: "ID" },
+    { key: "titulo", header: "Titulo" },
+    { key: "precio", header: "Precio" },
+    { key: "categoria", header: "Categoria" },
+    {
+      key: "image",
+      header: "Imagen",
+      render: (row) => <img src={row.image} alt="" width={25} />,
+    },
+  ];
+
   useEffect(() => {
     getProductosAdmin();
   }, []);
@@ -255,48 +269,12 @@ const AdminProductsPage = () => {
       </div>
       <div className="d-flex justify-content-center">
         <div className="table-responsive w-100 mt-3">
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Titulo</th>
-                <th>Precio</th>
-                <th>Descripcion</th>
-                <th>Categoria</th>
-                <th>Imagen</th>
-                <th>Editar/Eliminar</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map((product) => (
-                <tr key={product._id}>
-                  <td>{product._id}</td>
-                  <td>{product.titulo}</td>
-                  <td>{product.precio}</td>
-                  <td>{product.descripcion}</td>
-                  <td>{product.categoria}</td>
-                  <td className="text-center">
-                    <img src={product.image} alt="" width={25} />
-                  </td>
-                  <td>
-                    <Button
-                      variant="warning"
-                      onClick={() => editProduct(product)}
-                    >
-                      Editar
-                    </Button>
-
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => handleClickDel(product._id)}
-                    >
-                      Eliminar
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <TablaC
+            columns={columns}
+            data={products}
+            handleEdit={editProduct}
+            handleDelete={handleClickDel}
+          />
         </div>
       </div>
 
@@ -329,6 +307,7 @@ const AdminProductsPage = () => {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Descripcion</Form.Label>
               <Form.Control
+                as="textarea"
                 type="text"
                 placeholder="Ingrese descripcion"
                 name="descripcion"
@@ -342,8 +321,7 @@ const AdminProductsPage = () => {
               <Form.Select
                 name="categoria"
                 value={editProd.categoria}
-                onChange={handleChange}
-              >
+                onChange={handleChange}>
                 <option value="">Selecciona una categoria</option>
                 <option value="Accesorios">Accesorios</option>
                 <option value="Alimentación">Alimentación</option>
@@ -395,6 +373,7 @@ const AdminProductsPage = () => {
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Descripcion</Form.Label>
               <Form.Control
+                as="textarea"
                 type="text"
                 placeholder="Ingrese descripcion"
                 name="descripcion"
@@ -408,8 +387,7 @@ const AdminProductsPage = () => {
               <Form.Select
                 name="categoria"
                 value={newProd.categoria}
-                onChange={handleChangeNew}
-              >
+                onChange={handleChangeNew}>
                 <option value="">Selecciona una categoria</option>
                 <option value="Accesorios">Accesorios</option>
                 <option value="Alimentación">Alimentación</option>

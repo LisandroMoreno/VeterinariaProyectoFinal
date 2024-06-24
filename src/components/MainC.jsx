@@ -16,11 +16,13 @@ import ApiClima from "./ApiClima";
 
 const MainC = () => {
   const [products, setProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("Todas las categorias");
+  const [selectedCategory, setSelectedCategory] = useState(
+    "Todas las categorias"
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [searchTerm, setSearchTerm] = useState(""); 
-  const [isSearching, setIsSearching] = useState(false); 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
   const navigate = useNavigate();
 
   const itemsPerPage = 10;
@@ -59,20 +61,21 @@ const MainC = () => {
 
   const handleSearch = (termino) => {
     setSearchTerm(termino);
-    setIsSearching(termino !== ""); 
+    setIsSearching(termino !== "");
   };
 
   return (
     <>
       <div className="ClimaSearch">
-        <ApiClima onSearch={handleSearch} /> 
+        <ApiClima onSearch={handleSearch} />
       </div>
 
-     
       {!isSearching && (
         <>
           <div className="text-center mt-2 mb-2">
-            <h2>Veterinaria Patas y Garras, un lugar para cuidar a tu mascota</h2>
+            <h2>
+              Veterinaria Patas y Garras, un lugar para cuidar a tu mascota
+            </h2>
           </div>
 
           <div className="container-fluid mb-3 mt-2">
@@ -94,14 +97,13 @@ const MainC = () => {
                             Nuestros Profesionales
                           </h1>
                           <p className="mx-md-5 px-5">
-                            Nuestros profesionales están comprometidos con la salud
-                            y el bienestar de las mascotas. ¡Confía en ellos para el
-                            cuidado de tus animales!
+                            Nuestros profesionales están comprometidos con la
+                            salud y el bienestar de las mascotas. ¡Confía en
+                            ellos para el cuidado de tus animales!
                           </p>
                           <a
                             className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInDown"
-                            href="/profesionales"
-                          >
+                            href="/profesionales">
                             Ver más
                           </a>
                         </div>
@@ -128,8 +130,7 @@ const MainC = () => {
                           </p>
                           <a
                             className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInDown"
-                            href="/planes"
-                          >
+                            href="/planes">
                             Ver más
                           </a>
                         </div>
@@ -156,8 +157,7 @@ const MainC = () => {
                           </p>
                           <a
                             className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInDown"
-                            href="#products-section"
-                          >
+                            href="#products-section">
                             Ver más
                           </a>
                         </div>
@@ -178,7 +178,9 @@ const MainC = () => {
                   <div className="offer-text">
                     <h6 className="text-white text-uppercase">Descuento 20%</h6>
                     <h3 className="text-white mb-3">Oferta especial</h3>
-                    <a href="*" className="btn btn-outline-light py-2 px-4 mt-3">
+                    <a
+                      href="*"
+                      className="btn btn-outline-light py-2 px-4 mt-3">
                       Ver más
                     </a>
                   </div>
@@ -193,7 +195,9 @@ const MainC = () => {
                   <div className="offer-text">
                     <h6 className="text-white text-uppercase">Descuento 20%</h6>
                     <h3 className="text-white mb-3">Oferta especial</h3>
-                    <a href="*" className="btn btn-outline-light py-2 px-4 mt-3">
+                    <a
+                      href="*"
+                      className="btn btn-outline-light py-2 px-4 mt-3">
                       Ver más
                     </a>
                   </div>
@@ -210,35 +214,46 @@ const MainC = () => {
             <div className="col-12">
               <h3 className="text-center">
                 <Pisadas />
-            
-                PetMarket: Te ofrecemos nuestros productos para el cuidado y bienestar de tu mascota
+                PetMarket: Te ofrecemos nuestros productos para el cuidado y
+                bienestar de tu mascota
               </h3>
-             
             </div>
           </div>
         </div>
-        
-   
 
-        <div className="container-fluid mb-30 mt-30 bg-btn" id="products-section">
+        <div
+          className="container-fluid mb-30 mt-30 bg-btn"
+          id="products-section">
           <div className="row d-flex justify-content-center">
             <div className="col-12 col-md-2 mtButton mb-30 d-flex justify-content-center">
-              <Button variant="light" className="btn-categoria" onClick={() => handleCategoryClick("Accesorios")}>
+              <Button
+                variant="light"
+                className="btn-categoria"
+                onClick={() => handleCategoryClick("Accesorios")}>
                 Accesorios
               </Button>
             </div>
             <div className="col-12 col-md-2 mtButton mb-30 d-flex justify-content-center">
-              <Button variant="light" className="btn-categoria" onClick={() => handleCategoryClick("Alimentación")}>
+              <Button
+                variant="light"
+                className="btn-categoria"
+                onClick={() => handleCategoryClick("Alimentación")}>
                 Alimentación
               </Button>
             </div>
             <div className="col-12 col-md-2 mtButton mb-30 d-flex justify-content-center">
-              <Button variant="light" className="btn-categoria" onClick={() => handleCategoryClick("Cuidados/Limpieza")}>
+              <Button
+                variant="light"
+                className="btn-categoria"
+                onClick={() => handleCategoryClick("Cuidados/Limpieza")}>
                 Cuidados/Limpieza
               </Button>
             </div>
             <div className="col-12 col-md-2 mtButton mb-30 d-flex justify-content-center">
-              <Button variant="light" className="btn-categoria" onClick={() => handleCategoryClick("Todas las categorias")}>
+              <Button
+                variant="light"
+                className="btn-categoria"
+                onClick={() => handleCategoryClick("Todas las categorias")}>
                 Todas las categorias
               </Button>
             </div>
@@ -269,9 +284,10 @@ const MainC = () => {
               <Pagination.Item
                 key={index + 1}
                 active={index + 1 === currentPage}
-                onClick={() => getProducts(selectedCategory, index + 1, searchTerm)}
-                linkClassName="custom-pagination-item"
-              >
+                onClick={() =>
+                  getProducts(selectedCategory, index + 1, searchTerm)
+                }
+                linkClassName="custom-pagination-item">
                 {index + 1}
               </Pagination.Item>
             ))}
@@ -283,9 +299,14 @@ const MainC = () => {
         <div className="health-plan-content">
           <h1>Plan de salud para animales</h1>
           <p>
-            Ofrecemos un plan de salud integral para tus mascotas que incluye consultas, vacunas y mucho más.
+            Ofrecemos un plan de salud integral para tus mascotas que incluye
+            consultas, vacunas y mucho más.
           </p>
-          <Button variant="primary" type="button" className="learn-more-button btnForm" onClick={handleButtonClick}>
+          <Button
+            variant="primary"
+            type="button"
+            className="learn-more-button btnForm"
+            onClick={handleButtonClick}>
             Saber más
           </Button>
         </div>
