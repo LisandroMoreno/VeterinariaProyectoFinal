@@ -45,11 +45,17 @@ const ApiClima = ({ onSearch }) => {
     async function fetchWeatherData() {
       try {
         const response = await axios.get(currentWeatherApiUrl);
-        const { temp, temp_min, temp_max, weather } = response.data.main;
-        setCurrentTemp(kelvinToCelsius(temp).toFixed(1));
-        setMinTemp(kelvinToCelsius(temp_min).toFixed(1));
-        setMaxTemp(kelvinToCelsius(temp_max).toFixed(1));
-        setWeatherIcon(weather[0].icon);
+        const { main, weather } = response.data;
+
+        if (main && weather) {
+          const { temp, temp_min, temp_max } = main;
+          setCurrentTemp(kelvinToCelsius(temp).toFixed(1));
+          setMinTemp(kelvinToCelsius(temp_min).toFixed(1));
+          setMaxTemp(kelvinToCelsius(temp_max).toFixed(1));
+          setWeatherIcon(weather[0].icon);
+        } else {
+          console.error("Datos de clima no disponibles");
+        }
       } catch (error) {
         console.error("Error al obtener el clima actual:", error);
       }
@@ -63,7 +69,7 @@ const ApiClima = ({ onSearch }) => {
   };
 
   const handleSearchClick = () => {
-    onSearch(searchTerm); 
+    onSearch(searchTerm);
   };
 
   return (

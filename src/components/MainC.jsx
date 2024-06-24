@@ -100,7 +100,7 @@ const MainC = () => {
                           </p>
                           <a
                             className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInDown"
-                            href="/reservaTurnos"
+                            href="/profesionales"
                           >
                             Ver más
                           </a>
