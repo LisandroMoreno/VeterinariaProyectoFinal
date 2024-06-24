@@ -281,15 +281,13 @@ const AdminProductsPage = () => {
                   <td>
                     <Button
                       variant="warning"
-                      onClick={() => editProduct(product)}
-                    >
+                      onClick={() => editProduct(product)}>
                       Editar
                     </Button>
 
                     <button
                       className="btn btn-danger"
-                      onClick={() => handleClickDel(product._id)}
-                    >
+                      onClick={() => handleClickDel(product._id)}>
                       Eliminar
                     </button>
                   </td>
@@ -342,8 +340,7 @@ const AdminProductsPage = () => {
               <Form.Select
                 name="categoria"
                 value={editProd.categoria}
-                onChange={handleChange}
-              >
+                onChange={handleChange}>
                 <option value="">Selecciona una categoria</option>
                 <option value="Accesorios">Accesorios</option>
                 <option value="Alimentación">Alimentación</option>
@@ -408,8 +405,7 @@ const AdminProductsPage = () => {
               <Form.Select
                 name="categoria"
                 value={newProd.categoria}
-                onChange={handleChangeNew}
-              >
+                onChange={handleChangeNew}>
                 <option value="">Selecciona una categoria</option>
                 <option value="Accesorios">Accesorios</option>
                 <option value="Alimentación">Alimentación</option>
