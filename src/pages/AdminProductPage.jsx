@@ -321,8 +321,7 @@ const AdminProductsPage = () => {
               <Form.Select
                 name="categoria"
                 value={editProd.categoria}
-                onChange={handleChange}
-              >
+                onChange={handleChange}>
                 <option value="">Selecciona una categoria</option>
                 <option value="Accesorios">Accesorios</option>
                 <option value="Alimentación">Alimentación</option>
@@ -388,8 +387,7 @@ const AdminProductsPage = () => {
               <Form.Select
                 name="categoria"
                 value={newProd.categoria}
-                onChange={handleChangeNew}
-              >
+                onChange={handleChangeNew}>
                 <option value="">Selecciona una categoria</option>
                 <option value="Accesorios">Accesorios</option>
                 <option value="Alimentación">Alimentación</option>
