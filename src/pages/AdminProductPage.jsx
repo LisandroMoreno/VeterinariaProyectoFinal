@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
-import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
+import React, { useEffect, useState } from "react";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import clienteAxios, { config, configImg } from "../helpers/clienteAxios";
 import { titlePage } from "../helpers/titlePages";
 import Swal from "sweetalert2";
 import TablaC from "../components/TablaC";
-import { InputGroup } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 const AdminProductsPage = () => {
   titlePage("Lista de Productos");
@@ -43,31 +41,36 @@ const AdminProductsPage = () => {
     setNewProd({ ...newProd, image: ev.target.files[0] });
   };
 
-  const handleChange = (ev) => {
-    setEditProd({ ...editProd, [ev.target.name]: ev.target.value });
-  };
+  const validationSchema = Yup.object().shape({
+    titulo: Yup.string()
+      .required("El título es obligatorio")
+      .min(3, "El título debe tener al menos 3 caracteres")
+      .max(100, "El título no debe exceder los 100 caracteres"),
+    precio: Yup.number()
+      .required("El precio es obligatorio")
+      .positive("El precio debe ser un valor positivo")
+      .max(10000, "El precio no debe exceder los 10,000"),
+    descripcion: Yup.string()
+      .required("La descripción es obligatoria")
+      .min(10, "La descripción debe tener al menos 10 caracteres")
+      .max(500, "La descripción no debe exceder los 500 caracteres"),
+    categoria: Yup.string().required("La categoría es obligatoria"),
+    image: Yup.mixed().nullable(),
+  });
 
-  const handleChangeNew = (ev) => {
-    setNewProd({ ...newProd, [ev.target.name]: ev.target.value });
-  };
-
-  const handleClickEdit = async (ev) => {
-    ev.preventDefault();
+  const handleClickEdit = async (values, { setSubmitting }) => {
     try {
       const updateProd = await clienteAxios.put(
         `/productos/${editProd._id}`,
         {
-          titulo: editProd.titulo,
-          precio: editProd.precio,
-          descripcion: editProd.descripcion,
-          categoria: editProd.categoria,
+          titulo: values.titulo,
+          precio: values.precio,
+          descripcion: values.descripcion,
+          categoria: values.categoria,
         },
         config
       );
-      console.log(updateProd);
-      console.log(image);
       if (updateProd.status === 200 && image) {
-        console.log("entra en el if");
         const formData = new FormData();
         formData.append("image", image);
 
@@ -89,7 +92,6 @@ const AdminProductsPage = () => {
           });
         }
       } else {
-        console.log("entra en el else");
         handleCloseEditModal();
         Swal.fire({
           title: "Producto actualizado. SIN IMAGEN",
@@ -101,7 +103,6 @@ const AdminProductsPage = () => {
         });
       }
     } catch (error) {
-      console.error("Error al actualizar el producto", error);
       Swal.fire({
         title: "Error al actualizar el producto",
         icon: "error",
@@ -110,6 +111,70 @@ const AdminProductsPage = () => {
           location.reload();
         }, 1000);
       });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleCreateProd = async (values, { setSubmitting }) => {
+    try {
+      const createProdRes = await clienteAxios.post(
+        "/productos",
+        {
+          titulo: values.titulo,
+          precio: values.precio,
+          descripcion: values.descripcion,
+          categoria: values.categoria,
+        },
+        config
+      );
+
+      const productId =
+        createProdRes.data.newProduct?._id || createProdRes.data._id;
+
+      if (createProdRes.status === 201 && newProd.image) {
+        const formData = new FormData();
+        formData.append("image", newProd.image);
+
+        const addImageProduct = await clienteAxios.post(
+          `/productos/addImage/${productId}`,
+          formData,
+          configImg
+        );
+
+        if (addImageProduct.status === 200) {
+          handleCloseCreateModal();
+          Swal.fire({
+            title: "Producto creado. IMAGEN",
+            icon: "success",
+          }).then(() => {
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
+          });
+        }
+      } else {
+        handleCloseCreateModal();
+        Swal.fire({
+          title: "Producto creado. SIN IMAGEN",
+          icon: "success",
+        }).then(() => {
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Error al crear el producto",
+        icon: "error",
+      }).then(() => {
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      });
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -151,89 +216,8 @@ const AdminProductsPage = () => {
         }
       }
     } catch (error) {
-      console.error("Error al eliminar el producto", error);
       Swal.fire({
         title: "Error al eliminar el producto",
-        icon: "error",
-      }).then(() => {
-        setTimeout(() => {
-          location.reload();
-        }, 1000);
-      });
-    }
-  };
-
-  const handleCreateProd = async (ev) => {
-    ev.preventDefault();
-    try {
-      // Crear el producto sin imagen primero
-      const createProdRes = await clienteAxios.post(
-        "/productos",
-        {
-          titulo: newProd.titulo,
-          precio: newProd.precio,
-          descripcion: newProd.descripcion,
-          categoria: newProd.categoria,
-        },
-        config
-      );
-
-      console.log("Respuesta de creación del producto:", createProdRes);
-      console.log("Estado de respuesta:", createProdRes.status);
-      console.log("Datos de respuesta:", createProdRes.data);
-
-      // Asegurarse de obtener el ID del producto correctamente
-      const productId =
-        createProdRes.data.newProduct?._id || createProdRes.data._id;
-
-      console.log("ID del producto creado:", productId);
-      console.log("Imagen:", newProd.image);
-
-      // Verificar si el producto se creó correctamente y si hay una imagen para subir
-      if (createProdRes.status === 201 && newProd.image) {
-        console.log("Entrando en el bloque de subida de imagen");
-
-        const formData = new FormData();
-        formData.append("image", newProd.image);
-        console.log("FormData con imagen:", formData.get("image"));
-
-        // Subir la imagen para el producto creado
-        const addImageProduct = await clienteAxios.post(
-          `/productos/addImage/${productId}`,
-          formData,
-          configImg
-        );
-
-        console.log("Respuesta de añadir imagen:", addImageProduct);
-
-        // Verificar si la imagen se subió correctamente
-        if (addImageProduct.status === 200) {
-          handleCloseCreateModal();
-          Swal.fire({
-            title: "Producto creado. IMAGEN",
-            icon: "success",
-          }).then(() => {
-            setTimeout(() => {
-              location.reload();
-            }, 1000);
-          });
-        }
-      } else {
-        console.log("Entrando en el bloque de producto creado sin imagen");
-        handleCloseCreateModal();
-        Swal.fire({
-          title: "Producto creado. SIN IMAGEN",
-          icon: "success",
-        }).then(() => {
-          setTimeout(() => {
-            location.reload();
-          }, 1000);
-        });
-      }
-    } catch (error) {
-      console.error("Error al crear el producto", error);
-      Swal.fire({
-        title: "Error al crear el producto",
         icon: "error",
       }).then(() => {
         setTimeout(() => {
@@ -262,7 +246,7 @@ const AdminProductsPage = () => {
   return (
     <>
       <h2 className="mt-4 text-center">Administracion de Productos</h2>
-      <div className="d-flex justify-content-start mt-2 mx-3">
+      <div className="d-flex justify-content-center ">
         <Button variant="success" onClick={() => setShowCreateModal(true)}>
           Crear Producto
         </Button>
@@ -283,64 +267,115 @@ const AdminProductsPage = () => {
           <Modal.Title>Editar Producto</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Titulo</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese titulo"
-                name="titulo"
-                value={editProd.titulo}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Precio</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Ingrese precio"
-                name="precio"
-                value={editProd.precio}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Descripcion</Form.Label>
-              <Form.Control
-                as="textarea"
-                type="text"
-                placeholder="Ingrese descripcion"
-                name="descripcion"
-                value={editProd.descripcion}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Categoria</Form.Label>
-
-              <Form.Select
-                name="categoria"
-                value={editProd.categoria}
-                onChange={handleChange}>
-                <option value="">Selecciona una categoria</option>
-                <option value="Accesorios">Accesorios</option>
-                <option value="Alimentación">Alimentación</option>
-                <option value="Cuidados/Limpieza">Cuidados/Limpieza</option>
-              </Form.Select>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Imagen</Form.Label>
-              <Form.Control
-                type="file"
-                placeholder="Ingrese imagen"
-                name="image"
-                onChange={handleChangeImage}
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit" onClick={handleClickEdit}>
-              Editar Producto
-            </Button>
-          </Form>
+          <Formik
+            initialValues={editProd}
+            validationSchema={validationSchema}
+            onSubmit={handleClickEdit}>
+            {({ isSubmitting, errors, touched }) => (
+              <Form>
+                <div className="mb-3">
+                  <label htmlFor="titulo" className="form-label">
+                    Titulo
+                  </label>
+                  <Field
+                    type="text"
+                    name="titulo"
+                    className={`form-control ${
+                      errors.titulo && touched.titulo ? "is-invalid" : ""
+                    }`}
+                  />
+                  <ErrorMessage
+                    name="titulo"
+                    component="div"
+                    className="invalid-feedback"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="precio" className="form-label">
+                    Precio
+                  </label>
+                  <Field
+                    type="number"
+                    name="precio"
+                    className={`form-control ${
+                      errors.precio && touched.precio ? "is-invalid" : ""
+                    }`}
+                  />
+                  <ErrorMessage
+                    name="precio"
+                    component="div"
+                    className="invalid-feedback"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="descripcion" className="form-label">
+                    Descripcion
+                  </label>
+                  <Field
+                    as="textarea"
+                    name="descripcion"
+                    className={`form-control ${
+                      errors.descripcion && touched.descripcion
+                        ? "is-invalid"
+                        : ""
+                    }`}
+                  />
+                  <ErrorMessage
+                    name="descripcion"
+                    component="div"
+                    className="invalid-feedback"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="categoria" className="form-label">
+                    Categoria
+                  </label>
+                  <Field
+                    as="select"
+                    name="categoria"
+                    className={`form-select ${
+                      errors.categoria && touched.categoria ? "is-invalid" : ""
+                    }`}>
+                    <option value="">Selecciona una categoria</option>
+                    <option value="Accesorios">Accesorios</option>
+                    <option value="Alimentación">Alimentación</option>
+                    <option value="Cuidados/Limpieza">Cuidados/Limpieza</option>
+                  </Field>
+                  <ErrorMessage
+                    name="categoria"
+                    component="div"
+                    className="invalid-feedback"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="image" className="form-label">
+                    Imagen
+                  </label>
+                  <input
+                    type="file"
+                    name="image"
+                    className={`form-control ${
+                      errors.image && touched.image ? "is-invalid" : ""
+                    }`}
+                    onChange={handleChangeImage}
+                  />
+                  <ErrorMessage
+                    name="image"
+                    component="div"
+                    className="invalid-feedback"
+                  />
+                </div>
+                <div className="d-flex justify-content-center">
+                  <Button
+                    variant="success"
+                    type="submit"
+                    disabled={isSubmitting}>
+                    Editar Producto
+                  </Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
         </Modal.Body>
       </Modal>
 
@@ -349,64 +384,115 @@ const AdminProductsPage = () => {
           <Modal.Title>Crear Producto</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Titulo</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese titulo"
-                name="titulo"
-                value={newProd.titulo}
-                onChange={handleChangeNew}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Precio</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Ingrese precio"
-                name="precio"
-                value={newProd.precio}
-                onChange={handleChangeNew}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Descripcion</Form.Label>
-              <Form.Control
-                as="textarea"
-                type="text"
-                placeholder="Ingrese descripcion"
-                name="descripcion"
-                value={newProd.descripcion}
-                onChange={handleChangeNew}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Categoria</Form.Label>
-
-              <Form.Select
-                name="categoria"
-                value={newProd.categoria}
-                onChange={handleChangeNew}>
-                <option value="">Selecciona una categoria</option>
-                <option value="Accesorios">Accesorios</option>
-                <option value="Alimentación">Alimentación</option>
-                <option value="Cuidados/Limpieza">Cuidados/Limpieza</option>
-              </Form.Select>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Imagen</Form.Label>
-              <Form.Control
-                type="file"
-                placeholder="Seleccione una imagen"
-                name="image"
-                onChange={handleChangeNewImage}
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit" onClick={handleCreateProd}>
-              Crear Producto
-            </Button>
-          </Form>
+          <Formik
+            initialValues={newProd}
+            validationSchema={validationSchema}
+            onSubmit={handleCreateProd}>
+            {({ isSubmitting, errors, touched }) => (
+              <Form>
+                <div className="mb-3">
+                  <label htmlFor="titulo" className="form-label">
+                    Titulo
+                  </label>
+                  <Field
+                    type="text"
+                    name="titulo"
+                    className={`form-control ${
+                      errors.titulo && touched.titulo ? "is-invalid" : ""
+                    }`}
+                  />
+                  <ErrorMessage
+                    name="titulo"
+                    component="div"
+                    className="invalid-feedback"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="precio" className="form-label">
+                    Precio
+                  </label>
+                  <Field
+                    type="number"
+                    name="precio"
+                    className={`form-control ${
+                      errors.precio && touched.precio ? "is-invalid" : ""
+                    }`}
+                  />
+                  <ErrorMessage
+                    name="precio"
+                    component="div"
+                    className="invalid-feedback"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="descripcion" className="form-label">
+                    Descripcion
+                  </label>
+                  <Field
+                    as="textarea"
+                    name="descripcion"
+                    className={`form-control ${
+                      errors.descripcion && touched.descripcion
+                        ? "is-invalid"
+                        : ""
+                    }`}
+                  />
+                  <ErrorMessage
+                    name="descripcion"
+                    component="div"
+                    className="invalid-feedback"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="categoria" className="form-label">
+                    Categoria
+                  </label>
+                  <Field
+                    as="select"
+                    name="categoria"
+                    className={`form-select ${
+                      errors.categoria && touched.categoria ? "is-invalid" : ""
+                    }`}>
+                    <option value="">Selecciona una categoria</option>
+                    <option value="Accesorios">Accesorios</option>
+                    <option value="Alimentación">Alimentación</option>
+                    <option value="Cuidados/Limpieza">Cuidados/Limpieza</option>
+                  </Field>
+                  <ErrorMessage
+                    name="categoria"
+                    component="div"
+                    className="invalid-feedback"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="image" className="form-label">
+                    Imagen
+                  </label>
+                  <input
+                    type="file"
+                    name="image"
+                    className={`form-control ${
+                      errors.image && touched.image ? "is-invalid" : ""
+                    }`}
+                    onChange={handleChangeNewImage}
+                  />
+                  <ErrorMessage
+                    name="image"
+                    component="div"
+                    className="invalid-feedback"
+                  />
+                </div>
+                <div className="d-flex justify-content-center">
+                  <Button
+                    variant="success"
+                    type="submit"
+                    disabled={isSubmitting}>
+                    Crear Producto
+                  </Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
         </Modal.Body>
       </Modal>
     </>
