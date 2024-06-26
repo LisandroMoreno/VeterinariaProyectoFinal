@@ -157,8 +157,9 @@ const AdminUsersPage = () => {
         );
 
         if (statusUser.status === 200) {
+          const message = statusUser.data.msg;
           Swal.fire({
-            title: "Estado del usuario actualizado",
+            title: message,
             icon: "success",
           }).then(() => {
             setTimeout(() => {
