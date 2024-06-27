@@ -5,6 +5,7 @@ import "../css/FooterC.css";
 import { Nav } from "react-bootstrap";
 
 const FooterC = () => {
+  const role = JSON.parse(sessionStorage.getItem("role"));
   const url =
     "https://res.cloudinary.com/duexhxoyy/image/upload/v1714683325/hek6sf6ymtztchwpq7sr.jpg";
   return (
@@ -12,7 +13,7 @@ const FooterC = () => {
       <div className="container-fluid text-center">
         <div className="row justify-content-center">
           <div className="col-12 mt-2 col-md-6 col-lg-3 align-items-center d-flex justify-content-center">
-            <Link to="/">
+            <Link to={role === "admin" ? "/home-adminLog" : "/"}>
               <ImageC urlImagen={url} ancho="100vh" alternativo="logo" />
             </Link>
           </div>

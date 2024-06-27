@@ -16,6 +16,7 @@ const NavbarC = () => {
   const cerrarSesion = () => {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("role");
+    sessionStorage.removeItem("id");
     navigate("/");
   };
 
@@ -110,33 +111,55 @@ const NavbarC = () => {
                 <NavLink className="text-white"> </NavLink>
               </Nav>
               <Nav className="d-flex d-lg-none">
-                {token && role === "user" && (
-                  <NavDropdown
-                    title="Mi Cuenta"
-                    id="account-nav-dropdown"
-                    className="my-custom-link me-5 nav-link"
+                {token && role === "admin" ? (
+                  <NavLink
+                    to="/"
+                    className="my-custom-link nav-link"
+                    onClick={cerrarSesion}
                   >
-                    <NavDropdown.Item as={Link} to="/misReservas">
-                      Mis Reservas
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item as={Link} to="/misDatos">
-                      Mis Datos
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item as={Link} to="/" onClick={cerrarSesion}>
-                      Cerrar Sesión
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                )}
-                {!token && (
+                    Cerrar Sesión
+                  </NavLink>
+                ) : (
                   <>
-                    <NavLink to="/login" className="my-custom-link nav-link">
-                      Iniciar Sesión
-                    </NavLink>
-                    <NavLink to="/registro" className="my-custom-link nav-link">
-                      Registrarse
-                    </NavLink>
+                    {token && (
+                      <NavDropdown
+                        title="Mi Cuenta"
+                        id="account-nav-dropdown"
+                        className="my-custom-link me-5 nav-link"
+                      >
+                        <NavDropdown.Item as={Link} to="/misReservas">
+                          Mis Reservas
+                        </NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item as={Link} to="/misDatos">
+                          Mis Datos
+                        </NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item
+                          as={Link}
+                          to="/"
+                          onClick={cerrarSesion}
+                        >
+                          Cerrar Sesión
+                        </NavDropdown.Item>
+                      </NavDropdown>
+                    )}
+                    {!token && (
+                      <>
+                        <NavLink
+                          to="/login"
+                          className="my-custom-link nav-link"
+                        >
+                          Iniciar Sesión
+                        </NavLink>
+                        <NavLink
+                          to="/registro"
+                          className="my-custom-link nav-link"
+                        >
+                          Registrarse
+                        </NavLink>
+                      </>
+                    )}
                   </>
                 )}
               </Nav>
@@ -145,14 +168,14 @@ const NavbarC = () => {
                   <>
                     <NavLink
                       to="/detalleCarrito"
-                      className="my-custom-link nav-link me-2"
+                      className="my-custom-link nav-link me-2 mt-2"
                     >
                       <i className="fa-solid fa-cart-shopping"></i>
                     </NavLink>
 
                     <NavLink
                       to="/detalleFavorito"
-                      className="my-custom-link nav-link me-2"
+                      className="my-custom-link nav-link me-2 mt-2"
                     >
                       <i className="fa-solid fa-heart fa-1x"></i>
                     </NavLink>
