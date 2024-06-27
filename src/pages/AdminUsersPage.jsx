@@ -58,7 +58,8 @@ const AdminUsersPage = () => {
       role: "",
     },
     validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { setSubmitting }) => {
+      setIsSubmitting(true);
       try {
         const updateUser = await clienteAxios.put(
           `/users/${userEdit._id}`,
@@ -86,9 +87,14 @@ const AdminUsersPage = () => {
             location.reload();
           }, 1000);
         });
+      } finally {
+        setIsSubmitting(false);
+        setSubmitting(false);
       }
     },
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleClickDel = async (idUser) => {
     try {
@@ -151,8 +157,9 @@ const AdminUsersPage = () => {
         );
 
         if (statusUser.status === 200) {
+          const message = statusUser.data.msg;
           Swal.fire({
-            title: "Estado del usuario actualizado",
+            title: message,
             icon: "success",
           }).then(() => {
             setTimeout(() => {
@@ -262,8 +269,7 @@ const AdminUsersPage = () => {
                 name="role"
                 value={formik.values.role}
                 onChange={formik.handleChange}
-                isInvalid={!!formik.errors.role && formik.touched.role}
-              >
+                isInvalid={!!formik.errors.role && formik.touched.role}>
                 <option value="">Selecciona un role</option>
                 <option value="admin">Administrador</option>
                 <option value="user">Usuario</option>
@@ -274,7 +280,7 @@ const AdminUsersPage = () => {
             </Form.Group>
 
             <div className="d-flex justify-content-center">
-              <Button variant="success" type="submit">
+              <Button variant="success" type="submit" disabled={isSubmitting}>
                 Guardar Cambios
               </Button>
             </div>

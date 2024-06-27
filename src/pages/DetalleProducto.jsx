@@ -23,7 +23,7 @@ const DetalleProducto = () => {
 
   const obtenerProducto = async () => {
     try {
-      const response = await clienteAxios.get(`/api/productos/${params.id}`);
+      const response = await clienteAxios.get(`/productos/${params.id}`);
       setProduct(response.data.product);
       setPrecioTotal(response.data.product.precio);
       titlePage(`${response.data.product.titulo}`);
