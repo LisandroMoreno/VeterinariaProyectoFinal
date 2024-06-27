@@ -1,5 +1,5 @@
 import { Button, Card } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import "../css/Card.css";
 import clienteAxios, { config } from "../helpers/clienteAxios";
@@ -49,9 +49,9 @@ const CardC = ({
         <Card.Text>{descripcion}</Card.Text>
         <Card.Text>{precio}</Card.Text>
         <div>
-          <a href={`/productos/${idProd}`} className="btn btn-card">
+          <Link to={`/productos/${idProd}`} className="btn btn-card">
             Ver más
-          </a>
+          </Link>
           {isDetalleFavorito && (
             <Button
               onClick={() => eliminarProducto(idProd)}
