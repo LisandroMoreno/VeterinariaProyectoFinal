@@ -58,6 +58,15 @@ const AdminProductsPage = () => {
     image: Yup.mixed().nullable(),
   });
 
+  const fetchData = async () => {
+    try {
+      const allProducts = await clienteAxios.get("/productos/admin");
+      setProducts(allProducts.data.products);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   const handleClickEdit = async (values, { setSubmitting }) => {
     try {
       const updateProd = await clienteAxios.put(
@@ -86,9 +95,7 @@ const AdminProductsPage = () => {
             title: "Producto actualizado. IMAGEN",
             icon: "success",
           }).then(() => {
-            setTimeout(() => {
-              location.reload();
-            }, 1000);
+            fetchData();
           });
         }
       } else {
@@ -97,9 +104,7 @@ const AdminProductsPage = () => {
           title: "Producto actualizado. SIN IMAGEN",
           icon: "success",
         }).then(() => {
-          setTimeout(() => {
-            location.reload();
-          }, 1000);
+          fetchData();
         });
       }
     } catch (error) {
@@ -107,15 +112,12 @@ const AdminProductsPage = () => {
         title: "Error al actualizar el producto",
         icon: "error",
       }).then(() => {
-        setTimeout(() => {
-          location.reload();
-        }, 1000);
+        fetchData();
       });
     } finally {
       setSubmitting(false);
     }
   };
-
   const handleCreateProd = async (values, { setSubmitting }) => {
     try {
       const createProdRes = await clienteAxios.post(
@@ -148,9 +150,7 @@ const AdminProductsPage = () => {
             title: "Producto creado. IMAGEN",
             icon: "success",
           }).then(() => {
-            setTimeout(() => {
-              location.reload();
-            }, 1000);
+            fetchData();
           });
         }
       } else {
@@ -159,9 +159,7 @@ const AdminProductsPage = () => {
           title: "Producto creado. SIN IMAGEN",
           icon: "success",
         }).then(() => {
-          setTimeout(() => {
-            location.reload();
-          }, 1000);
+          fetchData();
         });
       }
     } catch (error) {
@@ -169,9 +167,7 @@ const AdminProductsPage = () => {
         title: "Error al crear el producto",
         icon: "error",
       }).then(() => {
-        setTimeout(() => {
-          location.reload();
-        }, 1000);
+        fetchData();
       });
     } finally {
       setSubmitting(false);
@@ -209,9 +205,7 @@ const AdminProductsPage = () => {
             title: "Producto eliminado",
             icon: "success",
           }).then(() => {
-            setTimeout(() => {
-              location.reload();
-            }, 1000);
+            fetchData();
           });
         }
       }
@@ -220,9 +214,7 @@ const AdminProductsPage = () => {
         title: "Error al eliminar el producto",
         icon: "error",
       }).then(() => {
-        setTimeout(() => {
-          location.reload();
-        }, 1000);
+        fetchData();
       });
     }
   };
@@ -270,7 +262,8 @@ const AdminProductsPage = () => {
           <Formik
             initialValues={editProd}
             validationSchema={validationSchema}
-            onSubmit={handleClickEdit}>
+            onSubmit={handleClickEdit}
+          >
             {({ isSubmitting, errors, touched }) => (
               <Form>
                 <div className="mb-3">
@@ -335,7 +328,8 @@ const AdminProductsPage = () => {
                     name="categoria"
                     className={`form-select ${
                       errors.categoria && touched.categoria ? "is-invalid" : ""
-                    }`}>
+                    }`}
+                  >
                     <option value="">Selecciona una categoria</option>
                     <option value="Accesorios">Accesorios</option>
                     <option value="Alimentación">Alimentación</option>
@@ -369,7 +363,8 @@ const AdminProductsPage = () => {
                   <Button
                     variant="success"
                     type="submit"
-                    disabled={isSubmitting}>
+                    disabled={isSubmitting}
+                  >
                     Editar Producto
                   </Button>
                 </div>
@@ -387,7 +382,8 @@ const AdminProductsPage = () => {
           <Formik
             initialValues={newProd}
             validationSchema={validationSchema}
-            onSubmit={handleCreateProd}>
+            onSubmit={handleCreateProd}
+          >
             {({ isSubmitting, errors, touched }) => (
               <Form>
                 <div className="mb-3">
@@ -452,7 +448,8 @@ const AdminProductsPage = () => {
                     name="categoria"
                     className={`form-select ${
                       errors.categoria && touched.categoria ? "is-invalid" : ""
-                    }`}>
+                    }`}
+                  >
                     <option value="">Selecciona una categoria</option>
                     <option value="Accesorios">Accesorios</option>
                     <option value="Alimentación">Alimentación</option>
@@ -486,7 +483,8 @@ const AdminProductsPage = () => {
                   <Button
                     variant="success"
                     type="submit"
-                    disabled={isSubmitting}>
+                    disabled={isSubmitting}
+                  >
                     Crear Producto
                   </Button>
                 </div>
