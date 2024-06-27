@@ -123,6 +123,13 @@ const NavbarC = () => {
                     >
                       Usuarios
                     </Nav.Link>
+                    <Nav.Link
+          as={Link}
+          to="/comentariosPendientes"
+          className="my-custom-link"
+        >
+          Reseñas
+        </Nav.Link>
                   </>
                 )}
               </Nav>

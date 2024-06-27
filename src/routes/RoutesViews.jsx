@@ -21,6 +21,7 @@ import DetalleMisReservas from "../pages/DetalleMisReservas";
 import AdminPageProfesionales from "../pages/AdminPageProfesionales";
 import MisDatosPage from "../pages/MisDatosPage";
 import AdminTurnos from "../pages/AdminTurnos";
+import AdminPageComentarios from "../pages/AdminPageComentarios"
 
 const RoutesViews = () => {
   return (
@@ -87,6 +88,8 @@ const RoutesViews = () => {
           path="/AdminProfesionales"
           element={<AdminPageProfesionales />}
         />
+       <Route path="/comentariosPendientes" element={<AdminPageComentarios />} />
+        
         <Route path="/misDatos" element={<MisDatosPage />} />
         <Route path="/AdminTurnos" element={<AdminTurnos />} />
       </Routes>
