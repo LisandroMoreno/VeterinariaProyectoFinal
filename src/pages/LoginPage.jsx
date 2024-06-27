@@ -6,8 +6,10 @@ import Form from "react-bootstrap/Form";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 import "../css/Reg-Log.css";
 import Swal from "sweetalert2";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   titlePage("Iniciar Sesión");
   const yupSchemaLogin = yup.object().shape({
     userName: yup
@@ -53,7 +55,7 @@ const LoginPage = () => {
             icon: "success",
           }).then(() => {
             setTimeout(() => {
-              location.href = "/home-adminLog";
+              navigate("/home-adminLog");
             }, 2000);
           });
         } else {
@@ -63,7 +65,7 @@ const LoginPage = () => {
             icon: "success",
           }).then(() => {
             setTimeout(() => {
-              location.href = "/";
+              navigate("/");
             }, 2000);
           });
         }
@@ -162,13 +164,14 @@ const LoginPage = () => {
               </Form.Group>
 
               <p className="text-center ">
-                <a className="text-black" href="/*">
+                <Link className="text-black" to="/*">
                   ¿Olvidaste tu contraseña?
-                </a>{" "}
+                </Link>
               </p>
 
               <p className="text-center">
-                Si no tienes una cuenta haz click <a href="/registro">aquí</a>
+                Si no tienes una cuenta haz click{" "}
+                <Link to="/registro">aquí</Link>
               </p>
 
               <div>

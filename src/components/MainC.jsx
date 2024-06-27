@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ImageC from "./ImageC";
 import CardC from "./CardC";
 import Pisadas from "./Pisadas";
@@ -101,11 +101,12 @@ const MainC = () => {
                             salud y el bienestar de las mascotas. ¡Confía en
                             ellos para el cuidado de tus animales!
                           </p>
-                          <a
+                          <Link
                             className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInDown"
-                            href="/profesionales">
+                            to="/profesionales"
+                          >
                             Ver más
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </Carousel.Caption>
@@ -128,11 +129,12 @@ const MainC = () => {
                             El cuidado de tu mascota nos importa, es por eso que
                             ofrecemos planes accesibles para su bienestar
                           </p>
-                          <a
+                          <Link
                             className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInDown"
-                            href="/planes">
+                            to="/planes"
+                          >
                             Ver más
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </Carousel.Caption>
@@ -155,11 +157,12 @@ const MainC = () => {
                             Te ofrecemos nuestros productos para el cuidado y
                             bienestar de tu mascota
                           </p>
-                          <a
+                          <Link
                             className="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInDown"
-                            href="#products-section">
+                            to="#products-section"
+                          >
                             Ver más
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </Carousel.Caption>
@@ -178,11 +181,12 @@ const MainC = () => {
                   <div className="offer-text">
                     <h6 className="text-white text-uppercase">Descuento 20%</h6>
                     <h3 className="text-white mb-3">Oferta especial</h3>
-                    <a
-                      href="*"
-                      className="btn btn-outline-light py-2 px-4 mt-3">
+                    <Link
+                      to="*"
+                      className="btn btn-outline-light py-2 px-4 mt-3"
+                    >
                       Ver más
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="product-offer mb-30 productH">
@@ -195,11 +199,12 @@ const MainC = () => {
                   <div className="offer-text">
                     <h6 className="text-white text-uppercase">Descuento 20%</h6>
                     <h3 className="text-white mb-3">Oferta especial</h3>
-                    <a
-                      href="*"
-                      className="btn btn-outline-light py-2 px-4 mt-3">
+                    <Link
+                      to="*"
+                      className="btn btn-outline-light py-2 px-4 mt-3"
+                    >
                       Ver más
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -223,13 +228,15 @@ const MainC = () => {
 
         <div
           className="container-fluid mb-30 mt-30 bg-btn"
-          id="products-section">
+          id="products-section"
+        >
           <div className="row d-flex justify-content-center">
             <div className="col-12 col-md-2 mtButton mb-30 d-flex justify-content-center">
               <Button
                 variant="light"
                 className="btn-categoria"
-                onClick={() => handleCategoryClick("Accesorios")}>
+                onClick={() => handleCategoryClick("Accesorios")}
+              >
                 Accesorios
               </Button>
             </div>
@@ -237,7 +244,8 @@ const MainC = () => {
               <Button
                 variant="light"
                 className="btn-categoria"
-                onClick={() => handleCategoryClick("Alimentación")}>
+                onClick={() => handleCategoryClick("Alimentación")}
+              >
                 Alimentación
               </Button>
             </div>
@@ -245,7 +253,8 @@ const MainC = () => {
               <Button
                 variant="light"
                 className="btn-categoria"
-                onClick={() => handleCategoryClick("Cuidados/Limpieza")}>
+                onClick={() => handleCategoryClick("Cuidados/Limpieza")}
+              >
                 Cuidados/Limpieza
               </Button>
             </div>
@@ -253,7 +262,8 @@ const MainC = () => {
               <Button
                 variant="light"
                 className="btn-categoria"
-                onClick={() => handleCategoryClick("Todas las categorias")}>
+                onClick={() => handleCategoryClick("Todas las categorias")}
+              >
                 Todas las categorias
               </Button>
             </div>
@@ -287,7 +297,8 @@ const MainC = () => {
                 onClick={() =>
                   getProducts(selectedCategory, index + 1, searchTerm)
                 }
-                linkClassName="custom-pagination-item">
+                linkClassName="custom-pagination-item"
+              >
                 {index + 1}
               </Pagination.Item>
             ))}
@@ -306,7 +317,8 @@ const MainC = () => {
             variant="primary"
             type="button"
             className="learn-more-button btnForm"
-            onClick={handleButtonClick}>
+            onClick={handleButtonClick}
+          >
             Saber más
           </Button>
         </div>
