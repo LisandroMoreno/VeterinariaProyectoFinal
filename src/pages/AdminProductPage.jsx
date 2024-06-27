@@ -5,7 +5,7 @@ import clienteAxios, { config, configImg } from "../helpers/clienteAxios";
 import { titlePage } from "../helpers/titlePages";
 import Swal from "sweetalert2";
 import TablaC from "../components/TablaC";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Spinner } from "react-bootstrap";
 
 const AdminProductsPage = () => {
   titlePage("Lista de Productos");
@@ -27,6 +27,7 @@ const AdminProductsPage = () => {
     categoria: "",
     image: "",
   });
+  const [loading, setLoading] = useState(true); // Estado para controlar el spinner
 
   const editProduct = (product) => {
     setEditProd(product);
@@ -64,6 +65,8 @@ const AdminProductsPage = () => {
       setProducts(allProducts.data.products);
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false); // Aquí se actualiza el estado de loading a false
     }
   };
 
@@ -118,6 +121,7 @@ const AdminProductsPage = () => {
       setSubmitting(false);
     }
   };
+
   const handleCreateProd = async (values, { setSubmitting }) => {
     try {
       const createProdRes = await clienteAxios.post(
@@ -233,6 +237,7 @@ const AdminProductsPage = () => {
 
   useEffect(() => {
     getProductosAdmin();
+    fetchData();
   }, []);
 
   return (
@@ -244,14 +249,20 @@ const AdminProductsPage = () => {
         </Button>
       </div>
       <div className="d-flex justify-content-center">
-        <div className="table-responsive w-100 mt-3">
-          <TablaC
-            columns={columns}
-            data={products}
-            handleEdit={editProduct}
-            handleDelete={handleClickDel}
-          />
-        </div>
+        {loading ? (
+          <div className="d-flex justify-content-center align-items-center mt-5">
+            <Spinner animation="border" role="status" className="my-4" />
+          </div>
+        ) : (
+          <div className="table-responsive w-100 mt-3">
+            <TablaC
+              columns={columns}
+              data={products}
+              handleEdit={editProduct}
+              handleDelete={handleClickDel}
+            />
+          </div>
+        )}
       </div>
 
       <Modal show={showEditModal} onHide={handleCloseEditModal}>
@@ -324,17 +335,12 @@ const AdminProductsPage = () => {
                     Categoria
                   </label>
                   <Field
-                    as="select"
+                    type="text"
                     name="categoria"
-                    className={`form-select ${
+                    className={`form-control ${
                       errors.categoria && touched.categoria ? "is-invalid" : ""
                     }`}
-                  >
-                    <option value="">Selecciona una categoria</option>
-                    <option value="Accesorios">Accesorios</option>
-                    <option value="Alimentación">Alimentación</option>
-                    <option value="Cuidados/Limpieza">Cuidados/Limpieza</option>
-                  </Field>
+                  />
                   <ErrorMessage
                     name="categoria"
                     component="div"
@@ -343,29 +349,22 @@ const AdminProductsPage = () => {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="image" className="form-label">
-                    Imagen
+                    Cambiar Imagen
                   </label>
                   <input
                     type="file"
                     name="image"
-                    className={`form-control ${
-                      errors.image && touched.image ? "is-invalid" : ""
-                    }`}
+                    className="form-control"
                     onChange={handleChangeImage}
                   />
-                  <ErrorMessage
-                    name="image"
-                    component="div"
-                    className="invalid-feedback"
-                  />
                 </div>
-                <div className="d-flex justify-content-center">
+                <div className="text-center">
                   <Button
-                    variant="success"
+                    variant="primary"
                     type="submit"
                     disabled={isSubmitting}
                   >
-                    Editar Producto
+                    Guardar Cambios
                   </Button>
                 </div>
               </Form>
@@ -444,17 +443,12 @@ const AdminProductsPage = () => {
                     Categoria
                   </label>
                   <Field
-                    as="select"
+                    type="text"
                     name="categoria"
-                    className={`form-select ${
+                    className={`form-control ${
                       errors.categoria && touched.categoria ? "is-invalid" : ""
                     }`}
-                  >
-                    <option value="">Selecciona una categoria</option>
-                    <option value="Accesorios">Accesorios</option>
-                    <option value="Alimentación">Alimentación</option>
-                    <option value="Cuidados/Limpieza">Cuidados/Limpieza</option>
-                  </Field>
+                  />
                   <ErrorMessage
                     name="categoria"
                     component="div"
@@ -468,20 +462,13 @@ const AdminProductsPage = () => {
                   <input
                     type="file"
                     name="image"
-                    className={`form-control ${
-                      errors.image && touched.image ? "is-invalid" : ""
-                    }`}
+                    className="form-control"
                     onChange={handleChangeNewImage}
                   />
-                  <ErrorMessage
-                    name="image"
-                    component="div"
-                    className="invalid-feedback"
-                  />
                 </div>
-                <div className="d-flex justify-content-center">
+                <div className="text-center">
                   <Button
-                    variant="success"
+                    variant="primary"
                     type="submit"
                     disabled={isSubmitting}
                   >
