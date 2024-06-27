@@ -99,7 +99,7 @@ const LoginPage = () => {
   };
 
   const handleGmailLogin = () => {
-    location.href = "/*";
+    navigate("/*");
   };
 
   return (
