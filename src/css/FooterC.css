@@ -2,7 +2,7 @@
   background-color: #3992cdec;
 }
 
-.footer-link a :hover {
+.footer-link a:hover {
   color: black;
 }
 
@@ -11,6 +11,7 @@
 .my-custom-link:active {
   color: black;
 }
+
 .nav-link {
   color: white;
 }

@@ -4,18 +4,23 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 import Swal from "sweetalert2";
 import { titlePage } from "../helpers/titlePages";
+import Spinner from "react-bootstrap/Spinner";
 
 const AdminTurnosPage = () => {
   titlePage("Lista de Turnos");
   const [turnos, setTurnos] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchTurnos = async () => {
+      setIsLoading(true);
       try {
         const response = await clienteAxios.get(`/turnos/AdminTurnos/`, config);
         setTurnos(response.data);
       } catch (error) {
         console.error("Error fetching turnos:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchTurnos();
@@ -35,6 +40,7 @@ const AdminTurnosPage = () => {
       });
 
       if (result.isConfirmed) {
+        setIsLoading(true);
         await clienteAxios.delete(`/turnos/AdminTurnos/${idReserva}`, config);
         setTurnos((prevTurnos) =>
           prevTurnos.map((turno) => ({
@@ -50,6 +56,8 @@ const AdminTurnosPage = () => {
     } catch (error) {
       console.error("Error deleting reserva:", error);
       Swal.fire("Error", "Hubo un problema al eliminar la reserva.", "error");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -82,7 +90,13 @@ const AdminTurnosPage = () => {
     <div className="container">
       <h1 className="mt-4">Lista de Turnos</h1>
       <div className="mt-5 table-responsive">
-        <TablaC columns={columns} data={data} handleDelete={handleDelete} />
+        {isLoading ? (
+          <div className="d-flex justify-content-center align-items-center mt-5">
+            <Spinner animation="border" role="status" className="my-4" />
+          </div>
+        ) : (
+          <TablaC columns={columns} data={data} handleDelete={handleDelete} />
+        )}
       </div>
     </div>
   );
