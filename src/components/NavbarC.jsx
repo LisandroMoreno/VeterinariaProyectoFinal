@@ -32,8 +32,7 @@ const NavbarC = () => {
             <Navbar.Brand
               as={Link}
               to={role === "admin" ? "/home-adminLog" : "/"}
-              className="me-auto"
-            >
+              className="me-auto">
               <ImageC urlImagen={url} ancho="50" alternativo="logo" />
             </Navbar.Brand>
             {token && role === "user" && (
@@ -188,7 +187,6 @@ const NavbarC = () => {
                     >
                       <i className="fa-solid fa-heart fa-1x"></i>
                     </NavLink>
-
                     <NavDropdown
                       title="Mi Cuenta"
                       id="account-nav-dropdown"
