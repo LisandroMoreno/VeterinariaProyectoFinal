@@ -1,21 +1,22 @@
+import { useNavigate } from "react-router-dom";
 const PrivateRoute = ({ children, role }) => {
-  const token = JSON.parse (sessionStorage.getItem("token")) || "";
-  const roleUser = JSON.parse (sessionStorage.getItem("role")) || "";
- 
+  const token = JSON.parse(sessionStorage.getItem("token")) || "";
+  const roleUser = JSON.parse(sessionStorage.getItem("role")) || "";
+
+  const navigate = useNavigate();
+
   if (!token) {
-   location.href = "/";
-  }else{
-   if (role === roleUser){
-     return children;
-   }else{
-     if(roleUser === 'admin'){
-       location.href = '/home-adminLog'
-     }else{
-       location.href = '/home-userLog'
-     }
-   }
- 
+    navigate("/login");
+  } else {
+    if (role === roleUser) {
+      return children;
+    } else {
+      if (roleUser === "admin") {
+        navigate("/home-adminLog");
+      } else {
+        navigate("/");
+      }
+    }
   }
- };
- export default PrivateRoute;
- 
+};
+export default PrivateRoute;

@@ -66,20 +66,38 @@ const DetalleCarrito = () => {
   };
 
   const eliminarProducto = async (id) => {
-    try {
-      await clienteAxios.delete(`/carritos/${id}`, config);
-      setCart((prevCarts) =>
-        prevCarts.filter((cartItem) => cartItem._id !== id)
-      );
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Error al eliminar el producto",
-        text: "No se pudo eliminar el producto del carrito. Por favor, intenta nuevamente.",
-        footer: `<a href="mailto:soporte@PawsAndClaws.com">Contactar soporte</a>`,
-      });
-      registrarError("Error al eliminar el producto del carrito:", error);
-    }
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "No podrás revertir esta acción. ¿Quieres eliminar este producto?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await clienteAxios.delete(`/carritos/${id}`, config);
+          setCart((prevCarts) =>
+            prevCarts.filter((cartItem) => cartItem._id !== id)
+          );
+          Swal.fire(
+            "Eliminado",
+            "El producto ha sido eliminado del carrito.",
+            "success"
+          );
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Error al eliminar el producto",
+            text: "No se pudo eliminar el producto del carrito. Por favor, intenta nuevamente.",
+            footer: `<a href="mailto:soporte@PawsAndClaws.com">Contactar soporte</a>`,
+          });
+          registrarError("Error al eliminar el producto del carrito:", error);
+        }
+      }
+    });
   };
 
   const registrarError = (mensaje, error) => {};
