@@ -21,6 +21,7 @@ import DetalleMisReservas from "../pages/DetalleMisReservas";
 import AdminPageProfesionales from "../pages/AdminPageProfesionales";
 import MisDatosPage from "../pages/MisDatosPage";
 import AdminTurnos from "../pages/AdminTurnos";
+import AdminProfesionales from "../pages/AdminProfesionales";
 
 const RoutesViews = () => {
   return (
@@ -83,10 +84,7 @@ const RoutesViews = () => {
         <Route path="*" element={<Error404 />} />
         <Route path="/turnos" element={<CrearTurno />} />
         <Route path="/misReservas" element={<DetalleMisReservas />} />
-        <Route
-          path="/AdminProfesionales"
-          element={<AdminPageProfesionales />}
-        />
+        <Route path="/profesionalesAdmin" element={<AdminProfesionales />} />
         <Route path="/misDatos" element={<MisDatosPage />} />
         <Route path="/AdminTurnos" element={<AdminTurnos />} />
       </Routes>
