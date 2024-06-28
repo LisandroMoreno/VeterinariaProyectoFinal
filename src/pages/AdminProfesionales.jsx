@@ -271,6 +271,7 @@ const AdminProfesionalesPage = () => {
         </div>
       </div>
 
+      {/* MODAL EDITAR */}
       <Modal show={showEditModal} onHide={handleCloseEditModal}>
         <Modal.Header closeButton>
           <Modal.Title>Editar Profesional</Modal.Title>
@@ -280,146 +281,135 @@ const AdminProfesionalesPage = () => {
             initialValues={editProf}
             validationSchema={validationSchema}
             onSubmit={handleClickEdit}>
-            {({ isSubmitting, errors, touched, values }) => (
-              <Form>
-                <div className="mb-3">
-                  <label htmlFor="nombre" className="form-label">
-                    Nombre
-                  </label>
+            {({ isSubmitting, values }) => (
+              <Form encType="multipart/form-data">
+                <div className="form-group mb-2">
+                  <label htmlFor="nombre">Nombre</label>
                   <Field
                     type="text"
+                    id="nombre"
                     name="nombre"
-                    className={`form-control ${
-                      touched.nombre && errors.nombre ? "is-invalid" : ""
-                    }`}
+                    className="form-control"
                   />
                   <ErrorMessage
                     name="nombre"
                     component="div"
-                    className="invalid-feedback"
+                    className="text-danger"
                   />
                 </div>
-
-                <div className="mb-3">
-                  <label htmlFor="especialidad" className="form-label">
-                    Especialidad
-                  </label>
+                <div className="form-group mb-2">
+                  <label htmlFor="especialidad">Especialidad</label>
                   <Field
                     type="text"
+                    id="especialidad"
                     name="especialidad"
-                    className={`form-control ${
-                      touched.especialidad && errors.especialidad
-                        ? "is-invalid"
-                        : ""
-                    }`}
+                    className="form-control"
                   />
                   <ErrorMessage
                     name="especialidad"
                     component="div"
-                    className="invalid-feedback"
+                    className="text-danger"
                   />
                 </div>
-
-                <div className="mb-3">
-                  <label htmlFor="descripcion" className="form-label">
-                    Descripción
-                  </label>
+                <div className="form-group mb-2">
+                  <label htmlFor="descripcion">Descripción</label>
                   <Field
                     as="textarea"
+                    id="descripcion"
                     name="descripcion"
-                    className={`form-control ${
-                      touched.descripcion && errors.descripcion
-                        ? "is-invalid"
-                        : ""
-                    }`}
+                    className="form-control"
                   />
                   <ErrorMessage
                     name="descripcion"
                     component="div"
-                    className="invalid-feedback"
+                    className="text-danger"
                   />
                 </div>
-
-                <div className="mb-3">
-                  <label htmlFor="horario" className="form-label">
-                    Horario
-                  </label>
+                <div className="form-group mb-2">
+                  <label htmlFor="image">Imagen</label>
+                  <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    className="form-control"
+                    onChange={handleChangeImage}
+                  />
+                  <ErrorMessage
+                    name="image"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+                <div className="form-group mb-2">
+                  <label>Horario</label>
                   <FieldArray name="horario">
-                    {({ push, remove }) => (
+                    {({ remove, push }) => (
                       <div>
                         {values.horario.length > 0 &&
                           values.horario.map((horario, index) => (
-                            <div key={index} className="d-flex mb-2">
+                            <div
+                              className="d-flex mb-2 align-items-center"
+                              key={index}>
                               <Field
-                                name={`horario[${index}].dia`}
-                                className="form-control me-2"
+                                name={`horario.${index}.dia`}
                                 placeholder="Día"
+                                className="form-control me-2"
                               />
                               <Field
-                                name={`horario[${index}].inicio`}
-                                className="form-control me-2"
+                                name={`horario.${index}.inicio`}
                                 placeholder="Inicio"
+                                className="form-control me-2"
                               />
                               <Field
-                                name={`horario[${index}].fin`}
-                                className="form-control me-2"
+                                name={`horario.${index}.fin`}
                                 placeholder="Fin"
+                                className="form-control me-2"
                               />
-                              <Button
-                                variant="danger"
+                              <button
+                                type="button"
+                                className="btn btn-danger"
                                 onClick={() => remove(index)}>
-                                Eliminar
-                              </Button>
+                                X
+                              </button>
+                              <ErrorMessage
+                                name={`horario.${index}.dia`}
+                                component="div"
+                                className="text-danger"
+                              />
+                              <ErrorMessage
+                                name={`horario.${index}.inicio`}
+                                component="div"
+                                className="text-danger"
+                              />
+                              <ErrorMessage
+                                name={`horario.${index}.fin`}
+                                component="div"
+                                className="text-danger"
+                              />
                             </div>
                           ))}
-                        <Button
-                          variant="success"
+                        <button
+                          type="button"
+                          className="btn btn-primary"
                           onClick={() =>
                             push({ dia: "", inicio: "", fin: "" })
                           }>
                           Agregar Horario
-                        </Button>
+                        </button>
                       </div>
                     )}
                   </FieldArray>
-                  <ErrorMessage
-                    name="horario"
-                    component="div"
-                    className="invalid-feedback"
-                  />
                 </div>
-
-                <div className="mb-3">
-                  <label htmlFor="image" className="form-label">
-                    Imagen
-                  </label>
-                  <input
-                    type="file"
-                    name="image"
-                    onChange={handleChangeImage}
-                    className="form-control"
-                  />
-                  <ErrorMessage
-                    name="image"
-                    component="div"
-                    className="invalid-feedback"
-                  />
-                </div>
-
-                <div className="d-flex justify-content-center">
-                  <Button
-                    variant="success"
-                    type="submit"
-                    disabled={isSubmitting}>
-                    Guardar Cambios
-                  </Button>
-                </div>
+                <Button variant="primary" type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Guardando..." : "Guardar"}
+                </Button>
               </Form>
             )}
           </Formik>
         </Modal.Body>
       </Modal>
 
+      {/* MODAL CREAR */}
       <Modal show={showCreateModal} onHide={handleCloseCreateModal}>
         <Modal.Header closeButton>
           <Modal.Title>Crear Profesional</Modal.Title>
@@ -429,140 +419,128 @@ const AdminProfesionalesPage = () => {
             initialValues={newProf}
             validationSchema={validationSchema}
             onSubmit={handleCreateProf}>
-            {({ isSubmitting, errors, touched, values }) => (
-              <Form>
-                <div className="mb-3">
-                  <label htmlFor="nombre" className="form-label">
-                    Nombre
-                  </label>
+            {({ isSubmitting, values }) => (
+              <Form encType="multipart/form-data">
+                <div className="form-group mb-2">
+                  <label htmlFor="nombre">Nombre</label>
                   <Field
                     type="text"
+                    id="nombre"
                     name="nombre"
-                    className={`form-control ${
-                      touched.nombre && errors.nombre ? "is-invalid" : ""
-                    }`}
+                    className="form-control"
                   />
                   <ErrorMessage
                     name="nombre"
                     component="div"
-                    className="invalid-feedback"
+                    className="text-danger"
                   />
                 </div>
-
-                <div className="mb-3">
-                  <label htmlFor="especialidad" className="form-label">
-                    Especialidad
-                  </label>
+                <div className="form-group mb-2">
+                  <label htmlFor="especialidad">Especialidad</label>
                   <Field
                     type="text"
+                    id="especialidad"
                     name="especialidad"
-                    className={`form-control ${
-                      touched.especialidad && errors.especialidad
-                        ? "is-invalid"
-                        : ""
-                    }`}
+                    className="form-control"
                   />
                   <ErrorMessage
                     name="especialidad"
                     component="div"
-                    className="invalid-feedback"
+                    className="text-danger"
                   />
                 </div>
-
-                <div className="mb-3">
-                  <label htmlFor="descripcion" className="form-label">
-                    Descripción
-                  </label>
+                <div className="form-group mb-2">
+                  <label htmlFor="descripcion">Descripción</label>
                   <Field
                     as="textarea"
+                    id="descripcion"
                     name="descripcion"
-                    className={`form-control ${
-                      touched.descripcion && errors.descripcion
-                        ? "is-invalid"
-                        : ""
-                    }`}
+                    className="form-control"
                   />
                   <ErrorMessage
                     name="descripcion"
                     component="div"
-                    className="invalid-feedback"
+                    className="text-danger"
                   />
                 </div>
-
-                <div className="mb-3">
-                  <label htmlFor="horario" className="form-label">
-                    Horario
-                  </label>
+                <div className="form-group mb-2">
+                  <label htmlFor="image">Imagen</label>
+                  <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    className="form-control"
+                    onChange={handleChangeNewImage}
+                  />
+                  <ErrorMessage
+                    name="image"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+                <div className="form-group mb-2">
+                  <label>Horario</label>
                   <FieldArray name="horario">
-                    {({ push, remove }) => (
+                    {({ remove, push }) => (
                       <div>
                         {values.horario.length > 0 &&
                           values.horario.map((horario, index) => (
-                            <div key={index} className="d-flex mb-2">
+                            <div
+                              className="d-flex mb-2 align-items-center"
+                              key={index}>
                               <Field
-                                name={`horario[${index}].dia`}
-                                className="form-control me-2"
+                                name={`horario.${index}.dia`}
                                 placeholder="Día"
+                                className="form-control me-2"
                               />
                               <Field
-                                name={`horario[${index}].inicio`}
-                                className="form-control me-2"
+                                name={`horario.${index}.inicio`}
                                 placeholder="Inicio"
+                                className="form-control me-2"
                               />
                               <Field
-                                name={`horario[${index}].fin`}
-                                className="form-control me-2"
+                                name={`horario.${index}.fin`}
                                 placeholder="Fin"
+                                className="form-control me-2"
                               />
-                              <Button
-                                variant="danger"
+                              <button
+                                type="button"
+                                className="btn btn-danger"
                                 onClick={() => remove(index)}>
-                                Eliminar
-                              </Button>
+                                X
+                              </button>
+                              <ErrorMessage
+                                name={`horario.${index}.dia`}
+                                component="div"
+                                className="text-danger"
+                              />
+                              <ErrorMessage
+                                name={`horario.${index}.inicio`}
+                                component="div"
+                                className="text-danger"
+                              />
+                              <ErrorMessage
+                                name={`horario.${index}.fin`}
+                                component="div"
+                                className="text-danger"
+                              />
                             </div>
                           ))}
-                        <Button
-                          variant="success"
+                        <button
+                          type="button"
+                          className="btn btn-primary"
                           onClick={() =>
                             push({ dia: "", inicio: "", fin: "" })
                           }>
                           Agregar Horario
-                        </Button>
+                        </button>
                       </div>
                     )}
                   </FieldArray>
-                  <ErrorMessage
-                    name="horario"
-                    component="div"
-                    className="invalid-feedback"
-                  />
                 </div>
-
-                <div className="mb-3">
-                  <label htmlFor="image" className="form-label">
-                    Imagen
-                  </label>
-                  <input
-                    type="file"
-                    name="image"
-                    onChange={handleChangeNewImage}
-                    className="form-control"
-                  />
-                  <ErrorMessage
-                    name="image"
-                    component="div"
-                    className="invalid-feedback"
-                  />
-                </div>
-
-                <div className="d-flex justify-content-center">
-                  <Button
-                    variant="success"
-                    type="submit"
-                    disabled={isSubmitting}>
-                    Crear Profesional
-                  </Button>
-                </div>
+                <Button variant="primary" type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Guardando..." : "Guardar"}
+                </Button>
               </Form>
             )}
           </Formik>
