@@ -207,8 +207,6 @@ const NavbarC = () => {
                       onClick={cerrarSesion}
                     >
                       Cerrar Sesión
-                      onClick={cerrarSesion}>
-                      Cerrar Sesion
                     </NavLink>
                   </>
                 ) : (
