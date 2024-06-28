@@ -6,7 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import ImageC from "./ImageC";
 import Pisadas from "./Pisadas";
-import "../css/NavbarC.css"; // Asegúrate de que el CSS esté correctamente importado
+import "../css/NavbarC.css"; 
 
 const NavbarC = () => {
   const navigate = useNavigate();
@@ -101,6 +101,13 @@ const NavbarC = () => {
                     >
                       Usuarios
                     </NavLink>
+                 
+                    <NavLink to="/comentariosPendientes"
+                     className="my-custom-link nav-link"
+                     >
+                     Reseñas
+                     </NavLink>
+
                     <NavLink
                       to="/profesionalesAdmin"
                       className="my-custom-link nav-link">
@@ -197,6 +204,9 @@ const NavbarC = () => {
                     <NavLink
                       to="/"
                       className="my-custom-link nav-link"
+                      onClick={cerrarSesion}
+                    >
+                      Cerrar Sesión
                       onClick={cerrarSesion}>
                       Cerrar Sesion
                     </NavLink>
