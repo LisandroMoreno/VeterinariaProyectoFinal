@@ -42,13 +42,7 @@ const SobreNosotros = () => {
       <div className="descripcion-individual">
         <div className="integrantes-container">
           <div className="integrante">
-            <div className="circulo">
-              <img
-                src="./src/img/Rodrigo.jpg"
-                alt="Foto-integrante1"
-                className="img-fluid rounded-circle"
-              />
-            </div>
+            <div className="circulo foto-rodrigo"></div>
             <h5 className="Nombres">
               <strong>Paz, Rodrigo</strong>
             </h5>
@@ -61,13 +55,7 @@ const SobreNosotros = () => {
           </div>
 
           <div className="integrante">
-            <div className="circulo">
-              <img
-                src="./src/img/Jose.png"
-                alt="Foto-integrante2"
-                className="img-fluid rounded-circle"
-              />
-            </div>
+            <div className="circulo foto-jose"></div>
             <h5 className="Nombres">
               <strong>Fe, Jose Martin</strong>
             </h5>
@@ -81,13 +69,7 @@ const SobreNosotros = () => {
           </div>
 
           <div className="integrante">
-            <div className="circulo">
-              <img
-                src="./src/img/Lisandro.jpg"
-                alt="Foto-integrante3"
-                className="img-fluid rounded-circle"
-              />
-            </div>
+            <div className="circulo foto-lisandro"></div>
             <h5 className="Nombres">
               <strong>Moreno, Lisandro</strong>
             </h5>

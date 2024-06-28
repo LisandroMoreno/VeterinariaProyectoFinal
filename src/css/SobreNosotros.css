@@ -1,29 +1,30 @@
 .video-container {
   display: flex;
   justify-content: center;
-  background-color: #4b4b4b;
+  background-color: #ffffff;
+  padding-top: 25px;
 }
 
 .video-container iframe {
-  width: 60%; 
+  width: 70%;
+  height: 450px;
+  
 }
 
-/*  */
-
 .descripcion-general {
-  text-align: center; 
-  max-width: 80%; 
-  margin: 0 auto; 
-  padding: 15px; 
+  text-align: center;
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 15px;
 }
 
 .descripcion-general h1 {
-  margin-bottom: 5px; 
+  margin-bottom: 5px;
 }
 
 .descripcion-general h4 {
-  font-size: 22px; 
-  line-height: 1.3; 
+  font-size: 22px;
+  line-height: 1.3;
 }
 
 /*  */
@@ -31,32 +32,39 @@
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  overflow: hidden; 
-  margin: 0 auto; 
+  overflow: hidden;
+  margin: 0 auto;
   border: 1px solid #000000;
   position: relative;
+  background-size: cover;
+  background-position: center;
 }
 
-.circulo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; 
+.circulo.foto-rodrigo {
+  background-image: url('./src/img/Rodrigo.jpg');
+}
+
+.circulo.foto-jose {
+  background-image: url('./src/img/Jose.png');
+}
+
+.circulo.foto-lisandro {
+  background-image: url('./src/img/Lisandro.jpg');
 }
 
 .integrante {
-  border: 1px solid #000000; 
+  border: 1px solid #000000;
   font-size: 18px;
   text-align: center;
   padding: 20px;
-  margin: 20px; 
-  flex: 1 1 250px; 
-  box-sizing: border-box; 
+  margin: 20px;
+  flex: 1 1 250px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  height: auto; 
-  align-items: center; 
+  height: auto;
+  align-items: center;
 }
-
 
 .Nombres {
   text-align: center;
@@ -70,8 +78,8 @@
 
 .integrantes-container {
   display: flex;
-  justify-content: space-between; 
-  flex-wrap: wrap; 
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 @media (max-width: 600px) {
