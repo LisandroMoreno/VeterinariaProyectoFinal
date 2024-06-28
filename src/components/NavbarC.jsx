@@ -32,8 +32,7 @@ const NavbarC = () => {
             <Navbar.Brand
               as={Link}
               to={role === "admin" ? "/home-adminLog" : "/"}
-              className="me-auto"
-            >
+              className="me-auto">
               <ImageC urlImagen={url} ancho="50" alternativo="logo" />
             </Navbar.Brand>
             {token && role === "user" && (
@@ -61,8 +60,7 @@ const NavbarC = () => {
                     </NavLink>
                     <NavLink
                       to="/sobreNosotros"
-                      className="my-custom-link nav-link"
-                    >
+                      className="my-custom-link nav-link">
                       Sobre Nosotros
                     </NavLink>
                     <NavLink to="/contacto" className="my-custom-link nav-link">
@@ -85,25 +83,30 @@ const NavbarC = () => {
                     </NavLink>
                     <NavLink
                       to="/pacientes"
-                      className="my-custom-link nav-link"
-                    >
+                      className="my-custom-link nav-link">
                       Pacientes
                     </NavLink>
                     <NavLink
                       to="/AdminTurnos"
-                      className="my-custom-link nav-link"
-                    >
+                      className="my-custom-link nav-link">
                       Turnos
                     </NavLink>
                     <NavLink
                       to="/productos"
-                      className="my-custom-link nav-link"
-                    >
+                      className="my-custom-link nav-link">
                       Productos
                     </NavLink>
-                    <NavLink to="/usuarios" className="my-custom-link nav-link">
+                    <NavLink to="/usuarios" 
+                    className="my-custom-link nav-link"
+                    >
                       Usuarios
                     </NavLink>
+                    <NavLink
+                      to="/profesionalesAdmin"
+                      className="my-custom-link nav-link">
+                      Profesionales
+                    </NavLink>
+
                   </>
                 )}
               </Nav>
@@ -115,8 +118,7 @@ const NavbarC = () => {
                   <NavLink
                     to="/"
                     className="my-custom-link nav-link"
-                    onClick={cerrarSesion}
-                  >
+                    onClick={cerrarSesion}>
                     Cerrar Sesión
                   </NavLink>
                 ) : (
@@ -125,8 +127,7 @@ const NavbarC = () => {
                       <NavDropdown
                         title="Mi Cuenta"
                         id="account-nav-dropdown"
-                        className="my-custom-link me-5 nav-link"
-                      >
+                        className="my-custom-link me-5 nav-link">
                         <NavDropdown.Item as={Link} to="/misReservas">
                           Mis Reservas
                         </NavDropdown.Item>
@@ -138,8 +139,7 @@ const NavbarC = () => {
                         <NavDropdown.Item
                           as={Link}
                           to="/"
-                          onClick={cerrarSesion}
-                        >
+                          onClick={cerrarSesion}>
                           Cerrar Sesión
                         </NavDropdown.Item>
                       </NavDropdown>
@@ -148,14 +148,12 @@ const NavbarC = () => {
                       <>
                         <NavLink
                           to="/login"
-                          className="my-custom-link nav-link"
-                        >
+                          className="my-custom-link nav-link">
                           Iniciar Sesión
                         </NavLink>
                         <NavLink
                           to="/registro"
-                          className="my-custom-link nav-link"
-                        >
+                          className="my-custom-link nav-link">
                           Registrarse
                         </NavLink>
                       </>
@@ -168,23 +166,19 @@ const NavbarC = () => {
                   <>
                     <NavLink
                       to="/detalleCarrito"
-                      className="my-custom-link nav-link me-2 mt-2"
-                    >
+                      className="my-custom-link nav-link me-2 mt-2">
                       <i className="fa-solid fa-cart-shopping"></i>
                     </NavLink>
 
                     <NavLink
                       to="/detalleFavorito"
-                      className="my-custom-link nav-link me-2 mt-2"
-                    >
+                      className="my-custom-link nav-link me-2 mt-2">
                       <i className="fa-solid fa-heart fa-1x"></i>
                     </NavLink>
-
                     <NavDropdown
                       title="Mi Cuenta"
                       id="account-nav-dropdown"
-                      className="my-custom-link nav-link me-5"
-                    >
+                      className="my-custom-link nav-link me-5">
                       <NavDropdown.Item as={Link} to="/misReservas">
                         Mis Reservas
                       </NavDropdown.Item>
@@ -203,8 +197,7 @@ const NavbarC = () => {
                     <NavLink
                       to="/"
                       className="my-custom-link nav-link"
-                      onClick={cerrarSesion}
-                    >
+                      onClick={cerrarSesion}>
                       Cerrar Sesion
                     </NavLink>
                   </>

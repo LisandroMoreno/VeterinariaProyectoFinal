@@ -8,10 +8,15 @@ const AdminPage = () => {
   titlePage("AdminPage");
   const navigate = useNavigate();
 
+
   const cardsAdmin = [
     {
       title: "Pacientes",
       path: "/pacientes",
+    },
+    {
+      title: "Profesionales",
+      path: "/profesionalesAdmin",
     },
     {
       title: "Turnos",
@@ -25,6 +30,10 @@ const AdminPage = () => {
       title: "Usuarios",
       path: "/usuarios",
     },
+    {
+      title: "Comentarios Pendientes",
+      path: "/comentariosPendientes",
+    },
   ];
 
   return (
@@ -32,15 +41,13 @@ const AdminPage = () => {
       <h2 className="mt-4 text-center">Panel de administracion</h2>
       <Container
         fluid
-        className="d-flex justify-content-center align-items-center vh-75"
-      >
+        className="d-flex justify-content-center align-items-center vh-75">
         <Row className="justify-content-center text-center w-100 mt-5 mx-0">
           {cardsAdmin.map((card, index) => (
             <Col xs="12" sm="6" md="4" lg="3" className="my-3" key={index}>
               <Card>
                 <Card.Body>
                   <Card.Title>{card.title}</Card.Title>
-                  <Card.Text>{card.text}</Card.Text>
                   <Button variant="dark" onClick={() => navigate(card.path)}>
                     Administrar {card.title}
                   </Button>
