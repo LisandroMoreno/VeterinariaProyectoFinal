@@ -3,6 +3,7 @@ import clienteAxios from "../helpers/clienteAxios";
 import { titlePage } from "../helpers/titlePages";
 import Swal from "sweetalert2";
 import "../css/MisDatos.css";
+import { Link } from "react-router-dom";
 
 const MisDatosPage = () => {
   titlePage("Mis Datos");
@@ -234,9 +235,9 @@ const MisDatosPage = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <h2 className="mb-4">Datos de tu Mascota</h2>
                   <div className="text-end mb-4">
-                    <a onClick={() => handleDeleteMascota(index)}>
+                    <Link onClick={() => handleDeleteMascota(index)}>
                       <i className="fa-solid fa-trash fa-lg icono-borrado"></i>
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
