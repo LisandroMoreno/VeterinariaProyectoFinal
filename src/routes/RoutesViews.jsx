@@ -81,14 +81,42 @@ const RoutesViews = () => {
         />
 
         <Route path="*" element={<Error404 />} />
-        <Route path="/turnos" element={<CrearTurno />} />
-        <Route path="/misReservas" element={<DetalleMisReservas />} />
+        <Route
+          path="/turnos"
+          element={
+            <PrivateRoute role={"user"}>
+              <CrearTurno />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/misReservas"
+          element={
+            <PrivateRoute role={"user"}>
+              <DetalleMisReservas />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/AdminProfesionales"
           element={<AdminPageProfesionales />}
         />
-        <Route path="/misDatos" element={<MisDatosPage />} />
-        <Route path="/AdminTurnos" element={<AdminTurnos />} />
+        <Route
+          path="/misDatos"
+          element={
+            <PrivateRoute role={"user"}>
+              <MisDatosPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/AdminTurnos"
+          element={
+            <PrivateRoute role={"admin"}>
+              <AdminTurnos />
+            </PrivateRoute>
+          }
+        />
       </Routes>
       <FooterC />
     </>
