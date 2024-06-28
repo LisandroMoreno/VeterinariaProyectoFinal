@@ -96,7 +96,9 @@ const NavbarC = () => {
                       className="my-custom-link nav-link">
                       Productos
                     </NavLink>
-                    <NavLink to="/usuarios" className="my-custom-link nav-link">
+                    <NavLink to="/usuarios" 
+                    className="my-custom-link nav-link"
+                    >
                       Usuarios
                     </NavLink>
                     <NavLink
@@ -104,6 +106,7 @@ const NavbarC = () => {
                       className="my-custom-link nav-link">
                       Profesionales
                     </NavLink>
+
                   </>
                 )}
               </Nav>
