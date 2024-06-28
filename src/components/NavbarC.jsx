@@ -100,9 +100,18 @@ const NavbarC = () => {
                     >
                       Productos
                     </NavLink>
-                    <NavLink to="/usuarios" className="my-custom-link nav-link">
+                    <NavLink to="/usuarios" 
+                    className="my-custom-link nav-link"
+                    >
                       Usuarios
-                    </NavLink>
+                    </Nav.Link>
+                    <Nav.Link 
+                     to="/comentariosPendientes"
+                      className="my-custom-link"
+                      >
+                     Reseñas
+                 </Nav.Link>
+
                   </>
                 )}
               </Nav>

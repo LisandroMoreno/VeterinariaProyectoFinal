@@ -8,6 +8,7 @@ const AdminPage = () => {
   titlePage("AdminPage");
   const navigate = useNavigate();
 
+
   const cardsAdmin = [
     {
       title: "Pacientes",
@@ -29,6 +30,10 @@ const AdminPage = () => {
       title: "Usuarios",
       path: "/usuarios",
     },
+    {
+      title: "Comentarios Pendientes",
+      path: "/comentariosPendientes",
+    },
   ];
 
   return (
@@ -43,7 +48,6 @@ const AdminPage = () => {
               <Card>
                 <Card.Body>
                   <Card.Title>{card.title}</Card.Title>
-                  <Card.Text>{card.text}</Card.Text>
                   <Button variant="dark" onClick={() => navigate(card.path)}>
                     Administrar {card.title}
                   </Button>
