@@ -116,6 +116,16 @@ const RoutesViews = () => {
             </PrivateRoute>
           }
         />
+
+<Route
+          path="/AdminProfesionales"
+          element={<AdminPageProfesionales />}
+        />
+       <Route path="/comentariosPendientes" element={<AdminPageComentarios />} />
+        
+
+        <Route path="/profesionalesAdmin" element={<AdminProfesionales />} />
+
       </Routes>
       <FooterC />
     </>
