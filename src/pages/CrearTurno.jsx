@@ -98,10 +98,7 @@ const CrearTurno = () => {
     titlePage("Reserva de turnos");
     const fetchVeterinarios = async () => {
       try {
-        const res = await clienteAxios.get(
-          "/profesionales/profesionales",
-          config
-        );
+        const res = await clienteAxios.get("/profesionales", config);
         setVeterinarios(res.data);
       } catch (error) {
         Swal.fire({

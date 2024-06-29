@@ -7,6 +7,7 @@ import { titlePage } from "../helpers/titlePages";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
+import ImageC from "../components/ImageC";
 
 titlePage("Planes");
 
@@ -16,7 +17,10 @@ const validationSchema = yup.object().shape({
     .required("Completa el campo vacío")
     .min(2, "Mínimo 2 caracteres")
     .max(50, "Máximo 50 caracteres")
-    .matches(/^[a-zA-Z]+$/, "El nombre solo puede contener letras."),
+    .matches(
+      /^[a-zA-Z ]+$/,
+      "El nombre solo puede contener letras y espacios."
+    ),
   email: yup
     .string()
     .email("Formato de email incorrecto. Por ejemplo: usuario@gmail.com")
@@ -25,7 +29,8 @@ const validationSchema = yup.object().shape({
   mensaje: yup
     .string()
     .required("Completa el campo vacío")
-    .min(10, "Mínimo 10 caracteres"),
+    .min(10, "Mínimo 10 caracteres")
+    .max(500, "Máximo 500 caracteres"),
 });
 
 const PlanesPage = () => {
@@ -70,10 +75,10 @@ const PlanesPage = () => {
         <div className="Planes-container">
           <div className="Plan">
             <div className="Cuadro">
-              <img
-                src="./src/img/Plan1.avif"
-                alt="Foto-integrante1"
-                className="img-fluid"
+              <ImageC
+                urlImagen="https://res.cloudinary.com/duexhxoyy/image/upload/v1719667564/Plan1_e3jth6.avif"
+                alternativo="Logo Plan inicial"
+                ancho={"100%"}
               />
             </div>
             <h5 className="NombrePlan">
@@ -103,10 +108,10 @@ const PlanesPage = () => {
 
           <div className="Plan">
             <div className="Cuadro">
-              <img
-                src="./src/img/Plan2.jpg"
-                alt="Foto-integrante2"
-                className="img-fluid"
+              <ImageC
+                urlImagen="https://res.cloudinary.com/duexhxoyy/image/upload/v1719667565/Plan2_oxqskf.jpg"
+                alternativo="Logo Plan Madurando"
+                ancho={"100%"}
               />
             </div>
             <h5 className="NombrePlan">
@@ -137,10 +142,10 @@ const PlanesPage = () => {
 
           <div className="Plan">
             <div className="Cuadro">
-              <img
-                src="./src/img/Plan3.png"
-                alt="Foto-integrante3"
-                className="img-fluid"
+              <ImageC
+                urlImagen="https://res.cloudinary.com/duexhxoyy/image/upload/v1719667565/Plan3_tist0s.png"
+                alternativo="Logo Plan Adulto"
+                ancho={"100%"}
               />
             </div>
             <h5 className="NombrePlan">
@@ -205,6 +210,8 @@ const PlanesPage = () => {
                   value={values.nombre}
                   onChange={handleChange}
                   isInvalid={touched.nombre && !!errors.nombre}
+                  minLength={2}
+                  maxLength={50}
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.nombre}
@@ -220,6 +227,7 @@ const PlanesPage = () => {
                   value={values.email}
                   onChange={handleChange}
                   isInvalid={touched.email && !!errors.email}
+                  maxLength={50}
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.email}
@@ -248,28 +256,27 @@ const PlanesPage = () => {
                 <Form.Label>Mensaje</Form.Label>
                 <Form.Control
                   as="textarea"
-                  rows={3}
                   placeholder="Escribe tu mensaje"
                   name="mensaje"
                   value={values.mensaje}
                   onChange={handleChange}
                   isInvalid={touched.mensaje && !!errors.mensaje}
+                  minLength={10}
+                  maxLength={500}
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.mensaje}
                 </Form.Control.Feedback>
               </Form.Group>
 
-              <div className="button-container">
-                <Button
-                  variant="primary"
-                  type="submit"
-                  className="button-custom mt-3"
-                  disabled={isSubmitting}
-                >
-                  Enviar
-                </Button>
-              </div>
+              <Button
+                variant="primary"
+                type="submit"
+                disabled={isSubmitting}
+                className="button-custom"
+              >
+                Enviar
+              </Button>
             </Form>
           )}
         </Formik>

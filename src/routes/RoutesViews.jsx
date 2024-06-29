@@ -21,9 +21,8 @@ import DetalleMisReservas from "../pages/DetalleMisReservas";
 import AdminPageProfesionales from "../pages/AdminPageProfesionales";
 import MisDatosPage from "../pages/MisDatosPage";
 import AdminTurnos from "../pages/AdminTurnos";
-import AdminPageComentarios from "../pages/AdminPageComentarios"
+import AdminPageComentarios from "../pages/AdminPageComentarios";
 import AdminProfesionales from "../pages/AdminProfesionales";
-
 
 const RoutesViews = () => {
   return (
@@ -117,15 +116,32 @@ const RoutesViews = () => {
           }
         />
 
-<Route
+        <Route
           path="/AdminProfesionales"
-          element={<AdminPageProfesionales />}
+          element={
+            <PrivateRoute role={"admin"}>
+              <AdminPageProfesionales />
+            </PrivateRoute>
+          }
         />
-       <Route path="/comentariosPendientes" element={<AdminPageComentarios />} />
-        
+        <Route
+          path="/comentariosPendientes"
+          element={
+            <PrivateRoute role={"admin"}>
+              {" "}
+              <AdminPageComentarios />
+            </PrivateRoute>
+          }
+        />
 
-        <Route path="/profesionalesAdmin" element={<AdminProfesionales />} />
-
+        <Route
+          path="/profesionalesAdmin"
+          element={
+            <PrivateRoute role={"admin"}>
+              <AdminProfesionales />
+            </PrivateRoute>
+          }
+        />
       </Routes>
       <FooterC />
     </>
