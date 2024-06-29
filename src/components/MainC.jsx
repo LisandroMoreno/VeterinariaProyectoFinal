@@ -192,7 +192,7 @@ const MainC = () => {
                 <div className="product-offer mb-30 productH">
                   <ImageC
                     className="img-fluid"
-                    urlImagen="https://cdn.ready-market.com.tw/78d8bdd7/Templates/pic/Dog-Toy-1.jpg"
+                    urlImagen="https://http2.mlstatic.com/D_NQ_NP_964873-MLA69490032003_052023-O.webp"
                     alternativo="Descripción de la imagen derecha 2"
                     ancho={"100%"}
                   />

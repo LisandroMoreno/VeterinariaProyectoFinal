@@ -8,7 +8,6 @@
 .video-container iframe {
   width: 70%;
   height: 450px;
-  
 }
 
 .descripcion-general {
@@ -41,15 +40,15 @@
 }
 
 .circulo.foto-rodrigo {
-  background-image: url('./src/img/Rodrigo.jpg');
+  background-image: url("https://res.cloudinary.com/duexhxoyy/image/upload/v1719667565/Rodrigo_hrdztz.jpg");
 }
 
 .circulo.foto-jose {
-  background-image: url('./src/img/Jose.png');
+  background-image: url("https://res.cloudinary.com/duexhxoyy/image/upload/v1719667565/Jose_aancnj.png");
 }
 
 .circulo.foto-lisandro {
-  background-image: url('./src/img/Lisandro.jpg');
+  background-image: url("https://res.cloudinary.com/duexhxoyy/image/upload/v1719667565/Lisandro_xtw5hp.jpg");
 }
 
 .integrante {
