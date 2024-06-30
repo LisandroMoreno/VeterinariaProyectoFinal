@@ -21,6 +21,9 @@ import DetalleMisReservas from "../pages/DetalleMisReservas";
 import AdminPageProfesionales from "../pages/AdminPageProfesionales";
 import MisDatosPage from "../pages/MisDatosPage";
 import AdminTurnos from "../pages/AdminTurnos";
+import AdminPageComentarios from "../pages/AdminPageComentarios";
+import AdminProfesionales from "../pages/AdminProfesionales";
+import AdminPagePacientes from "../pages/AdminPagePacientes";
 
 const RoutesViews = () => {
   return (
@@ -81,14 +84,74 @@ const RoutesViews = () => {
         />
 
         <Route path="*" element={<Error404 />} />
-        <Route path="/turnos" element={<CrearTurno />} />
-        <Route path="/misReservas" element={<DetalleMisReservas />} />
+        <Route
+          path="/turnos"
+          element={
+            <PrivateRoute role={"user"}>
+              <CrearTurno />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/misReservas"
+          element={
+            <PrivateRoute role={"user"}>
+              <DetalleMisReservas />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/misDatos"
+          element={
+            <PrivateRoute role={"user"}>
+              <MisDatosPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/AdminTurnos"
+          element={
+            <PrivateRoute role={"admin"}>
+              <AdminTurnos />
+            </PrivateRoute>
+          }
+        />
+
         <Route
           path="/AdminProfesionales"
-          element={<AdminPageProfesionales />}
+          element={
+            <PrivateRoute role={"admin"}>
+              <AdminPageProfesionales />
+            </PrivateRoute>
+          }
         />
-        <Route path="/misDatos" element={<MisDatosPage />} />
-        <Route path="/AdminTurnos" element={<AdminTurnos />} />
+        <Route
+          path="/comentariosPendientes"
+          element={
+            <PrivateRoute role={"admin"}>
+              {" "}
+              <AdminPageComentarios />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/profesionalesAdmin"
+          element={
+            <PrivateRoute role={"admin"}>
+              <AdminProfesionales />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/adminPacientes"
+          element={
+            <PrivateRoute role={"admin"}>
+              <AdminPagePacientes />
+            </PrivateRoute>
+          }
+        />
       </Routes>
       <FooterC />
     </>

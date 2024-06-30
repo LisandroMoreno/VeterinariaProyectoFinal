@@ -3,6 +3,7 @@ import clienteAxios from "../helpers/clienteAxios";
 import { titlePage } from "../helpers/titlePages";
 import Swal from "sweetalert2";
 import "../css/MisDatos.css";
+import { Link } from "react-router-dom";
 
 const MisDatosPage = () => {
   titlePage("Mis Datos");
@@ -25,8 +26,8 @@ const MisDatosPage = () => {
       try {
         const response = await clienteAxios.get(`/misDatos/${misDatos.idUser}`);
         if (response.data) {
-          setMisDatos(response.data);
-          setMascotas(response.data.mascotas || []);
+          setMisDatos(response.data); // Actualiza los datos personales
+          setMascotas(response.data.mascotas || []); // Actualiza las mascotas
         }
       } catch (error) {
         console.error("Error al obtener los datos personales:", error);
@@ -106,7 +107,7 @@ const MisDatosPage = () => {
     e.preventDefault();
     try {
       const response = await clienteAxios.put(`/misDatos/${misDatos.idUser}`, {
-        misDatos,
+        ...misDatos,
       });
       console.log("Datos personales guardados:", response.data);
 
@@ -234,9 +235,9 @@ const MisDatosPage = () => {
                 <div className="d-flex justify-content-between align-items-center">
                   <h2 className="mb-4">Datos de tu Mascota</h2>
                   <div className="text-end mb-4">
-                    <a onClick={() => handleDeleteMascota(index)}>
+                    <Link onClick={() => handleDeleteMascota(index)}>
                       <i className="fa-solid fa-trash fa-lg icono-borrado"></i>
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
@@ -273,7 +274,7 @@ const MisDatosPage = () => {
                 </select>
                 <div>
                   <button type="submit" className="btn-customMisDatos mb-2">
-                    Guardar Cambios
+                    Guardar Mascota
                   </button>
                 </div>
               </form>

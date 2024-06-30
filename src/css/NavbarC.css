@@ -27,3 +27,9 @@
 .my-custom-link:active {
   color: black;
 }
+
+.navbar-nav .nav-link,
+.my-custom-link {
+  color: white;
+  text-decoration: none;
+}

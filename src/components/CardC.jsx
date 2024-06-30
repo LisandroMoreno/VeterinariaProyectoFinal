@@ -1,5 +1,5 @@
 import { Button, Card } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import "../css/Card.css";
 import clienteAxios, { config } from "../helpers/clienteAxios";
@@ -14,6 +14,23 @@ const CardC = ({
 }) => {
   const location = useLocation();
   const isDetalleFavorito = location.pathname.includes("detalleFavorito");
+
+  const confirmarEliminacion = () => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción eliminará el producto de tus favoritos.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        eliminarProducto(idProd);
+      }
+    });
+  };
 
   const eliminarProducto = async (id) => {
     try {
@@ -49,14 +66,11 @@ const CardC = ({
         <Card.Text>{descripcion}</Card.Text>
         <Card.Text>{precio}</Card.Text>
         <div>
-          <a href={`/productos/${idProd}`} className="btn btn-card">
+          <Link to={`/productos/${idProd}`} className="btn btn-card">
             Ver más
-          </a>
+          </Link>
           {isDetalleFavorito && (
-            <Button
-              onClick={() => eliminarProducto(idProd)}
-              className="btn-card-borrar"
-            >
+            <Button onClick={confirmarEliminacion} className="btn-card-borrar">
               <i className="fa-solid fa-trash"></i>
             </Button>
           )}

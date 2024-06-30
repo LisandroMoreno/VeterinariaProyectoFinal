@@ -112,3 +112,84 @@
 .reseñas .resena p {
   margin: 0;
 }
+
+.comentarios {
+  margin-top: 3rem;
+}
+
+.comentarios h3 {
+  margin-bottom: 1.5rem;
+}
+
+.comentarios .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.comentarios .form-group label {
+  font-weight: bold;
+}
+
+.comentarios .form-control {
+  border-radius: 0.25rem;
+  border: 1px solid #ced4da;
+}
+
+.comentarios .btn {
+  border-radius: 0.25rem;
+}
+
+.comentarios .star-rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.star-rating .fa-star {
+  font-size: 2rem;
+  color: #ffc107;
+  cursor: pointer;
+}
+
+.star-rating .fa-star-o {
+  font-size: 2rem;
+  color: #e4e5e9;
+  cursor: pointer;
+}
+
+
+.comentarios .row {
+  justify-content: center;
+}
+
+.comentarios .col-12 {
+  max-width: 600px;
+}
+
+@media (max-width: 767px) {
+  .comentarios .col-12 {
+    padding: 0 1rem;
+  }
+}
+
+.comentarios-lista .comentario {
+  border-bottom: 1px solid #e9ecef;
+  padding: 1rem 0;
+}
+
+.comentarios-lista .comentario:last-child {
+  border-bottom: none;
+}
+
+.comentarios-lista .comentario p {
+  margin: 0.5rem 0;
+}
+
+.comentarios-lista .comentario strong {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.comentarios-lista .comentario small {
+  color: #6c757d;
+}
