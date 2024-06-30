@@ -15,7 +15,7 @@ const AdminTurnosPage = () => {
     const fetchTurnos = async () => {
       setIsLoading(true);
       try {
-        const response = await clienteAxios.get(`/turnos/AdminTurnos/`, config);
+        const response = await clienteAxios.get(`/turnos/AdminTurnos`, config);
         setTurnos(response.data);
       } catch (error) {
         console.error("Error fetching turnos:", error);

@@ -12,12 +12,11 @@ const AdminUsersPage = () => {
   const [users, setUsers] = useState([]);
   const [show, setShow] = useState(false);
   const [userEdit, setUserEdit] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const getUsers = async () => {
     try {
-      setIsLoading(true);
       const allUsers = await clienteAxios.get("/users", config);
       setUsers(allUsers.data.getUsers);
     } catch (error) {
@@ -106,7 +105,7 @@ const AdminUsersPage = () => {
       if (result.isConfirmed) {
         setIsLoading(true);
         const deleteUser = await clienteAxios.delete(
-          `/users/${idUser}`,
+          `/users/users/${idUser}`,
           config
         );
 
@@ -115,7 +114,7 @@ const AdminUsersPage = () => {
             title: "Usuario eliminado",
             icon: "success",
           });
-          getUsers(); // Actualizar la lista de usuarios después de eliminar
+          getUsers();
         }
       }
     } catch (error) {
@@ -144,7 +143,7 @@ const AdminUsersPage = () => {
       if (resultStatus.isConfirmed) {
         setIsLoading(true);
         const statusUser = await clienteAxios.put(
-          `/users/status/${idUser}`,
+          `/users/${idUser}`,
           {},
           config
         );
@@ -155,7 +154,7 @@ const AdminUsersPage = () => {
             title: message,
             icon: "success",
           });
-          getUsers(); // Actualizar la lista de usuarios después de cambiar estado
+          getUsers();
         }
       }
     } catch (error) {
@@ -274,9 +273,9 @@ const AdminUsersPage = () => {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <div className="d-flex justify-content-center">
-              <Button variant="success" type="submit" disabled={isSubmitting}>
-                Guardar Cambios
+            <div className="text-center">
+              <Button variant="primary" type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Guardando..." : "Guardar Cambios"}
               </Button>
             </div>
           </Form>

@@ -23,6 +23,7 @@ import MisDatosPage from "../pages/MisDatosPage";
 import AdminTurnos from "../pages/AdminTurnos";
 import AdminPageComentarios from "../pages/AdminPageComentarios";
 import AdminProfesionales from "../pages/AdminProfesionales";
+import AdminPagePacientes from "../pages/AdminPagePacientes";
 
 const RoutesViews = () => {
   return (
@@ -139,6 +140,15 @@ const RoutesViews = () => {
           element={
             <PrivateRoute role={"admin"}>
               <AdminProfesionales />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/adminPacientes"
+          element={
+            <PrivateRoute role={"admin"}>
+              <AdminPagePacientes />
             </PrivateRoute>
           }
         />

@@ -26,8 +26,8 @@ const MisDatosPage = () => {
       try {
         const response = await clienteAxios.get(`/misDatos/${misDatos.idUser}`);
         if (response.data) {
-          setMisDatos(response.data);
-          setMascotas(response.data.mascotas || []);
+          setMisDatos(response.data); // Actualiza los datos personales
+          setMascotas(response.data.mascotas || []); // Actualiza las mascotas
         }
       } catch (error) {
         console.error("Error al obtener los datos personales:", error);
@@ -107,7 +107,7 @@ const MisDatosPage = () => {
     e.preventDefault();
     try {
       const response = await clienteAxios.put(`/misDatos/${misDatos.idUser}`, {
-        misDatos,
+        ...misDatos,
       });
       console.log("Datos personales guardados:", response.data);
 
@@ -274,7 +274,7 @@ const MisDatosPage = () => {
                 </select>
                 <div>
                   <button type="submit" className="btn-customMisDatos mb-2">
-                    Guardar Cambios
+                    Guardar Mascota
                   </button>
                 </div>
               </form>
