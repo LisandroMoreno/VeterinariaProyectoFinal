@@ -176,7 +176,8 @@ const TablaC = ({
                   <Button
                     variant="danger"
                     onClick={() => handleDelete(row._id)}
-                    className="ms-2">
+                    className="ms-2"
+                  >
                     <i className="fa-solid fa-trash"></i>
                   </Button>
                 </>
@@ -195,14 +196,16 @@ const TablaC = ({
                     className="mx-2"
                     variant={row.deleted ? "success" : "dark"}
                     onClick={() => handleClickStatus(row._id)}
-                    disabled={row.role === "admin" && true}>
+                    disabled={row.role === "admin" && true}
+                  >
                     {row.deleted ? "Habilitar" : "Deshabilitar"}
                   </Button>
 
                   <Button
                     variant="danger"
                     onClick={() => handleDelete(row._id)}
-                    disabled={row.role === "admin" && true}>
+                    disabled={row.role === "admin" && true}
+                  >
                     <i className="fa-solid fa-trash"></i>
                   </Button>
                 </>
@@ -215,7 +218,8 @@ const TablaC = ({
                   <Button
                     variant="danger"
                     onClick={() => handleDelete(row._id)}
-                    className="ms-2">
+                    className="ms-2"
+                  >
                     <i className="fa-solid fa-trash"></i>
                   </Button>
                 </>
