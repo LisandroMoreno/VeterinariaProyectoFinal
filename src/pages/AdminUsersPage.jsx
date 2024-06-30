@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form, Spinner } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -12,6 +12,7 @@ const AdminUsersPage = () => {
   const [users, setUsers] = useState([]);
   const [show, setShow] = useState(false);
   const [userEdit, setUserEdit] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   const getUsers = async () => {
     try {
@@ -19,6 +20,8 @@ const AdminUsersPage = () => {
       setUsers(allUsers.data.getUsers);
     } catch (error) {
       console.error("Error al obtener los usuarios", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -73,7 +76,7 @@ const AdminUsersPage = () => {
             icon: "success",
           }).then(() => {
             setTimeout(() => {
-              location.reload();
+              getUsers();
             }, 1000);
           });
         }
@@ -84,7 +87,7 @@ const AdminUsersPage = () => {
           icon: "error",
         }).then(() => {
           setTimeout(() => {
-            location.reload();
+            getUsers();
           }, 1000);
         });
       } finally {
@@ -120,7 +123,7 @@ const AdminUsersPage = () => {
             icon: "success",
           }).then(() => {
             setTimeout(() => {
-              location.reload();
+              getUsers();
             }, 1000);
           });
         }
@@ -132,7 +135,7 @@ const AdminUsersPage = () => {
         icon: "error",
       }).then(() => {
         setTimeout(() => {
-          location.reload();
+          getUsers();
         }, 1000);
       });
     }
@@ -175,7 +178,7 @@ const AdminUsersPage = () => {
         icon: "error",
       }).then(() => {
         setTimeout(() => {
-          location.reload();
+          getUsers();
         }, 1000);
       });
     }
@@ -208,14 +211,20 @@ const AdminUsersPage = () => {
       <h2 className="mt-4 text-center">Administración de Usuarios</h2>
       <div className="d-flex justify-content-center">
         <div className="table-responsive w-100 mt-5">
-          <TablaC
-            columns={columns}
-            data={users}
-            handleDelete={handleClickDel}
-            handleClickStatus={handleClickStatus}
-            handleEdit={editUser}
-            getRoleLabel={getRoleLabel}
-          />
+          {isLoading ? (
+            <div className="d-flex justify-content-center align-items-center mt-5">
+              <Spinner animation="border" role="status" className="my-4" />
+            </div>
+          ) : (
+            <TablaC
+              columns={columns}
+              data={users}
+              handleDelete={handleClickDel}
+              handleClickStatus={handleClickStatus}
+              handleEdit={editUser}
+              getRoleLabel={getRoleLabel}
+            />
+          )}
         </div>
       </div>
 
