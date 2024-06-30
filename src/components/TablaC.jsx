@@ -138,7 +138,7 @@ const TablaC = ({
   const isAdminTurnosPage = location.pathname === "/AdminTurnos";
   const isAdminUsersPage = location.pathname === "/usuarios"; // Identifica AdminUsersPage
   const isAdminProfesionalesPage = location.pathname === "/profesionalesAdmin"; // Nueva variable para identificar AdminProfesionalesPage
-
+  const isAdminAdminPacientes = location.pathname === "/adminPacientes";
   const renderColumns = () => (
     <thead>
       <tr>
@@ -166,7 +166,8 @@ const TablaC = ({
           {(isProductosPage ||
             isAdminTurnosPage ||
             isAdminUsersPage ||
-            isAdminProfesionalesPage) && (
+            isAdminProfesionalesPage ||
+            isAdminAdminPacientes) && (
             <td className="align-middle">
               {isProductosPage && (
                 <>
@@ -224,6 +225,14 @@ const TablaC = ({
                   </Button>
                 </>
               )}
+              {isAdminAdminPacientes && (
+                <>
+                  <Button variant="warning" onClick={() => handleEdit(row)}>
+                    Editar
+                  </Button>
+                  
+                </>
+              )}
             </td>
           )}
         </tr>
@@ -236,7 +245,8 @@ const TablaC = ({
       {(isProductosPage ||
         isAdminTurnosPage ||
         isAdminUsersPage ||
-        isAdminProfesionalesPage) && (
+        isAdminProfesionalesPage ||
+        isAdminAdminPacientes) && (
         <Table striped bordered hover className="text-center">
           {renderColumns()}
           {renderRows()}
