@@ -5,13 +5,14 @@ import clienteAxios, { config, configImg } from "../helpers/clienteAxios";
 import { titlePage } from "../helpers/titlePages";
 import Swal from "sweetalert2";
 import TablaC from "../components/TablaC";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Spinner } from "react-bootstrap";
 
 const AdminProfesionalesPage = () => {
   titlePage("Lista de Profesionales");
   const [profesionales, setProfesionales] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [loading, setLoading] = useState(true); // Estado para controlar el spinner
   const [editProf, setEditProf] = useState({
     _id: "",
     nombre: "",
@@ -93,7 +94,7 @@ const AdminProfesionalesPage = () => {
             icon: "success",
           }).then(() => {
             setTimeout(() => {
-              location.reload();
+              getProfesionalesAdmin();
             }, 1000);
           });
         }
@@ -104,7 +105,7 @@ const AdminProfesionalesPage = () => {
           icon: "success",
         }).then(() => {
           setTimeout(() => {
-            location.reload();
+            getProfesionalesAdmin();
           }, 1000);
         });
       }
@@ -114,7 +115,7 @@ const AdminProfesionalesPage = () => {
         icon: "error",
       }).then(() => {
         setTimeout(() => {
-          location.reload();
+          getProfesionalesAdmin();
         }, 1000);
       });
     } finally {
@@ -158,7 +159,7 @@ const AdminProfesionalesPage = () => {
             icon: "success",
           }).then(() => {
             setTimeout(() => {
-              location.reload();
+              getProfesionalesAdmin();
             }, 1000);
           });
         }
@@ -169,7 +170,7 @@ const AdminProfesionalesPage = () => {
           icon: "success",
         }).then(() => {
           setTimeout(() => {
-            location.reload();
+            getProfesionalesAdmin();
           }, 1000);
         });
       }
@@ -180,7 +181,7 @@ const AdminProfesionalesPage = () => {
         icon: "error",
       }).then(() => {
         setTimeout(() => {
-          location.reload();
+          getProfesionalesAdmin();
         }, 1000);
       });
     } finally {
@@ -189,8 +190,14 @@ const AdminProfesionalesPage = () => {
   };
 
   const getProfesionalesAdmin = async () => {
-    const allProfesionales = await clienteAxios.get("/profesionales");
-    setProfesionales(allProfesionales.data);
+    try {
+      const allProfesionales = await clienteAxios.get("/profesionales");
+      setProfesionales(allProfesionales.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false); // Aquí se actualiza el estado de loading a false
+    }
   };
 
   const handleCloseEditModal = () => setShowEditModal(false);
@@ -220,7 +227,7 @@ const AdminProfesionalesPage = () => {
             icon: "success",
           }).then(() => {
             setTimeout(() => {
-              location.reload();
+              getProfesionalesAdmin();
             }, 1000);
           });
         }
@@ -231,7 +238,7 @@ const AdminProfesionalesPage = () => {
         icon: "error",
       }).then(() => {
         setTimeout(() => {
-          location.reload();
+          getProfesionalesAdmin();
         }, 1000);
       });
     }
@@ -261,14 +268,20 @@ const AdminProfesionalesPage = () => {
         </Button>
       </div>
       <div className="d-flex justify-content-center">
-        <div className="table-responsive w-100 mt-3">
-          <TablaC
-            columns={columns}
-            data={profesionales}
-            handleEdit={editProfesional}
-            handleDelete={handleClickDel}
-          />
-        </div>
+        {loading ? (
+          <div className="d-flex justify-content-center align-items-center mt-5">
+            <Spinner animation="border" role="status" className="my-4" />
+          </div>
+        ) : (
+          <div className="table-responsive w-100 mt-3">
+            <TablaC
+              columns={columns}
+              data={profesionales}
+              handleEdit={editProfesional}
+              handleDelete={handleClickDel}
+            />
+          </div>
+        )}
       </div>
 
       {/* MODAL EDITAR */}
