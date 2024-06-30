@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Form, Spinner } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -12,8 +12,6 @@ const AdminUsersPage = () => {
   const [users, setUsers] = useState([]);
   const [show, setShow] = useState(false);
   const [userEdit, setUserEdit] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const getUsers = async () => {
     try {
@@ -21,8 +19,6 @@ const AdminUsersPage = () => {
       setUsers(allUsers.data.getUsers);
     } catch (error) {
       console.error("Error al obtener los usuarios", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -62,7 +58,7 @@ const AdminUsersPage = () => {
       role: "",
     },
     validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { setSubmitting }) => {
       setIsSubmitting(true);
       try {
         const updateUser = await clienteAxios.put(
@@ -75,20 +71,30 @@ const AdminUsersPage = () => {
           Swal.fire({
             title: "Usuario actualizado",
             icon: "success",
+          }).then(() => {
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
           });
-          getUsers(); // Actualizar la lista de usuarios después de editar
         }
       } catch (error) {
         console.error("Error al actualizar el usuario", error);
         Swal.fire({
           title: "Error al actualizar el usuario",
           icon: "error",
+        }).then(() => {
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
         });
       } finally {
         setIsSubmitting(false);
+        setSubmitting(false);
       }
     },
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleClickDel = async (idUser) => {
     try {
@@ -103,7 +109,6 @@ const AdminUsersPage = () => {
       });
 
       if (result.isConfirmed) {
-        setIsLoading(true);
         const deleteUser = await clienteAxios.delete(
           `/users/users/${idUser}`,
           config
@@ -113,8 +118,11 @@ const AdminUsersPage = () => {
           Swal.fire({
             title: "Usuario eliminado",
             icon: "success",
+          }).then(() => {
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
           });
-          getUsers();
         }
       }
     } catch (error) {
@@ -122,9 +130,11 @@ const AdminUsersPage = () => {
       Swal.fire({
         title: "Error al eliminar el usuario",
         icon: "error",
+      }).then(() => {
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -141,30 +151,32 @@ const AdminUsersPage = () => {
       });
 
       if (resultStatus.isConfirmed) {
-        setIsLoading(true);
-        const statusUser = await clienteAxios.put(
+        const statusUser = await clienteAxios.delete(
           `/users/${idUser}`,
-          {},
           config
         );
 
         if (statusUser.status === 200) {
-          const message = statusUser.data.msg;
           Swal.fire({
-            title: message,
+            title: "Estado del usuario actualizado",
             icon: "success",
+          }).then(() => {
+            setTimeout(() => {
+              getUsers();
+            }, 1000);
           });
-          getUsers();
         }
       }
     } catch (error) {
-      console.error("Error al actualizar el estado del usuario", error);
+      console.error("Error al actualizar el estado del usuario:", error);
       Swal.fire({
         title: "Error al actualizar el estado del usuario",
         icon: "error",
+      }).then(() => {
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -195,20 +207,14 @@ const AdminUsersPage = () => {
       <h2 className="mt-4 text-center">Administración de Usuarios</h2>
       <div className="d-flex justify-content-center">
         <div className="table-responsive w-100 mt-5">
-          {isLoading ? (
-            <div className="d-flex justify-content-center align-items-center mt-5">
-              <Spinner animation="border" role="status" className="my-4" />
-            </div>
-          ) : (
-            <TablaC
-              columns={columns}
-              data={users}
-              handleDelete={handleClickDel}
-              handleClickStatus={handleClickStatus}
-              handleEdit={editUser}
-              getRoleLabel={getRoleLabel}
-            />
-          )}
+          <TablaC
+            columns={columns}
+            data={users}
+            handleDelete={handleClickDel}
+            handleClickStatus={handleClickStatus}
+            handleEdit={editUser}
+            getRoleLabel={getRoleLabel}
+          />
         </div>
       </div>
 
@@ -262,8 +268,7 @@ const AdminUsersPage = () => {
                 name="role"
                 value={formik.values.role}
                 onChange={formik.handleChange}
-                isInvalid={!!formik.errors.role && formik.touched.role}
-              >
+                isInvalid={!!formik.errors.role && formik.touched.role}>
                 <option value="">Selecciona un role</option>
                 <option value="admin">Administrador</option>
                 <option value="user">Usuario</option>
@@ -273,9 +278,9 @@ const AdminUsersPage = () => {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <div className="text-center">
-              <Button variant="primary" type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Guardando..." : "Guardar Cambios"}
+            <div className="d-flex justify-content-center">
+              <Button variant="success" type="submit" disabled={isSubmitting}>
+                Guardar Cambios
               </Button>
             </div>
           </Form>
