@@ -12,6 +12,7 @@ const AdminProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [loading, setLoading] = useState(true); // Estado para controlar el spinner
   const [editProd, setEditProd] = useState({
     _id: "",
     titulo: "",
@@ -98,7 +99,10 @@ const AdminProductsPage = () => {
             title: "Producto actualizado. IMAGEN",
             icon: "success",
           }).then(() => {
-            fetchData();
+            setTimeout(() => {
+              getProductosAdmin();
+            }, 1000);
+
           });
         }
       } else {
@@ -107,7 +111,9 @@ const AdminProductsPage = () => {
           title: "Producto actualizado. SIN IMAGEN",
           icon: "success",
         }).then(() => {
-          fetchData();
+          setTimeout(() => {
+            getProductosAdmin();
+          }, 1000);
         });
       }
     } catch (error) {
@@ -115,7 +121,9 @@ const AdminProductsPage = () => {
         title: "Error al actualizar el producto",
         icon: "error",
       }).then(() => {
-        fetchData();
+        setTimeout(() => {
+          getProductosAdmin();
+        }, 1000);
       });
     } finally {
       setSubmitting(false);
@@ -171,7 +179,9 @@ const AdminProductsPage = () => {
         title: "Error al crear el producto",
         icon: "error",
       }).then(() => {
-        fetchData();
+        setTimeout(() => {
+          getProductosAdmin();
+        }, 1000);
       });
     } finally {
       setSubmitting(false);
@@ -179,8 +189,14 @@ const AdminProductsPage = () => {
   };
 
   const getProductosAdmin = async () => {
-    const allProducts = await clienteAxios.get("/productos/admin");
-    setProducts(allProducts.data.products);
+    try {
+      const allProducts = await clienteAxios.get("/productos/admin");
+      setProducts(allProducts.data.products);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false); // Aquí se actualiza el estado de loading a false
+    }
   };
 
   const handleCloseEditModal = () => setShowEditModal(false);
@@ -209,7 +225,10 @@ const AdminProductsPage = () => {
             title: "Producto eliminado",
             icon: "success",
           }).then(() => {
-            fetchData();
+            setTimeout(() => {
+              getProductosAdmin();
+            }, 1000);
+
           });
         }
       }
@@ -218,7 +237,10 @@ const AdminProductsPage = () => {
         title: "Error al eliminar el producto",
         icon: "error",
       }).then(() => {
-        fetchData();
+        setTimeout(() => {
+          getProductosAdmin();
+        }, 1000);
+
       });
     }
   };
