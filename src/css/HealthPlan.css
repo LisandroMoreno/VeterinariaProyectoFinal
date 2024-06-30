@@ -1,7 +1,7 @@
 .health-plan-container {
   width: 100%;
   height: 400px; 
-  background-image: url('./src/img/plan.jpg'), linear-gradient(rgba(88, 72, 72, 0.5), rgba(79, 78, 78, 0.5)); 
+  background-image: url('https://res.cloudinary.com/duexhxoyy/image/upload/v1719772661/Plan_b6yauq.jpg'), linear-gradient(rgba(88, 72, 72, 0.5), rgba(79, 78, 78, 0.5)); 
   background-size: cover;
   background-position: center;
   display: flex;

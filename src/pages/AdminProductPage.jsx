@@ -28,6 +28,7 @@ const AdminProductsPage = () => {
     categoria: "",
     image: "",
   });
+  const [loading, setLoading] = useState(true); // Estado para controlar el spinner
 
   const editProduct = (product) => {
     setEditProd(product);
@@ -58,6 +59,17 @@ const AdminProductsPage = () => {
     categoria: Yup.string().required("La categoría es obligatoria"),
     image: Yup.mixed().nullable(),
   });
+
+  const fetchData = async () => {
+    try {
+      const allProducts = await clienteAxios.get("/productos/admin");
+      setProducts(allProducts.data.products);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false); // Aquí se actualiza el estado de loading a false
+    }
+  };
 
   const handleClickEdit = async (values, { setSubmitting }) => {
     try {
@@ -90,6 +102,7 @@ const AdminProductsPage = () => {
             setTimeout(() => {
               getProductosAdmin();
             }, 1000);
+
           });
         }
       } else {
@@ -149,9 +162,7 @@ const AdminProductsPage = () => {
             title: "Producto creado. IMAGEN",
             icon: "success",
           }).then(() => {
-            setTimeout(() => {
-              location.reload();
-            }, 1000);
+            fetchData();
           });
         }
       } else {
@@ -160,9 +171,7 @@ const AdminProductsPage = () => {
           title: "Producto creado. SIN IMAGEN",
           icon: "success",
         }).then(() => {
-          setTimeout(() => {
-            location.reload();
-          }, 1000);
+          fetchData();
         });
       }
     } catch (error) {
@@ -219,6 +228,7 @@ const AdminProductsPage = () => {
             setTimeout(() => {
               getProductosAdmin();
             }, 1000);
+
           });
         }
       }
@@ -230,6 +240,7 @@ const AdminProductsPage = () => {
         setTimeout(() => {
           getProductosAdmin();
         }, 1000);
+
       });
     }
   };
@@ -248,6 +259,7 @@ const AdminProductsPage = () => {
 
   useEffect(() => {
     getProductosAdmin();
+    fetchData();
   }, []);
 
   return (
@@ -283,7 +295,8 @@ const AdminProductsPage = () => {
           <Formik
             initialValues={editProd}
             validationSchema={validationSchema}
-            onSubmit={handleClickEdit}>
+            onSubmit={handleClickEdit}
+          >
             {({ isSubmitting, errors, touched }) => (
               <Form>
                 <div className="mb-3">
@@ -344,16 +357,12 @@ const AdminProductsPage = () => {
                     Categoria
                   </label>
                   <Field
-                    as="select"
+                    type="text"
                     name="categoria"
-                    className={`form-select ${
+                    className={`form-control ${
                       errors.categoria && touched.categoria ? "is-invalid" : ""
-                    }`}>
-                    <option value="">Selecciona una categoria</option>
-                    <option value="Accesorios">Accesorios</option>
-                    <option value="Alimentación">Alimentación</option>
-                    <option value="Cuidados/Limpieza">Cuidados/Limpieza</option>
-                  </Field>
+                    }`}
+                  />
                   <ErrorMessage
                     name="categoria"
                     component="div"
@@ -362,28 +371,22 @@ const AdminProductsPage = () => {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="image" className="form-label">
-                    Imagen
+                    Cambiar Imagen
                   </label>
                   <input
                     type="file"
                     name="image"
-                    className={`form-control ${
-                      errors.image && touched.image ? "is-invalid" : ""
-                    }`}
+                    className="form-control"
                     onChange={handleChangeImage}
                   />
-                  <ErrorMessage
-                    name="image"
-                    component="div"
-                    className="invalid-feedback"
-                  />
                 </div>
-                <div className="d-flex justify-content-center">
+                <div className="text-center">
                   <Button
-                    variant="success"
+                    variant="primary"
                     type="submit"
-                    disabled={isSubmitting}>
-                    Editar Producto
+                    disabled={isSubmitting}
+                  >
+                    Guardar Cambios
                   </Button>
                 </div>
               </Form>
@@ -400,7 +403,8 @@ const AdminProductsPage = () => {
           <Formik
             initialValues={newProd}
             validationSchema={validationSchema}
-            onSubmit={handleCreateProd}>
+            onSubmit={handleCreateProd}
+          >
             {({ isSubmitting, errors, touched }) => (
               <Form>
                 <div className="mb-3">
@@ -461,16 +465,12 @@ const AdminProductsPage = () => {
                     Categoria
                   </label>
                   <Field
-                    as="select"
+                    type="text"
                     name="categoria"
-                    className={`form-select ${
+                    className={`form-control ${
                       errors.categoria && touched.categoria ? "is-invalid" : ""
-                    }`}>
-                    <option value="">Selecciona una categoria</option>
-                    <option value="Accesorios">Accesorios</option>
-                    <option value="Alimentación">Alimentación</option>
-                    <option value="Cuidados/Limpieza">Cuidados/Limpieza</option>
-                  </Field>
+                    }`}
+                  />
                   <ErrorMessage
                     name="categoria"
                     component="div"
@@ -484,22 +484,16 @@ const AdminProductsPage = () => {
                   <input
                     type="file"
                     name="image"
-                    className={`form-control ${
-                      errors.image && touched.image ? "is-invalid" : ""
-                    }`}
+                    className="form-control"
                     onChange={handleChangeNewImage}
                   />
-                  <ErrorMessage
-                    name="image"
-                    component="div"
-                    className="invalid-feedback"
-                  />
                 </div>
-                <div className="d-flex justify-content-center">
+                <div className="text-center">
                   <Button
-                    variant="success"
+                    variant="primary"
                     type="submit"
-                    disabled={isSubmitting}>
+                    disabled={isSubmitting}
+                  >
                     Crear Producto
                   </Button>
                 </div>
