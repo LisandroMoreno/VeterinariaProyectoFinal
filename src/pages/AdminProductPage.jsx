@@ -5,13 +5,14 @@ import clienteAxios, { config, configImg } from "../helpers/clienteAxios";
 import { titlePage } from "../helpers/titlePages";
 import Swal from "sweetalert2";
 import TablaC from "../components/TablaC";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Spinner } from "react-bootstrap";
 
 const AdminProductsPage = () => {
   titlePage("Lista de Productos");
   const [products, setProducts] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [loading, setLoading] = useState(true); // Estado para controlar el spinner
   const [editProd, setEditProd] = useState({
     _id: "",
     titulo: "",
@@ -87,7 +88,7 @@ const AdminProductsPage = () => {
             icon: "success",
           }).then(() => {
             setTimeout(() => {
-              location.reload();
+              getProductosAdmin();
             }, 1000);
           });
         }
@@ -98,7 +99,7 @@ const AdminProductsPage = () => {
           icon: "success",
         }).then(() => {
           setTimeout(() => {
-            location.reload();
+            getProductosAdmin();
           }, 1000);
         });
       }
@@ -108,7 +109,7 @@ const AdminProductsPage = () => {
         icon: "error",
       }).then(() => {
         setTimeout(() => {
-          location.reload();
+          getProductosAdmin();
         }, 1000);
       });
     } finally {
@@ -170,7 +171,7 @@ const AdminProductsPage = () => {
         icon: "error",
       }).then(() => {
         setTimeout(() => {
-          location.reload();
+          getProductosAdmin();
         }, 1000);
       });
     } finally {
@@ -179,8 +180,14 @@ const AdminProductsPage = () => {
   };
 
   const getProductosAdmin = async () => {
-    const allProducts = await clienteAxios.get("/productos/admin");
-    setProducts(allProducts.data.products);
+    try {
+      const allProducts = await clienteAxios.get("/productos/admin");
+      setProducts(allProducts.data.products);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false); // Aquí se actualiza el estado de loading a false
+    }
   };
 
   const handleCloseEditModal = () => setShowEditModal(false);
@@ -210,7 +217,7 @@ const AdminProductsPage = () => {
             icon: "success",
           }).then(() => {
             setTimeout(() => {
-              location.reload();
+              getProductosAdmin();
             }, 1000);
           });
         }
@@ -221,7 +228,7 @@ const AdminProductsPage = () => {
         icon: "error",
       }).then(() => {
         setTimeout(() => {
-          location.reload();
+          getProductosAdmin();
         }, 1000);
       });
     }
@@ -252,14 +259,20 @@ const AdminProductsPage = () => {
         </Button>
       </div>
       <div className="d-flex justify-content-center">
-        <div className="table-responsive w-100 mt-3">
-          <TablaC
-            columns={columns}
-            data={products}
-            handleEdit={editProduct}
-            handleDelete={handleClickDel}
-          />
-        </div>
+        {loading ? (
+          <div className="d-flex justify-content-center align-items-center mt-5">
+            <Spinner animation="border" role="status" className="my-4" />
+          </div>
+        ) : (
+          <div className="table-responsive w-100 mt-3">
+            <TablaC
+              columns={columns}
+              data={products}
+              handleEdit={editProduct}
+              handleDelete={handleClickDel}
+            />
+          </div>
+        )}
       </div>
 
       <Modal show={showEditModal} onHide={handleCloseEditModal}>
