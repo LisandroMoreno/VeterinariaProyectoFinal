@@ -159,9 +159,6 @@ const ProfesionalesPage = () => {
                   />
                   <p>{comentario.comentario}</p>
                   <p>
-                    <strong>- {comentario.usuario}</strong>
-                  </p>
-                  <p>
                     <small>{new Date(comentario.fecha).toLocaleString()}</small>
                   </p>
                 </div>

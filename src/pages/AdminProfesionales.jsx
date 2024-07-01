@@ -12,7 +12,7 @@ const AdminProfesionalesPage = () => {
   const [profesionales, setProfesionales] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [loading, setLoading] = useState(true); // Estado para controlar el spinner
+  const [loading, setLoading] = useState(true); 
   const [editProf, setEditProf] = useState({
     _id: "",
     nombre: "",
@@ -196,7 +196,7 @@ const AdminProfesionalesPage = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
-      setLoading(false); // Aquí se actualiza el estado de loading a false
+      setLoading(false); 
     }
   };
 
@@ -284,7 +284,6 @@ const AdminProfesionalesPage = () => {
         )}
       </div>
 
-      {/* MODAL EDITAR */}
       <Modal show={showEditModal} onHide={handleCloseEditModal}>
         <Modal.Header closeButton>
           <Modal.Title>Editar Profesional</Modal.Title>
@@ -403,7 +402,7 @@ const AdminProfesionalesPage = () => {
                           ))}
                         <button
                           type="button"
-                          className="btn btn-primary"
+                          className="btn btn-success"
                           onClick={() =>
                             push({ dia: "", inicio: "", fin: "" })
                           }>
@@ -413,16 +412,20 @@ const AdminProfesionalesPage = () => {
                     )}
                   </FieldArray>
                 </div>
-                <Button variant="primary" type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Guardando..." : "Guardar"}
-                </Button>
+                <div className="d-flex justify-content-center">
+                  <Button
+                    variant="success"
+                    type="submit"
+                    disabled={isSubmitting}>
+                    Guardar Cambios
+                  </Button>
+                </div>
               </Form>
             )}
           </Formik>
         </Modal.Body>
       </Modal>
 
-      {/* MODAL CREAR */}
       <Modal show={showCreateModal} onHide={handleCloseCreateModal}>
         <Modal.Header closeButton>
           <Modal.Title>Crear Profesional</Modal.Title>
@@ -541,7 +544,7 @@ const AdminProfesionalesPage = () => {
                           ))}
                         <button
                           type="button"
-                          className="btn btn-primary"
+                          className="btn btn-success"
                           onClick={() =>
                             push({ dia: "", inicio: "", fin: "" })
                           }>
@@ -551,9 +554,14 @@ const AdminProfesionalesPage = () => {
                     )}
                   </FieldArray>
                 </div>
-                <Button variant="primary" type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Guardando..." : "Guardar"}
-                </Button>
+                <div className="d-flex justify-content-center">
+                  <Button
+                    variant="success"
+                    type="submit"
+                    disabled={isSubmitting}>
+                    Crear Profesional
+                  </Button>
+                </div>
               </Form>
             )}
           </Formik>
