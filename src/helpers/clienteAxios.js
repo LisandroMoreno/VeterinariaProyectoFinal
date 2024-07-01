@@ -8,7 +8,7 @@ const clienteAxios = axios.create({
 
 export const config = {
   headers: {
-    "Content-Type": "application/json",
+    "content-type": "application/json",
     auth: `Bearer ${token}`,
   },
 };
