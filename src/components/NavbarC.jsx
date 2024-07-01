@@ -6,7 +6,8 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import ImageC from "./ImageC";
 import Pisadas from "./Pisadas";
-import "../css/NavbarC.css"; 
+import "../css/NavbarC.css";
+import Swal from "sweetalert2";
 
 const NavbarC = () => {
   const navigate = useNavigate();
@@ -17,7 +18,14 @@ const NavbarC = () => {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("role");
     sessionStorage.removeItem("id");
-    navigate("/");
+    Swal.fire({
+      title: "Gracias por su visita",
+      text: "Has cerrado sesión exitosamente.",
+      icon: "success",
+      confirmButtonText: "OK",
+    }).then(() => {
+      navigate("/");
+    });
   };
 
   const url =
@@ -96,24 +104,21 @@ const NavbarC = () => {
                       className="my-custom-link nav-link">
                       Productos
                     </NavLink>
-                    <NavLink to="/usuarios" 
-                    className="my-custom-link nav-link"
-                    >
+                    <NavLink to="/usuarios" className="my-custom-link nav-link">
                       Usuarios
                     </NavLink>
-                 
-                    <NavLink to="/comentariosPendientes"
-                     className="my-custom-link nav-link"
-                     >
-                     Reseñas
-                     </NavLink>
+
+                    <NavLink
+                      to="/comentariosPendientes"
+                      className="my-custom-link nav-link">
+                      Reseñas
+                    </NavLink>
 
                     <NavLink
                       to="/profesionalesAdmin"
                       className="my-custom-link nav-link">
                       Profesionales
                     </NavLink>
-
                   </>
                 )}
               </Nav>
@@ -204,8 +209,7 @@ const NavbarC = () => {
                     <NavLink
                       to="/"
                       className="my-custom-link nav-link"
-                      onClick={cerrarSesion}
-                    >
+                      onClick={cerrarSesion}>
                       Cerrar Sesión
                     </NavLink>
                   </>
