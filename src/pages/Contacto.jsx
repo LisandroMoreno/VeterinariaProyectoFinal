@@ -18,7 +18,7 @@ const validationSchema = yup.object().shape({
     .string()
     .required("Completa el campo vacío")
     .min(2, "Mínimo 2 caracteres")
-    .max(15, "Máximo 15 caracteres")
+    .max(25, "Máximo 25 caracteres")
     .matches(/^[a-zA-Z]+$/, "El apellido solo puede contener letras."),
   email: yup
     .string()
@@ -27,7 +27,8 @@ const validationSchema = yup.object().shape({
   mensaje: yup
     .string()
     .required("Completa el campo vacío")
-    .min(10, "Mínimo 10 caracteres"),
+    .min(10, "Mínimo 10 caracteres")
+    .max(500, "Máximo 500 caracteres"),
 });
 
 const Contacto = () => {

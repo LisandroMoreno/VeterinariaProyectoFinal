@@ -3,6 +3,9 @@
   background-color: #f8f9fa;
   overflow-x: hidden; 
 }
+.comentario-input-error {
+  border: 1px solid red;
+}
 
 .Profesionales-container {
   display: flex;
@@ -19,6 +22,10 @@
   width: 100%;
   max-width: 600px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.is-invalid {
+  border-color: red;
 }
 
 .Circulo {

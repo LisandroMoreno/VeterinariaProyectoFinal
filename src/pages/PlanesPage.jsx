@@ -13,14 +13,11 @@ titlePage("Planes");
 
 const validationSchema = yup.object().shape({
   nombre: yup
-    .string()
-    .required("Completa el campo vacío")
-    .min(2, "Mínimo 2 caracteres")
-    .max(50, "Máximo 50 caracteres")
-    .matches(
-      /^[a-zA-Z ]+$/,
-      "El nombre solo puede contener letras y espacios."
-    ),
+  .string()
+  .required("Completa el campo vacío")
+  .min(2, "Mínimo 2 caracteres")
+  .max(50, "Máximo 50 caracteres")
+  .matches(/^[a-zA-Z\s]+$/, "El nombre solo puede contener letras."),
   email: yup
     .string()
     .email("Formato de email incorrecto. Por ejemplo: usuario@gmail.com")
