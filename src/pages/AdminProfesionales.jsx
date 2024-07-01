@@ -402,7 +402,7 @@ const AdminProfesionalesPage = () => {
                           ))}
                         <button
                           type="button"
-                          className="btn btn-primary"
+                          className="btn btn-success"
                           onClick={() =>
                             push({ dia: "", inicio: "", fin: "" })
                           }>
@@ -412,9 +412,14 @@ const AdminProfesionalesPage = () => {
                     )}
                   </FieldArray>
                 </div>
-                <Button variant="primary" type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Guardando..." : "Guardar"}
-                </Button>
+                <div className="d-flex justify-content-center">
+                  <Button
+                    variant="success"
+                    type="submit"
+                    disabled={isSubmitting}>
+                    Guardar Cambios
+                  </Button>
+                </div>
               </Form>
             )}
           </Formik>
@@ -539,7 +544,7 @@ const AdminProfesionalesPage = () => {
                           ))}
                         <button
                           type="button"
-                          className="btn btn-primary"
+                          className="btn btn-success"
                           onClick={() =>
                             push({ dia: "", inicio: "", fin: "" })
                           }>
@@ -549,9 +554,14 @@ const AdminProfesionalesPage = () => {
                     )}
                   </FieldArray>
                 </div>
-                <Button variant="primary" type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Guardando..." : "Guardar"}
-                </Button>
+                <div className="d-flex justify-content-center">
+                  <Button
+                    variant="success"
+                    type="submit"
+                    disabled={isSubmitting}>
+                    Crear Profesional
+                  </Button>
+                </div>
               </Form>
             )}
           </Formik>
