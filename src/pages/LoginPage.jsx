@@ -56,6 +56,7 @@ const LoginPage = () => {
           }).then(() => {
             setTimeout(() => {
               navigate("/home-adminLog");
+              window.location.reload(); // Recargar la página después de navegar
             }, 2000);
           });
         } else {
@@ -66,6 +67,7 @@ const LoginPage = () => {
           }).then(() => {
             setTimeout(() => {
               navigate("/");
+              window.location.reload(); // Recargar la página después de navegar
             }, 2000);
           });
         }
