@@ -29,6 +29,11 @@
 
 }
 
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
 .NombrePlan {
   text-align: center;
   font-size: 30px;
