@@ -12,7 +12,7 @@ const AdminProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const [editProd, setEditProd] = useState({
     _id: "",
     titulo: "",
@@ -46,7 +46,7 @@ const AdminProductsPage = () => {
     titulo: Yup.string()
       .required("El título es obligatorio")
       .min(3, "El título debe tener al menos 3 caracteres")
-      .max(100, "El título no debe exceder los 100 caracteres"),
+      .max(50, "El título no debe exceder los 50 caracteres"),
     precio: Yup.number()
       .required("El precio es obligatorio")
       .positive("El precio debe ser un valor positivo")
@@ -186,7 +186,7 @@ const AdminProductsPage = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -293,6 +293,8 @@ const AdminProductsPage = () => {
                   <Field
                     type="text"
                     name="titulo"
+                    minLength={3}
+                    maxLength={50}
                     className={`form-control ${
                       errors.titulo && touched.titulo ? "is-invalid" : ""
                     }`}
@@ -327,6 +329,8 @@ const AdminProductsPage = () => {
                   <Field
                     as="textarea"
                     name="descripcion"
+                    minLength={10}
+                    maxLength={500}
                     className={`form-control ${
                       errors.descripcion && touched.descripcion
                         ? "is-invalid"
@@ -410,6 +414,8 @@ const AdminProductsPage = () => {
                   <Field
                     type="text"
                     name="titulo"
+                    minLength={3}
+                    maxLength={50}
                     className={`form-control ${
                       errors.titulo && touched.titulo ? "is-invalid" : ""
                     }`}
@@ -444,6 +450,8 @@ const AdminProductsPage = () => {
                   <Field
                     as="textarea"
                     name="descripcion"
+                    minLength={10}
+                    maxLength={500}
                     className={`form-control ${
                       errors.descripcion && touched.descripcion
                         ? "is-invalid"
