@@ -19,7 +19,7 @@ const AdminPagePacientes = () => {
       const response = await clienteAxios.get("/misDatos", config);
       const pacientesData = response.data.map((paciente) => ({
         ...paciente,
-        ...paciente.mascotas[0], // Asumiendo que cada usuario tiene solo una mascota por ahora
+        ...paciente.mascotas[0], 
       }));
       setData(pacientesData);
     } catch (error) {
@@ -30,17 +30,17 @@ const AdminPagePacientes = () => {
   const handleEdit = (paciente) => {
     setCurrentPaciente(paciente);
     setShow(true);
-    setSelectedMascotaIndex(0); // Reiniciar el índice seleccionado al abrir el modal
+    setSelectedMascotaIndex(0); 
   };
 
   const handleClose = () => {
     setShow(false);
     setCurrentPaciente(null);
-    setSelectedMascotaIndex(0); // Reiniciar el índice seleccionado al cerrar el modal
+    setSelectedMascotaIndex(0); 
   };
 
   const handleSave = async (event) => {
-    event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+    event.preventDefault(); 
 
     try {
       const form = event.target;
@@ -58,7 +58,7 @@ const AdminPagePacientes = () => {
       };
 
       if (currentPaciente) {
-        // Si existe currentPaciente, es una edición
+        
         const mascotas = currentPaciente.mascotas.map((mascota, index) => ({
           ...mascota,
           nombreMascota:
@@ -76,7 +76,7 @@ const AdminPagePacientes = () => {
           mascotas,
         });
       } else {
-        // Si no existe currentPaciente, es un nuevo paciente
+        
         await clienteAxios.post(`/misDatos`, {
           idUser: values.idUser,
           ...values,
@@ -90,7 +90,7 @@ const AdminPagePacientes = () => {
         });
       }
       handleClose();
-      fetchData(); // Actualizar los datos después de guardar
+      fetchData(); 
       Swal.fire("Guardado!", "El paciente ha sido guardado.", "success");
     } catch (error) {
       console.error("Error saving paciente", error);
@@ -99,7 +99,7 @@ const AdminPagePacientes = () => {
   };
 
   const handleSelectMascota = (e) => {
-    const index = parseInt(e.target.value, 10); // Asegúrate de parsear el índice como entero
+    const index = parseInt(e.target.value, 10); 
     setSelectedMascotaIndex(index);
     const mascota = currentPaciente.mascotas[index];
     setCurrentPaciente((prevPaciente) => ({

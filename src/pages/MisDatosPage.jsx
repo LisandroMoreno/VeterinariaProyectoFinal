@@ -26,8 +26,8 @@ const MisDatosPage = () => {
       try {
         const response = await clienteAxios.get(`/misDatos/${misDatos.idUser}`);
         if (response.data) {
-          setMisDatos(response.data); // Actualiza los datos personales
-          setMascotas(response.data.mascotas || []); // Actualiza las mascotas
+          setMisDatos(response.data); 
+          setMascotas(response.data.mascotas || []); 
         }
       } catch (error) {
         console.error("Error al obtener los datos personales:", error);

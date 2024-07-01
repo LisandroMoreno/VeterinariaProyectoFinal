@@ -12,7 +12,7 @@ const AdminProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [loading, setLoading] = useState(true); // Estado para controlar el spinner
+  const [loading, setLoading] = useState(true); 
   const [editProd, setEditProd] = useState({
     _id: "",
     titulo: "",
@@ -186,7 +186,7 @@ const AdminProductsPage = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
-      setLoading(false); // Aquí se actualiza el estado de loading a false
+      setLoading(false); 
     }
   };
 
