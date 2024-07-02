@@ -6,6 +6,7 @@ import { titlePage } from "../helpers/titlePages";
 import { Formik } from "formik";
 import * as yup from "yup";
 import clienteAxios from "../helpers/clienteAxios";
+import Swal from 'sweetalert2';
 
 const validationSchema = yup.object().shape({
   nombre: yup
@@ -34,34 +35,38 @@ const validationSchema = yup.object().shape({
 const Contacto = () => {
   titlePage("Contacto");
 
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
-  const [alertVariant, setAlertVariant] = useState("success");
-
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-   
     try {
       const response = await clienteAxios.post("/contact/send", values);
 
-      if ((response.status = 200)) {
-        setAlertMessage("Consulta enviada correctamente");
-        setAlertVariant("success");
+      if (response.status === 200) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Consulta enviada correctamente',
+          showConfirmButton: false,
+          timer: 3000
+        });
         resetForm();
       } else {
-        setAlertMessage("Error al enviar la consulta");
-        setAlertVariant("danger");
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al enviar la consulta',
+          showConfirmButton: false,
+          timer: 3000
+        });
       }
     } catch (error) {
-      setAlertMessage("Error al enviar la consulta");
-      setAlertVariant("danger");
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al enviar la consulta',
+        showConfirmButton: false,
+        timer: 3000
+      });
     }
 
-    setShowAlert(true);
     setSubmitting(false);
 
-    
     setTimeout(() => {
-      setShowAlert(false);
       window.location.reload();
     }, 3000);
   };
@@ -71,15 +76,6 @@ const Contacto = () => {
       <Row>
         <Col md={6} className="form-container">
           <h2>Contáctanos</h2>
-          {showAlert && (
-            <Alert
-              variant={alertVariant}
-              onClose={() => setShowAlert(false)}
-              dismissible
-            >
-              {alertMessage}
-            </Alert>
-          )}
           <Formik
             initialValues={{ nombre: "", apellido: "", email: "", mensaje: "" }}
             validationSchema={validationSchema}
