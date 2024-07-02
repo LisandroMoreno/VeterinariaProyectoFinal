@@ -12,7 +12,7 @@ const AdminProfesionalesPage = () => {
   const [profesionales, setProfesionales] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const [editProf, setEditProf] = useState({
     _id: "",
     nombre: "",
@@ -196,7 +196,7 @@ const AdminProfesionalesPage = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -293,7 +293,7 @@ const AdminProfesionalesPage = () => {
             initialValues={editProf}
             validationSchema={validationSchema}
             onSubmit={handleClickEdit}>
-            {({ isSubmitting, values }) => (
+            {({ isSubmitting, errors, touched, values }) => (
               <Form encType="multipart/form-data">
                 <div className="form-group mb-2">
                   <label htmlFor="nombre">Nombre</label>
@@ -301,7 +301,9 @@ const AdminProfesionalesPage = () => {
                     type="text"
                     id="nombre"
                     name="nombre"
-                    className="form-control"
+                    className={`form-control ${
+                      errors.nombre && touched.nombre ? "is-invalid" : ""
+                    }`}
                   />
                   <ErrorMessage
                     name="nombre"
@@ -315,7 +317,11 @@ const AdminProfesionalesPage = () => {
                     type="text"
                     id="especialidad"
                     name="especialidad"
-                    className="form-control"
+                    className={`form-control ${
+                      errors.especialidad && touched.especialidad
+                        ? "is-invalid"
+                        : ""
+                    }`}
                   />
                   <ErrorMessage
                     name="especialidad"
@@ -329,7 +335,11 @@ const AdminProfesionalesPage = () => {
                     as="textarea"
                     id="descripcion"
                     name="descripcion"
-                    className="form-control"
+                    className={`form-control ${
+                      errors.descripcion && touched.descripcion
+                        ? "is-invalid"
+                        : ""
+                    }`}
                   />
                   <ErrorMessage
                     name="descripcion"
@@ -343,7 +353,9 @@ const AdminProfesionalesPage = () => {
                     type="file"
                     id="image"
                     name="image"
-                    className="form-control"
+                    className={`form-control ${
+                      errors.image && touched.image ? "is-invalid" : ""
+                    }`}
                     onChange={handleChangeImage}
                   />
                   <ErrorMessage
@@ -365,17 +377,32 @@ const AdminProfesionalesPage = () => {
                               <Field
                                 name={`horario.${index}.dia`}
                                 placeholder="Día"
-                                className="form-control me-2"
+                                className={`form-control me-2 ${
+                                  errors.horario?.[index]?.dia &&
+                                  touched.horario?.[index]?.dia
+                                    ? "is-invalid"
+                                    : ""
+                                }`}
                               />
                               <Field
                                 name={`horario.${index}.inicio`}
                                 placeholder="Inicio"
-                                className="form-control me-2"
+                                className={`form-control me-2 ${
+                                  errors.horario?.[index]?.inicio &&
+                                  touched.horario?.[index]?.inicio
+                                    ? "is-invalid"
+                                    : ""
+                                }`}
                               />
                               <Field
                                 name={`horario.${index}.fin`}
                                 placeholder="Fin"
-                                className="form-control me-2"
+                                className={`form-control me-2 ${
+                                  errors.horario?.[index]?.fin &&
+                                  touched.horario?.[index]?.fin
+                                    ? "is-invalid"
+                                    : ""
+                                }`}
                               />
                               <button
                                 type="button"
@@ -435,7 +462,7 @@ const AdminProfesionalesPage = () => {
             initialValues={newProf}
             validationSchema={validationSchema}
             onSubmit={handleCreateProf}>
-            {({ isSubmitting, values }) => (
+            {({ isSubmitting, errors, touched, values }) => (
               <Form encType="multipart/form-data">
                 <div className="form-group mb-2">
                   <label htmlFor="nombre">Nombre</label>
@@ -443,7 +470,9 @@ const AdminProfesionalesPage = () => {
                     type="text"
                     id="nombre"
                     name="nombre"
-                    className="form-control"
+                    className={`form-control ${
+                      errors.nombre && touched.nombre ? "is-invalid" : ""
+                    }`}
                   />
                   <ErrorMessage
                     name="nombre"
@@ -457,7 +486,11 @@ const AdminProfesionalesPage = () => {
                     type="text"
                     id="especialidad"
                     name="especialidad"
-                    className="form-control"
+                    className={`form-control ${
+                      errors.especialidad && touched.especialidad
+                        ? "is-invalid"
+                        : ""
+                    }`}
                   />
                   <ErrorMessage
                     name="especialidad"
@@ -471,7 +504,11 @@ const AdminProfesionalesPage = () => {
                     as="textarea"
                     id="descripcion"
                     name="descripcion"
-                    className="form-control"
+                    className={`form-control ${
+                      errors.descripcion && touched.descripcion
+                        ? "is-invalid"
+                        : ""
+                    }`}
                   />
                   <ErrorMessage
                     name="descripcion"
@@ -485,7 +522,9 @@ const AdminProfesionalesPage = () => {
                     type="file"
                     id="image"
                     name="image"
-                    className="form-control"
+                    className={`form-control ${
+                      errors.image && touched.image ? "is-invalid" : ""
+                    }`}
                     onChange={handleChangeNewImage}
                   />
                   <ErrorMessage
@@ -507,17 +546,32 @@ const AdminProfesionalesPage = () => {
                               <Field
                                 name={`horario.${index}.dia`}
                                 placeholder="Día"
-                                className="form-control me-2"
+                                className={`form-control me-2 ${
+                                  errors.horario?.[index]?.dia &&
+                                  touched.horario?.[index]?.dia
+                                    ? "is-invalid"
+                                    : ""
+                                }`}
                               />
                               <Field
                                 name={`horario.${index}.inicio`}
                                 placeholder="Inicio"
-                                className="form-control me-2"
+                                className={`form-control me-2 ${
+                                  errors.horario?.[index]?.inicio &&
+                                  touched.horario?.[index]?.inicio
+                                    ? "is-invalid"
+                                    : ""
+                                }`}
                               />
                               <Field
                                 name={`horario.${index}.fin`}
                                 placeholder="Fin"
-                                className="form-control me-2"
+                                className={`form-control me-2 ${
+                                  errors.horario?.[index]?.fin &&
+                                  touched.horario?.[index]?.fin
+                                    ? "is-invalid"
+                                    : ""
+                                }`}
                               />
                               <button
                                 type="button"
