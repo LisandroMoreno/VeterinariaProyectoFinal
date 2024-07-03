@@ -46,7 +46,8 @@ const AdminProfesionalesPage = () => {
     nombre: Yup.string()
       .required("El nombre es obligatorio")
       .min(3, "El nombre debe tener al menos 3 caracteres")
-      .max(100, "El nombre no debe exceder los 100 caracteres"),
+      .max(100, "El nombre no debe exceder los 100 caracteres")
+      .matches(/^[a-zA-Z]+$/, "El nombre solo puede contener letras."),
     especialidad: Yup.string()
       .required("La especialidad es obligatoria")
       .min(3, "La especialidad debe tener al menos 3 caracteres")
@@ -90,7 +91,7 @@ const AdminProfesionalesPage = () => {
         if (addImageProfesional.status === 200) {
           handleCloseEditModal();
           Swal.fire({
-            title: "Profesional actualizado. IMAGEN",
+            title: "Profesional actualizado.",
             icon: "success",
           }).then(() => {
             setTimeout(() => {
@@ -101,7 +102,7 @@ const AdminProfesionalesPage = () => {
       } else {
         handleCloseEditModal();
         Swal.fire({
-          title: "Profesional actualizado. SIN IMAGEN",
+          title: "Profesional actualizado.",
           icon: "success",
         }).then(() => {
           setTimeout(() => {
@@ -155,7 +156,7 @@ const AdminProfesionalesPage = () => {
         if (addImageProfesional.status === 200) {
           handleCloseCreateModal();
           Swal.fire({
-            title: "Profesional creado. IMAGEN",
+            title: "Profesional creado.",
             icon: "success",
           }).then(() => {
             setTimeout(() => {
@@ -166,7 +167,7 @@ const AdminProfesionalesPage = () => {
       } else {
         handleCloseCreateModal();
         Swal.fire({
-          title: "Profesional creado. SIN IMAGEN",
+          title: "Profesional creado.",
           icon: "success",
         }).then(() => {
           setTimeout(() => {

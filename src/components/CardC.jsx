@@ -66,7 +66,7 @@ const CardC = ({
         <Card.Text>{descripcion}</Card.Text>
         <Card.Text>{precio}</Card.Text>
         <div>
-          <Link to={`/productos/${idProd}`} className="btn btn-card mt-2">
+          <Link to={`/productos/${idProd}`} className="btn btn-card">
             Ver más
           </Link>
           {isDetalleFavorito && (
