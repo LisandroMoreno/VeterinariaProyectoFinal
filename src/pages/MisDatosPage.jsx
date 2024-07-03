@@ -28,11 +28,11 @@ const MisDatosPage = () => {
           config
         );
         if (response.data) {
-          setMisDatos({
-            ...misDatos,
+          setMisDatos((prevMisDatos) => ({
+            ...prevMisDatos,
             datosPersonales: response.data.datosPersonales,
             mascotas: response.data.mascotas || [],
-          });
+          }));
         }
       } catch (error) {
         console.error("Error al obtener los datos personales:", error);
@@ -44,13 +44,13 @@ const MisDatosPage = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setMisDatos({
-      ...misDatos,
+    setMisDatos((prevMisDatos) => ({
+      ...prevMisDatos,
       datosPersonales: {
-        ...misDatos.datosPersonales,
+        ...prevMisDatos.datosPersonales,
         [name]: value,
       },
-    });
+    }));
   };
 
   const handleMascotaChange = (index, e) => {
@@ -101,6 +101,7 @@ const MisDatosPage = () => {
               `/misDatos/mascota/${mascota._id}`,
               config
             );
+            console.log("Mascota eliminada:", response.data);
 
             const newMascotas = [...misDatos.mascotas];
             newMascotas.splice(index, 1);
@@ -123,16 +124,14 @@ const MisDatosPage = () => {
   const handleSubmitMisDatos = async (e) => {
     e.preventDefault();
     try {
-
       const response = await clienteAxios.put(
         `/misDatos/${misDatos.idUser}`,
-
         {
           ...misDatos,
         },
         config
       );
-
+      console.log("Datos personales guardados:", response.data);
 
       Swal.fire({
         icon: "success",
@@ -153,7 +152,6 @@ const MisDatosPage = () => {
   const handleSubmitMascota = async (index, e) => {
     e.preventDefault();
     try {
-
       const response = await clienteAxios.post(
         `/misDatos/mascota`,
         {
@@ -162,7 +160,7 @@ const MisDatosPage = () => {
         },
         config
       );
- 
+      console.log("Datos de la mascota guardados:", response.data);
 
       const updatedMascotas = [...misDatos.mascotas];
       updatedMascotas[index] = response.data;
@@ -220,7 +218,7 @@ const MisDatosPage = () => {
                 type="text"
                 name="nombre"
                 placeholder="Nombre"
-                value={misDatos.datosPersonales.nombre}
+                value={misDatos.datosPersonales?.nombre || ""}
                 onChange={handleInputChange}
                 className="form-control mb-2"
               />
@@ -228,7 +226,7 @@ const MisDatosPage = () => {
                 type="text"
                 name="apellido"
                 placeholder="Apellido"
-                value={misDatos.datosPersonales.apellido}
+                value={misDatos.datosPersonales?.apellido || ""}
                 onChange={handleInputChange}
                 className="form-control mb-2"
               />
@@ -236,7 +234,7 @@ const MisDatosPage = () => {
                 type="email"
                 name="mail"
                 placeholder="Email"
-                value={misDatos.datosPersonales.mail}
+                value={misDatos.datosPersonales?.mail || ""}
                 onChange={handleInputChange}
                 className="form-control mb-2"
               />
@@ -244,7 +242,7 @@ const MisDatosPage = () => {
                 type="text"
                 name="telefono"
                 placeholder="Teléfono"
-                value={misDatos.datosPersonales.telefono}
+                value={misDatos.datosPersonales?.telefono || ""}
                 onChange={handleInputChange}
                 className="form-control mb-2"
               />
@@ -258,7 +256,8 @@ const MisDatosPage = () => {
             <div key={index} className="col-12 col-md-6">
               <form
                 onSubmit={(e) => handleSubmitMascota(index, e)}
-                className="pet-form">
+                className="pet-form"
+              >
                 <div className="d-flex justify-content-between align-items-center">
                   <h2 className="mb-4">Datos de tu Mascota</h2>
                   <div className="text-end mb-4">
@@ -280,7 +279,8 @@ const MisDatosPage = () => {
                   name="especie"
                   value={mascota.especie}
                   onChange={(e) => handleMascotaChange(index, e)}
-                  className="form-select mb-2">
+                  className="form-select mb-2"
+                >
                   <option value="">Selecciona una especie</option>
                   <option value="Perro">Perro</option>
                   <option value="Gato">Gato</option>
@@ -289,7 +289,8 @@ const MisDatosPage = () => {
                   name="raza"
                   value={mascota.raza}
                   onChange={(e) => handleMascotaChange(index, e)}
-                  className="form-select mb-2">
+                  className="form-select mb-2"
+                >
                   <option value="">Selecciona una raza</option>
                   {getRazasPorEspecie(mascota.especie).map((raza, idx) => (
                     <option key={idx} value={raza}>
