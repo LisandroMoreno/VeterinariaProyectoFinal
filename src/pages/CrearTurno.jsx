@@ -126,8 +126,7 @@ const CrearTurno = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-        >
+          onSubmit={handleSubmit}>
           {({ setFieldValue, values, errors, touched }) => (
             <Form className="formulario">
               <div className="form-group">
@@ -139,8 +138,7 @@ const CrearTurno = () => {
                     touched.detalleCita && errors.detalleCita
                       ? "is-invalid"
                       : ""
-                  }`}
-                >
+                  }`}>
                   <option value="" disabled>
                     Seleccione la consulta
                   </option>
@@ -180,8 +178,7 @@ const CrearTurno = () => {
                     );
                     setFotoVet(selectedVet?.foto || "");
                     actualizarOpcionesDisponibles(values.fecha, value);
-                  }}
-                >
+                  }}>
                   <option value="" disabled>
                     Seleccione el veterinario/a
                   </option>
@@ -244,8 +241,7 @@ const CrearTurno = () => {
                   name="hora"
                   className={`form-control ${
                     touched.hora && errors.hora ? "is-invalid" : ""
-                  }`}
-                >
+                  }`}>
                   <option value="" disabled>
                     Seleccione la hora
                   </option>
@@ -262,7 +258,9 @@ const CrearTurno = () => {
                 />
               </div>
 
-              <button type="submit">Agendar</button>
+              <div className="d-flex justify-content-center">
+                <button type="submit">Agendar</button>
+              </div>
             </Form>
           )}
         </Formik>

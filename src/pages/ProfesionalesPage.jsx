@@ -94,8 +94,7 @@ const ProfesionalesPage = () => {
           {profesionales.map((profesional) => (
             <div
               key={profesional._id}
-              className="profesional col-lg-6 d-flex flex-column align-items-center"
-            >
+              className="profesional col-lg-6 d-flex flex-column align-items-center">
               <div className="Circulo">
                 <img
                   src={profesional.foto}
@@ -175,8 +174,7 @@ const ProfesionalesPage = () => {
                 key={index + 1}
                 active={index + 1 === currentPage}
                 onClick={() => getComentarios(index + 1)}
-                linkClassName="custom-pagination-item"
-              >
+                linkClassName="custom-pagination-item">
                 {index + 1}
               </Pagination.Item>
             ))}
@@ -227,12 +225,11 @@ const ProfesionalesPage = () => {
                     </div>
                   ) : null}
                 </Form.Group>
-                <div className="d-flex justify-content-center">
+                <div className="d-flex justify-content-center mt-3">
                   <Button
                     variant="primary"
                     className="button-custom"
-                    type="submit"
-                  >
+                    type="submit">
                     Enviar comentario
                   </Button>
                 </div>
@@ -251,4 +248,3 @@ const ProfesionalesPage = () => {
 };
 
 export default ProfesionalesPage;
-
