@@ -3,8 +3,10 @@ import { Button, Modal, Form } from "react-bootstrap";
 import Swal from "sweetalert2";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 import TablaC from "../components/TablaC";
+import { titlePage } from "../helpers/titlePages";
 
 const AdminPagePacientes = () => {
+  titlePage("Administracion Pacientes");
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [currentPaciente, setCurrentPaciente] = useState(null);
