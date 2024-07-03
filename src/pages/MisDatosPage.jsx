@@ -11,23 +11,25 @@ const MisDatosPage = () => {
   const id = JSON.parse(sessionStorage.getItem("id"));
   const [misDatos, setMisDatos] = useState({
     idUser: id,
-    nombre: "",
-    apellido: "",
-    mail: "",
-    telefono: "",
+    datosPersonales: {
+      nombre: "",
+      apellido: "",
+      mail: "",
+      telefono: "",
+    },
+    mascotas: [],
   });
-
-  const [mascotas, setMascotas] = useState([
-    { nombreMascota: "", especie: "", raza: "" },
-  ]);
 
   useEffect(() => {
     const fetchDatos = async () => {
       try {
         const response = await clienteAxios.get(`/misDatos/${misDatos.idUser}`);
         if (response.data) {
-          setMisDatos(response.data); 
-          setMascotas(response.data.mascotas || []); 
+          setMisDatos({
+            ...misDatos,
+            datosPersonales: response.data.datosPersonales,
+            mascotas: response.data.mascotas || [],
+          });
         }
       } catch (error) {
         console.error("Error al obtener los datos personales:", error);
@@ -41,19 +43,31 @@ const MisDatosPage = () => {
     const { name, value } = e.target;
     setMisDatos({
       ...misDatos,
-      [name]: value,
+      datosPersonales: {
+        ...misDatos.datosPersonales,
+        [name]: value,
+      },
     });
   };
 
   const handleMascotaChange = (index, e) => {
     const { name, value } = e.target;
-    const newMascotas = [...mascotas];
+    const newMascotas = [...misDatos.mascotas];
     newMascotas[index][name] = value;
-    setMascotas(newMascotas);
+    setMisDatos({
+      ...misDatos,
+      mascotas: newMascotas,
+    });
   };
 
   const handleAddMascota = () => {
-    setMascotas([...mascotas, { nombreMascota: "", especie: "", raza: "" }]);
+    setMisDatos({
+      ...misDatos,
+      mascotas: [
+        ...misDatos.mascotas,
+        { nombreMascota: "", especie: "", raza: "" },
+      ],
+    });
   };
 
   const handleDeleteMascota = (index) => {
@@ -69,11 +83,11 @@ const MisDatosPage = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const mascota = mascotas[index];
+          const mascota = misDatos.mascotas[index];
           if (!mascota._id) {
-            const newMascotas = [...mascotas];
+            const newMascotas = [...misDatos.mascotas];
             newMascotas.splice(index, 1);
-            setMascotas(newMascotas);
+            setMisDatos({ ...misDatos, mascotas: newMascotas });
             Swal.fire(
               "Eliminado",
               "El formulario ha sido eliminado correctamente",
@@ -85,9 +99,9 @@ const MisDatosPage = () => {
             );
             console.log("Mascota eliminada:", response.data);
 
-            const newMascotas = [...mascotas];
+            const newMascotas = [...misDatos.mascotas];
             newMascotas.splice(index, 1);
-            setMascotas(newMascotas);
+            setMisDatos({ ...misDatos, mascotas: newMascotas });
 
             Swal.fire(
               "¡Eliminado!",
@@ -132,13 +146,13 @@ const MisDatosPage = () => {
     try {
       const response = await clienteAxios.post(`/misDatos/mascota`, {
         idUser: misDatos.idUser,
-        mascota: mascotas[index],
+        mascota: misDatos.mascotas[index],
       });
       console.log("Datos de la mascota guardados:", response.data);
 
-      const updatedMascotas = [...mascotas];
+      const updatedMascotas = [...misDatos.mascotas];
       updatedMascotas[index] = response.data;
-      setMascotas(updatedMascotas);
+      setMisDatos({ ...misDatos, mascotas: updatedMascotas });
 
       Swal.fire({
         icon: "success",
@@ -192,7 +206,7 @@ const MisDatosPage = () => {
                 type="text"
                 name="nombre"
                 placeholder="Nombre"
-                value={misDatos.nombre}
+                value={misDatos.datosPersonales.nombre}
                 onChange={handleInputChange}
                 className="form-control mb-2"
               />
@@ -200,7 +214,7 @@ const MisDatosPage = () => {
                 type="text"
                 name="apellido"
                 placeholder="Apellido"
-                value={misDatos.apellido}
+                value={misDatos.datosPersonales.apellido}
                 onChange={handleInputChange}
                 className="form-control mb-2"
               />
@@ -208,7 +222,7 @@ const MisDatosPage = () => {
                 type="email"
                 name="mail"
                 placeholder="Email"
-                value={misDatos.mail}
+                value={misDatos.datosPersonales.mail}
                 onChange={handleInputChange}
                 className="form-control mb-2"
               />
@@ -216,7 +230,7 @@ const MisDatosPage = () => {
                 type="text"
                 name="telefono"
                 placeholder="Teléfono"
-                value={misDatos.telefono}
+                value={misDatos.datosPersonales.telefono}
                 onChange={handleInputChange}
                 className="form-control mb-2"
               />
@@ -226,7 +240,7 @@ const MisDatosPage = () => {
             </form>
           </div>
 
-          {mascotas.map((mascota, index) => (
+          {misDatos.mascotas.map((mascota, index) => (
             <div key={index} className="col-12 col-md-6">
               <form
                 onSubmit={(e) => handleSubmitMascota(index, e)}
@@ -255,9 +269,9 @@ const MisDatosPage = () => {
                   onChange={(e) => handleMascotaChange(index, e)}
                   className="form-select mb-2"
                 >
-                  <option value="">Seleccionar Especie</option>
-                  <option value="Gato">Gato</option>
+                  <option value="">Selecciona una especie</option>
                   <option value="Perro">Perro</option>
+                  <option value="Gato">Gato</option>
                 </select>
                 <select
                   name="raza"
@@ -265,18 +279,16 @@ const MisDatosPage = () => {
                   onChange={(e) => handleMascotaChange(index, e)}
                   className="form-select mb-2"
                 >
-                  <option value="">Seleccionar Raza</option>
-                  {getRazasPorEspecie(mascota.especie).map((raza) => (
-                    <option key={raza} value={raza}>
+                  <option value="">Selecciona una raza</option>
+                  {getRazasPorEspecie(mascota.especie).map((raza, idx) => (
+                    <option key={idx} value={raza}>
                       {raza}
                     </option>
                   ))}
                 </select>
-                <div>
-                  <button type="submit" className="btn-customMisDatos mb-2">
-                    Guardar Mascota
-                  </button>
-                </div>
+                <button type="submit" className="btn-customMisDatos mb-2">
+                  Guardar Cambios
+                </button>
               </form>
             </div>
           ))}
