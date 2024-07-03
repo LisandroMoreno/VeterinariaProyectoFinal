@@ -97,7 +97,6 @@ const MisDatosPage = () => {
             const response = await clienteAxios.delete(
               `/misDatos/mascota/${mascota._id}`
             );
-            console.log("Mascota eliminada:", response.data);
 
             const newMascotas = [...misDatos.mascotas];
             newMascotas.splice(index, 1);
@@ -123,7 +122,6 @@ const MisDatosPage = () => {
       const response = await clienteAxios.put(`/misDatos/${misDatos.idUser}`, {
         ...misDatos,
       });
-      console.log("Datos personales guardados:", response.data);
 
       Swal.fire({
         icon: "success",
@@ -148,7 +146,6 @@ const MisDatosPage = () => {
         idUser: misDatos.idUser,
         mascota: misDatos.mascotas[index],
       });
-      console.log("Datos de la mascota guardados:", response.data);
 
       const updatedMascotas = [...misDatos.mascotas];
       updatedMascotas[index] = response.data;
@@ -244,8 +241,7 @@ const MisDatosPage = () => {
             <div key={index} className="col-12 col-md-6">
               <form
                 onSubmit={(e) => handleSubmitMascota(index, e)}
-                className="pet-form"
-              >
+                className="pet-form">
                 <div className="d-flex justify-content-between align-items-center">
                   <h2 className="mb-4">Datos de tu Mascota</h2>
                   <div className="text-end mb-4">
@@ -267,8 +263,7 @@ const MisDatosPage = () => {
                   name="especie"
                   value={mascota.especie}
                   onChange={(e) => handleMascotaChange(index, e)}
-                  className="form-select mb-2"
-                >
+                  className="form-select mb-2">
                   <option value="">Selecciona una especie</option>
                   <option value="Perro">Perro</option>
                   <option value="Gato">Gato</option>
@@ -277,8 +272,7 @@ const MisDatosPage = () => {
                   name="raza"
                   value={mascota.raza}
                   onChange={(e) => handleMascotaChange(index, e)}
-                  className="form-select mb-2"
-                >
+                  className="form-select mb-2">
                   <option value="">Selecciona una raza</option>
                   {getRazasPorEspecie(mascota.especie).map((raza, idx) => (
                     <option key={idx} value={raza}>
