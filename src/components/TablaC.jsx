@@ -14,8 +14,8 @@ const TablaC = ({
   const location = useLocation();
   const isProductosPage = location.pathname === "/productos";
   const isAdminTurnosPage = location.pathname === "/AdminTurnos";
-  const isAdminUsersPage = location.pathname === "/usuarios"; // Identifica AdminUsersPage
-  const isAdminProfesionalesPage = location.pathname === "/profesionalesAdmin"; // Nueva variable para identificar AdminProfesionalesPage
+  const isAdminUsersPage = location.pathname === "/usuarios";
+  const isAdminProfesionalesPage = location.pathname === "/profesionalesAdmin";
   const isAdminAdminPacientes = location.pathname === "/adminPacientes";
   const renderColumns = () => (
     <thead>
@@ -55,8 +55,7 @@ const TablaC = ({
                   <Button
                     variant="danger"
                     onClick={() => handleDelete(row._id)}
-                    className="ms-2"
-                  >
+                    className="ms-2">
                     <i className="fa-solid fa-trash"></i>
                   </Button>
                 </>
@@ -75,16 +74,14 @@ const TablaC = ({
                     className="mx-2"
                     variant={row.deleted ? "success" : "dark"}
                     onClick={() => handleClickStatus(row._id)}
-                    disabled={row.role === "admin" && true}
-                  >
+                    disabled={row.role === "admin" && true}>
                     {row.deleted ? "Habilitar" : "Deshabilitar"}
                   </Button>
 
                   <Button
                     variant="danger"
                     onClick={() => handleDelete(row._id)}
-                    disabled={row.role === "admin" && true}
-                  >
+                    disabled={row.role === "admin" && true}>
                     <i className="fa-solid fa-trash"></i>
                   </Button>
                 </>
@@ -97,8 +94,7 @@ const TablaC = ({
                   <Button
                     variant="danger"
                     onClick={() => handleDelete(row._id)}
-                    className="ms-2"
-                  >
+                    className="ms-2">
                     <i className="fa-solid fa-trash"></i>
                   </Button>
                 </>
@@ -108,7 +104,6 @@ const TablaC = ({
                   <Button variant="warning" onClick={() => handleEdit(row)}>
                     Editar
                   </Button>
-                  
                 </>
               )}
             </td>
@@ -145,7 +140,7 @@ TablaC.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleDelete: PropTypes.func,
   handleEdit: PropTypes.func,
-  handleClickStatus: PropTypes.func, // Nueva función para cambiar estado de usuario
+  handleClickStatus: PropTypes.func,
   getRoleLabel: PropTypes.func,
 };
 
