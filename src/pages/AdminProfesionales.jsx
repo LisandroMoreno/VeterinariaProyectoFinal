@@ -90,7 +90,7 @@ const AdminProfesionalesPage = () => {
         if (addImageProfesional.status === 200) {
           handleCloseEditModal();
           Swal.fire({
-            title: "Profesional actualizado. IMAGEN",
+            title: "Profesional actualizado.",
             icon: "success",
           }).then(() => {
             setTimeout(() => {
@@ -101,7 +101,7 @@ const AdminProfesionalesPage = () => {
       } else {
         handleCloseEditModal();
         Swal.fire({
-          title: "Profesional actualizado. SIN IMAGEN",
+          title: "Profesional actualizado.",
           icon: "success",
         }).then(() => {
           setTimeout(() => {
@@ -155,7 +155,7 @@ const AdminProfesionalesPage = () => {
         if (addImageProfesional.status === 200) {
           handleCloseCreateModal();
           Swal.fire({
-            title: "Profesional creado. IMAGEN",
+            title: "Profesional creado.",
             icon: "success",
           }).then(() => {
             setTimeout(() => {
@@ -166,7 +166,7 @@ const AdminProfesionalesPage = () => {
       } else {
         handleCloseCreateModal();
         Swal.fire({
-          title: "Profesional creado. SIN IMAGEN",
+          title: "Profesional creado.",
           icon: "success",
         }).then(() => {
           setTimeout(() => {

@@ -84,7 +84,7 @@ const AdminProductsPage = () => {
         if (addImageProduct.status === 200) {
           handleCloseEditModal();
           Swal.fire({
-            title: "Producto actualizado. IMAGEN",
+            title: "Producto actualizado.",
             icon: "success",
           }).then(() => {
             setTimeout(() => {
@@ -95,7 +95,7 @@ const AdminProductsPage = () => {
       } else {
         handleCloseEditModal();
         Swal.fire({
-          title: "Producto actualizado. SIN IMAGEN",
+          title: "Producto actualizado.",
           icon: "success",
         }).then(() => {
           setTimeout(() => {
@@ -146,7 +146,7 @@ const AdminProductsPage = () => {
         if (addImageProduct.status === 200) {
           handleCloseCreateModal();
           Swal.fire({
-            title: "Producto creado. IMAGEN",
+            title: "Producto creado.",
             icon: "success",
           }).then(() => {
             setTimeout(() => {
@@ -157,7 +157,7 @@ const AdminProductsPage = () => {
       } else {
         handleCloseCreateModal();
         Swal.fire({
-          title: "Producto creado. SIN IMAGEN",
+          title: "Producto creado.",
           icon: "success",
         }).then(() => {
           setTimeout(() => {
