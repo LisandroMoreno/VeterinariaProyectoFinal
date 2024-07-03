@@ -3,23 +3,49 @@ import { Button, Modal, Form } from "react-bootstrap";
 import Swal from "sweetalert2";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 import TablaC from "../components/TablaC";
+import { titlePage } from "../helpers/titlePages";
 
 const AdminPagePacientes = () => {
+  titlePage("Administracion Pacientes");
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [currentPaciente, setCurrentPaciente] = useState(null);
   const [selectedMascotaIndex, setSelectedMascotaIndex] = useState(0);
+  const [razasPorEspecie, setRazasPorEspecie] = useState([]);
 
   useEffect(() => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (currentPaciente && currentPaciente.mascotas) {
+      setCurrentPaciente((prevPaciente) => ({
+        ...prevPaciente,
+        ...currentPaciente.mascotas[selectedMascotaIndex],
+      }));
+    }
+  }, [selectedMascotaIndex]);
+
+  useEffect(() => {
+    if (currentPaciente) {
+      setRazasPorEspecie(
+        getRazasPorEspecie(
+          currentPaciente.mascotas[selectedMascotaIndex]?.especie || ""
+        )
+      );
+    }
+  }, [currentPaciente, selectedMascotaIndex]);
+
   const fetchData = async () => {
     try {
       const response = await clienteAxios.get("/misDatos", config);
       const pacientesData = response.data.map((paciente) => ({
-        ...paciente,
-        ...paciente.mascotas[0], 
+        ...paciente.datosPersonales,
+        idUser: paciente.idUser,
+        mascotas: paciente.mascotas || [],
+        nombreMascota: paciente.mascotas[0]?.nombreMascota || "",
+        especie: paciente.mascotas[0]?.especie || "",
+        raza: paciente.mascotas[0]?.raza || "",
       }));
       setData(pacientesData);
     } catch (error) {
@@ -30,67 +56,48 @@ const AdminPagePacientes = () => {
   const handleEdit = (paciente) => {
     setCurrentPaciente(paciente);
     setShow(true);
-    setSelectedMascotaIndex(0); 
+    setSelectedMascotaIndex(0); // Inicia editando la primera mascota por defecto
+    setRazasPorEspecie(getRazasPorEspecie(paciente.mascotas[0]?.especie || ""));
   };
 
   const handleClose = () => {
     setShow(false);
     setCurrentPaciente(null);
-    setSelectedMascotaIndex(0); 
+    setSelectedMascotaIndex(0);
   };
 
   const handleSave = async (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
 
     try {
       const form = event.target;
       const formData = new FormData(form);
 
-      const values = {
-        idUser: formData.get("idUser"),
+      const datosPersonales = {
         nombre: formData.get("nombre"),
         apellido: formData.get("apellido"),
         mail: formData.get("mail"),
         telefono: formData.get("telefono"),
+      };
+
+      const mascota = {
+        _id: currentPaciente.mascotas[selectedMascotaIndex]?._id,
         nombreMascota: formData.get("nombreMascota"),
         especie: formData.get("especie"),
         raza: formData.get("raza"),
       };
 
-      if (currentPaciente) {
-        
-        const mascotas = currentPaciente.mascotas.map((mascota, index) => ({
-          ...mascota,
-          nombreMascota:
-            index === selectedMascotaIndex
-              ? values.nombreMascota
-              : mascota.nombreMascota,
-          especie:
-            index === selectedMascotaIndex ? values.especie : mascota.especie,
-          raza: index === selectedMascotaIndex ? values.raza : mascota.raza,
-        }));
+      await clienteAxios.put(
+        `/misDatos/${currentPaciente.idUser}/modificar`,
+        {
+          datosPersonales,
+          mascota,
+        },
+        config
+      );
 
-        await clienteAxios.put(`/misDatos/${currentPaciente._id}/modificar`, {
-          idUser: currentPaciente.idUser,
-          ...currentPaciente,
-          mascotas,
-        });
-      } else {
-        
-        await clienteAxios.post(`/misDatos`, {
-          idUser: values.idUser,
-          ...values,
-          mascotas: [
-            {
-              nombreMascota: values.nombreMascota,
-              especie: values.especie,
-              raza: values.raza,
-            },
-          ],
-        });
-      }
       handleClose();
-      fetchData(); 
+      fetchData();
       Swal.fire("Guardado!", "El paciente ha sido guardado.", "success");
     } catch (error) {
       console.error("Error saving paciente", error);
@@ -99,15 +106,40 @@ const AdminPagePacientes = () => {
   };
 
   const handleSelectMascota = (e) => {
-    const index = parseInt(e.target.value, 10); 
+    const index = parseInt(e.target.value, 10);
     setSelectedMascotaIndex(index);
-    const mascota = currentPaciente.mascotas[index];
+    setRazasPorEspecie(
+      getRazasPorEspecie(currentPaciente.mascotas[index]?.especie || "")
+    );
+  };
+
+  const handleSelectEspecie = (e) => {
+    const especieSeleccionada = e.target.value;
     setCurrentPaciente((prevPaciente) => ({
       ...prevPaciente,
-      nombreMascota: mascota.nombreMascota,
-      especie: mascota.especie,
-      raza: mascota.raza,
+      mascotas: prevPaciente.mascotas.map((mascota, idx) =>
+        idx === selectedMascotaIndex
+          ? { ...mascota, especie: especieSeleccionada, raza: "" } // Reinicia la raza al cambiar especie
+          : mascota
+      ),
     }));
+    setRazasPorEspecie(getRazasPorEspecie(especieSeleccionada));
+  };
+
+  const getRazasPorEspecie = (especie) => {
+    const razasGato = ["Mestizo", "Persa", "Siamés", "Maine Coon", "Bengala"];
+    const razasPerro = [
+      "Mestizo",
+      "Labrador",
+      "Pastor Alemán",
+      "Bulldog",
+      "Beagle",
+    ];
+    return especie === "Gato"
+      ? razasGato
+      : especie === "Perro"
+      ? razasPerro
+      : [];
   };
 
   const columns = [
@@ -123,8 +155,11 @@ const AdminPagePacientes = () => {
 
   return (
     <div>
-      <h1>Administrar Pacientes</h1>
-      <TablaC columns={columns} data={data} handleEdit={handleEdit} />
+      <h2 className="mt-3">Administrar Pacientes</h2>
+      <div className="table-responsive w-100 mt-5">
+        <TablaC columns={columns} data={data} handleEdit={handleEdit} />
+      </div>
+
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>
@@ -137,7 +172,7 @@ const AdminPagePacientes = () => {
               <Form.Control
                 type="hidden"
                 name="idUser"
-                value={currentPaciente ? currentPaciente.idUser : ""}
+                defaultValue={currentPaciente ? currentPaciente.idUser : ""}
               />
             </Form.Group>
             <Form.Group controlId="nombre">
@@ -181,17 +216,15 @@ const AdminPagePacientes = () => {
               />
             </Form.Group>
             {currentPaciente && currentPaciente.mascotas.length > 1 && (
-              <Form.Group controlId="mascotaId">
+              <Form.Group controlId="selectMascota">
                 <Form.Label>Seleccionar Mascota</Form.Label>
                 <Form.Control
                   as="select"
-                  name="mascotaId"
-                  onChange={handleSelectMascota}
                   value={selectedMascotaIndex}
-                  required
+                  onChange={handleSelectMascota}
                 >
                   {currentPaciente.mascotas.map((mascota, index) => (
-                    <option key={mascota._id} value={index}>
+                    <option key={index} value={index}>
                       {mascota.nombreMascota}
                     </option>
                   ))}
@@ -204,11 +237,20 @@ const AdminPagePacientes = () => {
                 type="text"
                 name="nombreMascota"
                 placeholder="Nombre Mascota"
-                value={currentPaciente ? currentPaciente.nombreMascota : ""}
+                value={
+                  currentPaciente
+                    ? currentPaciente.mascotas[selectedMascotaIndex]
+                        ?.nombreMascota
+                    : ""
+                }
                 onChange={(e) =>
                   setCurrentPaciente({
                     ...currentPaciente,
-                    nombreMascota: e.target.value,
+                    mascotas: currentPaciente.mascotas.map((mascota, idx) =>
+                      idx === selectedMascotaIndex
+                        ? { ...mascota, nombreMascota: e.target.value }
+                        : mascota
+                    ),
                   })
                 }
                 required
@@ -217,41 +259,52 @@ const AdminPagePacientes = () => {
             <Form.Group controlId="especie">
               <Form.Label>Especie</Form.Label>
               <Form.Control
-                type="text"
+                as="select"
                 name="especie"
-                placeholder="Especie"
-                value={currentPaciente ? currentPaciente.especie : ""}
-                onChange={(e) =>
-                  setCurrentPaciente({
-                    ...currentPaciente,
-                    especie: e.target.value,
-                  })
+                value={
+                  currentPaciente?.mascotas[selectedMascotaIndex]?.especie || ""
                 }
+                onChange={handleSelectEspecie}
                 required
-              />
+              >
+                <option value="">Seleccionar Especie</option>
+                <option value="Gato">Gato</option>
+                <option value="Perro">Perro</option>
+              </Form.Control>
             </Form.Group>
             <Form.Group controlId="raza">
               <Form.Label>Raza</Form.Label>
               <Form.Control
-                type="text"
+                as="select"
                 name="raza"
-                placeholder="Raza"
-                value={currentPaciente ? currentPaciente.raza : ""}
+                value={
+                  currentPaciente?.mascotas[selectedMascotaIndex]?.raza || ""
+                }
                 onChange={(e) =>
-                  setCurrentPaciente({
-                    ...currentPaciente,
-                    raza: e.target.value,
-                  })
+                  setCurrentPaciente((prevPaciente) => ({
+                    ...prevPaciente,
+                    mascotas: prevPaciente.mascotas.map((mascota, idx) =>
+                      idx === selectedMascotaIndex
+                        ? { ...mascota, raza: e.target.value }
+                        : mascota
+                    ),
+                  }))
                 }
                 required
-              />
+              >
+                <option value="">Seleccionar Raza</option>
+                {razasPorEspecie.map((raza, index) => (
+                  <option key={index} value={raza}>
+                    {raza}
+                  </option>
+                ))}
+              </Form.Control>
             </Form.Group>
-            <Button variant="secondary" onClick={handleClose}>
-              Cancelar
-            </Button>
-            <Button variant="primary" type="submit">
-              Guardar
-            </Button>
+            <div className="mt-5">
+              <Button variant="primary" type="submit" className="ml-2">
+                Guardar
+              </Button>
+            </div>
           </Form>
         </Modal.Body>
       </Modal>
