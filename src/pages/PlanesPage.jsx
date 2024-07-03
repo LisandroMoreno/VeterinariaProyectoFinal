@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Swal from "sweetalert2";
@@ -7,6 +8,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
 import ImageC from "../components/ImageC";
+import clienteAxios from "../helpers/clienteAxios";
 
 titlePage("Planes");
 
@@ -34,15 +36,9 @@ const PlanesPage = () => {
 
   const handleSubmit = async (values, actions) => {
     try {
-      const response = await fetch("http://localhost:3001/api/planes/send", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
+      const response = await clienteAxios.post('planes/send', values);
 
-      if (response.ok) {
+      if (response.status === 200) {
         Swal.fire({
           icon: "success",
           title: "Consulta enviada correctamente",
