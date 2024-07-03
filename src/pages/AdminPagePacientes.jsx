@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import Swal from "sweetalert2";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 import TablaC from "../components/TablaC";
 import { titlePage } from "../helpers/titlePages";
@@ -56,8 +58,17 @@ const AdminPagePacientes = () => {
   const handleEdit = (paciente) => {
     setCurrentPaciente(paciente);
     setShow(true);
-    setSelectedMascotaIndex(0); // Inicia editando la primera mascota por defecto
+    setSelectedMascotaIndex(0);
     setRazasPorEspecie(getRazasPorEspecie(paciente.mascotas[0]?.especie || ""));
+    formik.setValues({
+      nombre: paciente.nombre || "",
+      apellido: paciente.apellido || "",
+      mail: paciente.mail || "",
+      telefono: paciente.telefono || "",
+      nombreMascota: paciente.mascotas[0]?.nombreMascota || "",
+      especie: paciente.mascotas[0]?.especie || "",
+      raza: paciente.mascotas[0]?.raza || "",
+    });
   };
 
   const handleClose = () => {
@@ -66,44 +77,81 @@ const AdminPagePacientes = () => {
     setSelectedMascotaIndex(0);
   };
 
-  const handleSave = async (event) => {
-    event.preventDefault();
+  const validationSchema = Yup.object({
+    nombre: Yup.string()
+      .required("El nombre es obligatorio")
+      .min(2, "Mínimo 2 caracteres")
+      .max(30, "Máximo 30 caracteres")
+      .matches(/^[a-zA-Z]+$/, "El nombre solo puede contener letras."),
+    apellido: Yup.string()
+      .required("El apellido es obligatorio")
+      .min(2, "Mínimo 2 caracteres")
+      .max(30, "Máximo 30 caracteres")
+      .matches(/^[a-zA-Z]+$/, "El apellido solo puede contener letras."),
+    mail: Yup.string()
+      .email("Formato de email incorrecto. Por ejemplo: usuario@gmail.com")
+      .required("El email es obligatorio")
+      .min(8, "Mínimo 8 caracteres")
+      .max(50, "Máximo 50 caracteres"),
+    telefono: Yup.number()
+      .required("El teléfono es obligatorio")
+      .positive("El numero debe ser un valor positivo"),
+    nombreMascota: Yup.string()
+      .required("El nombre de la mascota es obligatorio")
+      .min(3, "Mínimo 3 caracteres")
+      .max(30, "Máximo 30 caracteres"),
+    especie: Yup.string().required("La especie es obligatoria"),
+    raza: Yup.string().required("La raza es obligatoria"),
+  });
 
-    try {
-      const form = event.target;
-      const formData = new FormData(form);
+  const formik = useFormik({
+    initialValues: {
+      nombre: "",
+      apellido: "",
+      mail: "",
+      telefono: "",
+      nombreMascota: "",
+      especie: "",
+      raza: "",
+    },
+    validationSchema,
+    onSubmit: async (values, { setSubmitting }) => {
+      setSubmitting(true);
+      try {
+        const datosPersonales = {
+          nombre: values.nombre,
+          apellido: values.apellido,
+          mail: values.mail,
+          telefono: values.telefono,
+        };
 
-      const datosPersonales = {
-        nombre: formData.get("nombre"),
-        apellido: formData.get("apellido"),
-        mail: formData.get("mail"),
-        telefono: formData.get("telefono"),
-      };
+        const mascota = {
+          _id: currentPaciente.mascotas[selectedMascotaIndex]?._id,
+          nombreMascota: values.nombreMascota,
+          especie: values.especie,
+          raza: values.raza,
+        };
 
-      const mascota = {
-        _id: currentPaciente.mascotas[selectedMascotaIndex]?._id,
-        nombreMascota: formData.get("nombreMascota"),
-        especie: formData.get("especie"),
-        raza: formData.get("raza"),
-      };
+        await clienteAxios.put(
+          `/misDatos/${currentPaciente.idUser}/modificar`,
+          {
+            datosPersonales,
+            mascota,
+          },
+          config
+        );
 
-      await clienteAxios.put(
-        `/misDatos/${currentPaciente.idUser}/modificar`,
-        {
-          datosPersonales,
-          mascota,
-        },
-        config
-      );
-
-      handleClose();
-      fetchData();
-      Swal.fire("Guardado!", "El paciente ha sido guardado.", "success");
-    } catch (error) {
-      console.error("Error saving paciente", error);
-      Swal.fire("Error!", "Hubo un error al guardar el paciente.", "error");
-    }
-  };
+        handleClose();
+        fetchData();
+        Swal.fire("Guardado!", "El paciente ha sido guardado.", "success");
+      } catch (error) {
+        console.error("Error saving paciente", error);
+        Swal.fire("Error!", "Hubo un error al guardar el paciente.", "error");
+      } finally {
+        setSubmitting(false);
+      }
+    },
+  });
 
   const handleSelectMascota = (e) => {
     const index = parseInt(e.target.value, 10);
@@ -111,6 +159,12 @@ const AdminPagePacientes = () => {
     setRazasPorEspecie(
       getRazasPorEspecie(currentPaciente.mascotas[index]?.especie || "")
     );
+    formik.setValues({
+      ...formik.values,
+      nombreMascota: currentPaciente.mascotas[index]?.nombreMascota || "",
+      especie: currentPaciente.mascotas[index]?.especie || "",
+      raza: currentPaciente.mascotas[index]?.raza || "",
+    });
   };
 
   const handleSelectEspecie = (e) => {
@@ -119,11 +173,13 @@ const AdminPagePacientes = () => {
       ...prevPaciente,
       mascotas: prevPaciente.mascotas.map((mascota, idx) =>
         idx === selectedMascotaIndex
-          ? { ...mascota, especie: especieSeleccionada, raza: "" } // Reinicia la raza al cambiar especie
+          ? { ...mascota, especie: especieSeleccionada, raza: "" }
           : mascota
       ),
     }));
     setRazasPorEspecie(getRazasPorEspecie(especieSeleccionada));
+    formik.setFieldValue("especie", especieSeleccionada);
+    formik.setFieldValue("raza", "");
   };
 
   const getRazasPorEspecie = (especie) => {
@@ -167,62 +223,77 @@ const AdminPagePacientes = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSave}>
-            <Form.Group controlId="idUser">
-              <Form.Control
-                type="hidden"
-                name="idUser"
-                defaultValue={currentPaciente ? currentPaciente.idUser : ""}
-              />
-            </Form.Group>
+          <Form onSubmit={formik.handleSubmit}>
             <Form.Group controlId="nombre">
               <Form.Label>Nombre</Form.Label>
               <Form.Control
+                minLength={2}
+                maxLength={30}
                 type="text"
                 name="nombre"
                 placeholder="Nombre"
-                defaultValue={currentPaciente ? currentPaciente.nombre : ""}
-                required
+                value={formik.values.nombre}
+                onChange={formik.handleChange}
+                isInvalid={formik.touched.nombre && !!formik.errors.nombre}
               />
+              <Form.Control.Feedback type="invalid">
+                {formik.errors.nombre}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="apellido">
               <Form.Label>Apellido</Form.Label>
               <Form.Control
+                minLength={2}
+                maxLength={30}
                 type="text"
                 name="apellido"
                 placeholder="Apellido"
-                defaultValue={currentPaciente ? currentPaciente.apellido : ""}
-                required
+                value={formik.values.apellido}
+                onChange={formik.handleChange}
+                isInvalid={formik.touched.apellido && !!formik.errors.apellido}
               />
+              <Form.Control.Feedback type="invalid">
+                {formik.errors.apellido}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="mail">
               <Form.Label>Correo</Form.Label>
               <Form.Control
+                minLength={8}
+                maxLength={50}
                 type="email"
                 name="mail"
                 placeholder="Correo"
-                defaultValue={currentPaciente ? currentPaciente.mail : ""}
-                required
+                value={formik.values.mail}
+                onChange={formik.handleChange}
+                isInvalid={formik.touched.mail && !!formik.errors.mail}
               />
+              <Form.Control.Feedback type="invalid">
+                {formik.errors.mail}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="telefono">
               <Form.Label>Teléfono</Form.Label>
               <Form.Control
-                type="text"
+                type="number"
                 name="telefono"
                 placeholder="Teléfono"
-                defaultValue={currentPaciente ? currentPaciente.telefono : ""}
-                required
+                value={formik.values.telefono}
+                onChange={formik.handleChange}
+                isInvalid={formik.touched.telefono && !!formik.errors.telefono}
               />
+              <Form.Control.Feedback type="invalid">
+                {formik.errors.telefono}
+              </Form.Control.Feedback>
             </Form.Group>
-            {currentPaciente && currentPaciente.mascotas.length > 1 && (
-              <Form.Group controlId="selectMascota">
+
+            {currentPaciente && currentPaciente.mascotas && (
+              <Form.Group controlId="select-mascota">
                 <Form.Label>Seleccionar Mascota</Form.Label>
                 <Form.Control
                   as="select"
                   value={selectedMascotaIndex}
-                  onChange={handleSelectMascota}
-                >
+                  onChange={handleSelectMascota}>
                   {currentPaciente.mascotas.map((mascota, index) => (
                     <option key={index} value={index}>
                       {mascota.nombreMascota}
@@ -231,77 +302,68 @@ const AdminPagePacientes = () => {
                 </Form.Control>
               </Form.Group>
             )}
+
             <Form.Group controlId="nombreMascota">
               <Form.Label>Nombre Mascota</Form.Label>
               <Form.Control
+                minLength={3}
+                maxLength={30}
                 type="text"
                 name="nombreMascota"
                 placeholder="Nombre Mascota"
-                value={
-                  currentPaciente
-                    ? currentPaciente.mascotas[selectedMascotaIndex]
-                        ?.nombreMascota
-                    : ""
+                value={formik.values.nombreMascota}
+                onChange={formik.handleChange}
+                isInvalid={
+                  formik.touched.nombreMascota && !!formik.errors.nombreMascota
                 }
-                onChange={(e) =>
-                  setCurrentPaciente({
-                    ...currentPaciente,
-                    mascotas: currentPaciente.mascotas.map((mascota, idx) =>
-                      idx === selectedMascotaIndex
-                        ? { ...mascota, nombreMascota: e.target.value }
-                        : mascota
-                    ),
-                  })
-                }
-                required
               />
+              <Form.Control.Feedback type="invalid">
+                {formik.errors.nombreMascota}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="especie">
               <Form.Label>Especie</Form.Label>
               <Form.Control
                 as="select"
                 name="especie"
-                value={
-                  currentPaciente?.mascotas[selectedMascotaIndex]?.especie || ""
-                }
-                onChange={handleSelectEspecie}
-                required
-              >
-                <option value="">Seleccionar Especie</option>
-                <option value="Gato">Gato</option>
+                value={formik.values.especie}
+                onChange={(e) => {
+                  handleSelectEspecie(e);
+                  formik.handleChange(e);
+                }}
+                isInvalid={formik.touched.especie && !!formik.errors.especie}>
+                <option value="">Selecciona una especie</option>
                 <option value="Perro">Perro</option>
+                <option value="Gato">Gato</option>
               </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                {formik.errors.especie}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="raza">
               <Form.Label>Raza</Form.Label>
               <Form.Control
                 as="select"
                 name="raza"
-                value={
-                  currentPaciente?.mascotas[selectedMascotaIndex]?.raza || ""
-                }
-                onChange={(e) =>
-                  setCurrentPaciente((prevPaciente) => ({
-                    ...prevPaciente,
-                    mascotas: prevPaciente.mascotas.map((mascota, idx) =>
-                      idx === selectedMascotaIndex
-                        ? { ...mascota, raza: e.target.value }
-                        : mascota
-                    ),
-                  }))
-                }
-                required
-              >
-                <option value="">Seleccionar Raza</option>
-                {razasPorEspecie.map((raza, index) => (
-                  <option key={index} value={raza}>
+                value={formik.values.raza}
+                onChange={formik.handleChange}
+                isInvalid={formik.touched.raza && !!formik.errors.raza}>
+                <option value="">Selecciona una raza</option>
+                {razasPorEspecie.map((raza) => (
+                  <option key={raza} value={raza}>
                     {raza}
                   </option>
                 ))}
               </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                {formik.errors.raza}
+              </Form.Control.Feedback>
             </Form.Group>
-            <div className="mt-5">
-              <Button variant="primary" type="submit" className="ml-2">
+            <div className="d-flex justify-content-center mt-3">
+              <Button
+                variant="success"
+                type="submit"
+                disabled={formik.isSubmitting}>
                 Guardar
               </Button>
             </div>
