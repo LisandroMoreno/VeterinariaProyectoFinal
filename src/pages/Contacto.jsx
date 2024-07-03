@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { FaWhatsapp, FaFacebook, FaInstagram } from "react-icons/fa";
 import "../css/Contacto.css";
 import { titlePage } from "../helpers/titlePages";
 import { Formik } from "formik";
 import * as yup from "yup";
 import clienteAxios from "../helpers/clienteAxios";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 const validationSchema = yup.object().shape({
   nombre: yup
@@ -41,26 +41,26 @@ const Contacto = () => {
 
       if (response.status === 200) {
         Swal.fire({
-          icon: 'success',
-          title: 'Consulta enviada correctamente',
+          icon: "success",
+          title: "Consulta enviada correctamente",
           showConfirmButton: false,
-          timer: 3000
+          timer: 3000,
         });
         resetForm();
       } else {
         Swal.fire({
-          icon: 'error',
-          title: 'Error al enviar la consulta',
+          icon: "error",
+          title: "Error al enviar la consulta",
           showConfirmButton: false,
-          timer: 3000
+          timer: 3000,
         });
       }
     } catch (error) {
       Swal.fire({
-        icon: 'error',
-        title: 'Error al enviar la consulta',
+        icon: "error",
+        title: "Error al enviar la consulta",
         showConfirmButton: false,
-        timer: 3000
+        timer: 3000,
       });
     }
 
@@ -79,8 +79,7 @@ const Contacto = () => {
           <Formik
             initialValues={{ nombre: "", apellido: "", email: "", mensaje: "" }}
             validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-          >
+            onSubmit={handleSubmit}>
             {({
               values,
               errors,
@@ -156,8 +155,7 @@ const Contacto = () => {
                     variant="primary"
                     type="submit"
                     className="button-custom mt-3"
-                    disabled={isSubmitting}
-                  >
+                    disabled={isSubmitting}>
                     Enviar
                   </Button>
                 </div>
@@ -191,8 +189,7 @@ const Contacto = () => {
               style={{ border: 0 }}
               allowFullScreen=""
               aria-hidden="false"
-              tabIndex="0"
-            ></iframe>
+              tabIndex="0"></iframe>
           </div>
         </Col>
       </Row>

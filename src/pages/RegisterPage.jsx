@@ -6,8 +6,10 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 import "../css/Reg-Log.css";
+import { Link, useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   titlePage("Registro");
   const yupSchemaRegister = yup.object().shape({
     user: yup
@@ -62,7 +64,7 @@ const RegisterPage = () => {
             icon: "success",
           }).then(() => {
             setTimeout(() => {
-              location.href = "/login";
+              navigate("/login");
             }, 2000);
           });
         } else {
@@ -91,7 +93,7 @@ const RegisterPage = () => {
   };
 
   const handleGmailLogin = () => {
-    location.href = "/*";
+    navigate("/*");
   };
 
   return (
@@ -197,7 +199,7 @@ const RegisterPage = () => {
               </Form.Group>
 
               <p className="text-center">
-                Si tienes una cuenta haz click <a href="/login">aquí</a>
+                Si tienes una cuenta haz click <Link to="/login">aquí</Link>
               </p>
 
               <div>
