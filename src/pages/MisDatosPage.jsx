@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import clienteAxios from "../helpers/clienteAxios";
+import clienteAxios, { config } from "../helpers/clienteAxios";
 import { titlePage } from "../helpers/titlePages";
 import Swal from "sweetalert2";
 import "../css/MisDatos.css";
@@ -23,7 +23,10 @@ const MisDatosPage = () => {
   useEffect(() => {
     const fetchDatos = async () => {
       try {
-        const response = await clienteAxios.get(`/misDatos/${misDatos.idUser}`);
+        const response = await clienteAxios.get(
+          `/misDatos/${misDatos.idUser}`,
+          config
+        );
         if (response.data) {
           setMisDatos({
             ...misDatos,
@@ -95,7 +98,8 @@ const MisDatosPage = () => {
             );
           } else {
             const response = await clienteAxios.delete(
-              `/misDatos/mascota/${mascota._id}`
+              `/misDatos/mascota/${mascota._id}`,
+              config
             );
             console.log("Mascota eliminada:", response.data);
 
@@ -120,9 +124,14 @@ const MisDatosPage = () => {
   const handleSubmitMisDatos = async (e) => {
     e.preventDefault();
     try {
-      const response = await clienteAxios.put(`/misDatos/${misDatos.idUser}`, {
-        ...misDatos,
-      });
+      const response = await clienteAxios.put(
+        `/misDatos/${misDatos.idUser}`,
+
+        {
+          ...misDatos,
+        },
+        config
+      );
       console.log("Datos personales guardados:", response.data);
 
       Swal.fire({
@@ -144,10 +153,14 @@ const MisDatosPage = () => {
   const handleSubmitMascota = async (index, e) => {
     e.preventDefault();
     try {
-      const response = await clienteAxios.post(`/misDatos/mascota`, {
-        idUser: misDatos.idUser,
-        mascota: misDatos.mascotas[index],
-      });
+      const response = await clienteAxios.post(
+        `/misDatos/mascota`,
+        {
+          idUser: misDatos.idUser,
+          mascota: misDatos.mascotas[index],
+        },
+        config
+      );
       console.log("Datos de la mascota guardados:", response.data);
 
       const updatedMascotas = [...misDatos.mascotas];
