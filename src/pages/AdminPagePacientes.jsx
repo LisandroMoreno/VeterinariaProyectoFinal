@@ -8,7 +8,7 @@ import TablaC from "../components/TablaC";
 import { titlePage } from "../helpers/titlePages";
 
 const AdminPagePacientes = () => {
-  titlePage("Administracion Pacientes");
+  titlePage("Lista de Pacientes");
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [currentPaciente, setCurrentPaciente] = useState(null);
@@ -293,7 +293,8 @@ const AdminPagePacientes = () => {
                 <Form.Control
                   as="select"
                   value={selectedMascotaIndex}
-                  onChange={handleSelectMascota}>
+                  onChange={handleSelectMascota}
+                >
                   {currentPaciente.mascotas.map((mascota, index) => (
                     <option key={index} value={index}>
                       {mascota.nombreMascota}
@@ -331,7 +332,8 @@ const AdminPagePacientes = () => {
                   handleSelectEspecie(e);
                   formik.handleChange(e);
                 }}
-                isInvalid={formik.touched.especie && !!formik.errors.especie}>
+                isInvalid={formik.touched.especie && !!formik.errors.especie}
+              >
                 <option value="">Selecciona una especie</option>
                 <option value="Perro">Perro</option>
                 <option value="Gato">Gato</option>
@@ -347,7 +349,8 @@ const AdminPagePacientes = () => {
                 name="raza"
                 value={formik.values.raza}
                 onChange={formik.handleChange}
-                isInvalid={formik.touched.raza && !!formik.errors.raza}>
+                isInvalid={formik.touched.raza && !!formik.errors.raza}
+              >
                 <option value="">Selecciona una raza</option>
                 {razasPorEspecie.map((raza) => (
                   <option key={raza} value={raza}>
@@ -363,7 +366,8 @@ const AdminPagePacientes = () => {
               <Button
                 variant="success"
                 type="submit"
-                disabled={formik.isSubmitting}>
+                disabled={formik.isSubmitting}
+              >
                 Guardar
               </Button>
             </div>
