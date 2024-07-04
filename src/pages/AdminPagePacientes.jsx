@@ -90,12 +90,12 @@ const AdminPagePacientes = () => {
       .required("El nombre es obligatorio")
       .min(2, "Mínimo 2 caracteres")
       .max(30, "Máximo 30 caracteres")
-      .matches(/^[a-zA-Z]+$/, "El nombre solo puede contener letras."),
+      .matches(/^[a-zA-Z ]+$/, "El nombre solo puede contener letras"),
     apellido: Yup.string()
       .required("El apellido es obligatorio")
       .min(2, "Mínimo 2 caracteres")
       .max(30, "Máximo 30 caracteres")
-      .matches(/^[a-zA-Z]+$/, "El apellido solo puede contener letras."),
+      .matches(/^[a-zA-Z ]+$/, "El apellido solo puede contener letras"),
     mail: Yup.string()
       .email("Formato de email incorrecto. Por ejemplo: usuario@gmail.com")
       .required("El email es obligatorio")
@@ -310,8 +310,7 @@ const AdminPagePacientes = () => {
                 <Form.Control
                   as="select"
                   value={selectedMascotaIndex}
-                  onChange={handleSelectMascota}
-                >
+                  onChange={handleSelectMascota}>
                   {currentPaciente.mascotas.map((mascota, index) => (
                     <option key={index} value={index}>
                       {mascota.nombreMascota}
@@ -349,8 +348,7 @@ const AdminPagePacientes = () => {
                   handleSelectEspecie(e);
                   formik.handleChange(e);
                 }}
-                isInvalid={formik.touched.especie && !!formik.errors.especie}
-              >
+                isInvalid={formik.touched.especie && !!formik.errors.especie}>
                 <option value="">Selecciona una especie</option>
                 <option value="Perro">Perro</option>
                 <option value="Gato">Gato</option>
@@ -366,8 +364,7 @@ const AdminPagePacientes = () => {
                 name="raza"
                 value={formik.values.raza}
                 onChange={formik.handleChange}
-                isInvalid={formik.touched.raza && !!formik.errors.raza}
-              >
+                isInvalid={formik.touched.raza && !!formik.errors.raza}>
                 <option value="">Selecciona una raza</option>
                 {razasPorEspecie.map((raza) => (
                   <option key={raza} value={raza}>
@@ -383,8 +380,7 @@ const AdminPagePacientes = () => {
               <Button
                 variant="success"
                 type="submit"
-                disabled={formik.isSubmitting}
-              >
+                disabled={formik.isSubmitting}>
                 Guardar
               </Button>
             </div>

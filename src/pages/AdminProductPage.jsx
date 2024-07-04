@@ -47,8 +47,10 @@ const AdminProductsPage = () => {
       .required("El título es obligatorio")
       .min(3, "El título debe tener al menos 3 caracteres")
       .max(50, "El título no debe exceder los 50 caracteres")
-      .matches(/^[a-zA-Z]+$/, "El nombre solo puede contener letras."),
-
+      .matches(
+        /^[a-zA-Z0-9 !@#$%^&*()]+$/,
+        "El titulo solo puede contener letras, números y caracteres especiales"
+      ),
     precio: Yup.number()
       .required("El precio es obligatorio")
       .positive("El precio debe ser un valor positivo")
@@ -86,7 +88,7 @@ const AdminProductsPage = () => {
         if (addImageProduct.status === 200) {
           handleCloseEditModal();
           Swal.fire({
-            title: "Producto actualizado.",
+            title: "Producto actualizado",
             icon: "success",
           }).then(() => {
             setTimeout(() => {
@@ -97,7 +99,7 @@ const AdminProductsPage = () => {
       } else {
         handleCloseEditModal();
         Swal.fire({
-          title: "Producto actualizado.",
+          title: "Producto actualizado",
           icon: "success",
         }).then(() => {
           setTimeout(() => {
@@ -148,22 +150,22 @@ const AdminProductsPage = () => {
         if (addImageProduct.status === 200) {
           handleCloseCreateModal();
           Swal.fire({
-            title: "Producto creado.",
+            title: "Producto creado",
             icon: "success",
           }).then(() => {
             setTimeout(() => {
-              location.reload();
+              getProductosAdmin();
             }, 1000);
           });
         }
       } else {
         handleCloseCreateModal();
         Swal.fire({
-          title: "Producto creado.",
+          title: "Producto creado",
           icon: "success",
         }).then(() => {
           setTimeout(() => {
-            location.reload();
+            getProductosAdmin();
           }, 1000);
         });
       }
@@ -285,8 +287,7 @@ const AdminProductsPage = () => {
           <Formik
             initialValues={editProd}
             validationSchema={validationSchema}
-            onSubmit={handleClickEdit}
-          >
+            onSubmit={handleClickEdit}>
             {({ isSubmitting, errors, touched }) => (
               <Form>
                 <div className="mb-3">
@@ -355,8 +356,7 @@ const AdminProductsPage = () => {
                     name="categoria"
                     className={`form-select ${
                       errors.categoria && touched.categoria ? "is-invalid" : ""
-                    }`}
-                  >
+                    }`}>
                     <option value="">Selecciona una categoria</option>
                     <option value="Accesorios">Accesorios</option>
                     <option value="Alimentación">Alimentación</option>
@@ -390,8 +390,7 @@ const AdminProductsPage = () => {
                   <Button
                     variant="success"
                     type="submit"
-                    disabled={isSubmitting}
-                  >
+                    disabled={isSubmitting}>
                     Editar Producto
                   </Button>
                 </div>
@@ -409,8 +408,7 @@ const AdminProductsPage = () => {
           <Formik
             initialValues={newProd}
             validationSchema={validationSchema}
-            onSubmit={handleCreateProd}
-          >
+            onSubmit={handleCreateProd}>
             {({ isSubmitting, errors, touched }) => (
               <Form>
                 <div className="mb-3">
@@ -479,8 +477,7 @@ const AdminProductsPage = () => {
                     name="categoria"
                     className={`form-select ${
                       errors.categoria && touched.categoria ? "is-invalid" : ""
-                    }`}
-                  >
+                    }`}>
                     <option value="">Selecciona una categoria</option>
                     <option value="Accesorios">Accesorios</option>
                     <option value="Alimentación">Alimentación</option>
@@ -514,8 +511,7 @@ const AdminProductsPage = () => {
                   <Button
                     variant="success"
                     type="submit"
-                    disabled={isSubmitting}
-                  >
+                    disabled={isSubmitting}>
                     Crear Producto
                   </Button>
                 </div>
