@@ -31,7 +31,12 @@ const MisDatosPage = () => {
         if (response.data) {
           setMisDatos((prevMisDatos) => ({
             ...prevMisDatos,
-            datosPersonales: response.data.datosPersonales,
+            datosPersonales: response.data.datosPersonales || {
+              nombre: "",
+              apellido: "",
+              mail: "",
+              telefono: "",
+            },
             mascotas: response.data.mascotas || [],
           }));
         }
@@ -39,14 +44,13 @@ const MisDatosPage = () => {
         Swal.fire(
           "Error",
           "Hubo un problema al cargar los datos personales",
-          error
+          "error"
         );
       }
     };
 
     fetchDatos();
   }, [misDatos.idUser]);
-
   const handleAddMascota = () => {
     setMisDatos({
       ...misDatos,

@@ -27,9 +27,10 @@ const DetalleMisReservas = () => {
       icon: "error",
       title: titulo,
       text: "Hubo un problema al obtener la información de tus reservas. Por favor, intenta nuevamente.",
+      titulo,
+      error,
       footer: `<a href="mailto:soporte@PawsAndClaws.com">Contactar soporte</a>`,
     });
-    console.error(titulo, error);
   };
 
   const handleBorrarReserva = async (idReserva) => {
@@ -59,8 +60,8 @@ const DetalleMisReservas = () => {
         icon: "error",
         title: "Error",
         text: "Error al eliminar la reserva",
+        error,
       });
-      console.error("Error al eliminar la reserva:", error);
     }
   };
 

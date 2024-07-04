@@ -46,7 +46,9 @@ const AdminProductsPage = () => {
     titulo: Yup.string()
       .required("El título es obligatorio")
       .min(3, "El título debe tener al menos 3 caracteres")
-      .max(50, "El título no debe exceder los 50 caracteres"),
+      .max(50, "El título no debe exceder los 50 caracteres")
+      .matches(/^[a-zA-Z]+$/, "El nombre solo puede contener letras."),
+
     precio: Yup.number()
       .required("El precio es obligatorio")
       .positive("El precio debe ser un valor positivo")
@@ -283,7 +285,8 @@ const AdminProductsPage = () => {
           <Formik
             initialValues={editProd}
             validationSchema={validationSchema}
-            onSubmit={handleClickEdit}>
+            onSubmit={handleClickEdit}
+          >
             {({ isSubmitting, errors, touched }) => (
               <Form>
                 <div className="mb-3">
@@ -352,7 +355,8 @@ const AdminProductsPage = () => {
                     name="categoria"
                     className={`form-select ${
                       errors.categoria && touched.categoria ? "is-invalid" : ""
-                    }`}>
+                    }`}
+                  >
                     <option value="">Selecciona una categoria</option>
                     <option value="Accesorios">Accesorios</option>
                     <option value="Alimentación">Alimentación</option>
@@ -386,7 +390,8 @@ const AdminProductsPage = () => {
                   <Button
                     variant="success"
                     type="submit"
-                    disabled={isSubmitting}>
+                    disabled={isSubmitting}
+                  >
                     Editar Producto
                   </Button>
                 </div>
@@ -404,7 +409,8 @@ const AdminProductsPage = () => {
           <Formik
             initialValues={newProd}
             validationSchema={validationSchema}
-            onSubmit={handleCreateProd}>
+            onSubmit={handleCreateProd}
+          >
             {({ isSubmitting, errors, touched }) => (
               <Form>
                 <div className="mb-3">
@@ -473,7 +479,8 @@ const AdminProductsPage = () => {
                     name="categoria"
                     className={`form-select ${
                       errors.categoria && touched.categoria ? "is-invalid" : ""
-                    }`}>
+                    }`}
+                  >
                     <option value="">Selecciona una categoria</option>
                     <option value="Accesorios">Accesorios</option>
                     <option value="Alimentación">Alimentación</option>
@@ -507,7 +514,8 @@ const AdminProductsPage = () => {
                   <Button
                     variant="success"
                     type="submit"
-                    disabled={isSubmitting}>
+                    disabled={isSubmitting}
+                  >
                     Crear Producto
                   </Button>
                 </div>
