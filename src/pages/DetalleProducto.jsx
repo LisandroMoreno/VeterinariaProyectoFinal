@@ -86,7 +86,7 @@ const DetalleProducto = () => {
   const agregarCarrito = async () => {
     const token = JSON.parse(sessionStorage.getItem("token"));
     if (!token) {
-      location.href = "/login";
+      navigate("/login");
       return;
     }
 
@@ -128,9 +128,10 @@ const DetalleProducto = () => {
       icon: "error",
       title: titulo,
       text: "Hubo un problema al realizar esta acción. Por favor, intenta nuevamente.",
+      titulo,
+      error,
       footer: `<a href="mailto:soporte@PawsAndClaws.com">Contactar soporte</a>`,
     });
-    console.error(titulo, error);
   };
 
   const handleComprar = () => {
@@ -173,12 +174,14 @@ const DetalleProducto = () => {
               </InputGroup>
               <Button
                 className="btn-customProduct mb-3"
-                onClick={handleComprar}>
+                onClick={handleComprar}
+              >
                 Comprar
               </Button>
               <Button
                 onClick={agregarCarrito}
-                className="btn-customProduct mb-3">
+                className="btn-customProduct mb-3"
+              >
                 <i className="fa-solid fa-cart-shopping"></i>
               </Button>
             </div>
