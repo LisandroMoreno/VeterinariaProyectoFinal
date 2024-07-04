@@ -222,7 +222,7 @@ const MisDatosPage = () => {
         <h1>Datos de tu cuenta</h1>
       </div>
       <div className="mt-4">
-        <button className="btn-customMisDatos" onClick={handleAddMascota}>
+        <button className="btn-customMisDatos p-2" onClick={handleAddMascota}>
           + Agregar Mascota
         </button>
       </div>
