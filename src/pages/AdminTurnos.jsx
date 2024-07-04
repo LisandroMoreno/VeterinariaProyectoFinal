@@ -18,7 +18,12 @@ const AdminTurnosPage = () => {
         const response = await clienteAxios.get(`/turnos/AdminTurnos`, config);
         setTurnos(response.data);
       } catch (error) {
-        console.error("Error fetching turnos:", error);
+        Swal.fire({
+          title: "Error!",
+          text: "Error al obtener turnos",
+          error,
+          icon: "error",
+        });
       } finally {
         setIsLoading(false);
       }
@@ -54,8 +59,12 @@ const AdminTurnosPage = () => {
         Swal.fire("Eliminado!", "La reserva ha sido eliminada.", "success");
       }
     } catch (error) {
-      console.error("Error deleting reserva:", error);
-      Swal.fire("Error", "Hubo un problema al eliminar la reserva.", "error");
+      Swal.fire(
+        "Error",
+        "Hubo un problema al eliminar la reserva.",
+        "error",
+        error
+      );
     } finally {
       setIsLoading(false);
     }
