@@ -21,11 +21,11 @@ const RegisterPage = () => {
     userName: yup
       .string()
       .required("Completa el campo vacío")
-      .min(8, "Mínimo 8 caracteres")
-      .max(15, "Máximo 15 caracteres")
+      .min(5, "Mínimo 5 caracteres")
+      .max(20, "Máximo 20 caracteres")
       .matches(
-        /^[a-zA-Z0-9]+$/,
-        "El nombre de usuario solo puede contener letras y números."
+        /^[a-zA-Z0-9_]+$/,
+        "El nombre de usuario solo puede contener letras, números y guion bajo (_)."
       ),
     pass: yup
       .string()
@@ -33,14 +33,12 @@ const RegisterPage = () => {
       .min(8, "Mínimo 8 caracteres")
       .max(15, "Máximo 15 caracteres")
       .matches(
-        /^[a-zA-Z0-9]+$/,
-        "La contraseña solo puede contener letras y números."
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/,
+        "La contraseña debe contener al menos una letra minúscula, una mayúscula, un dígito, un carácter especial (@$!%*?&), y tener entre 8 y 15 caracteres."
       ),
     rpass: yup
       .string()
       .required("Completa el campo vacío")
-      .min(8, "Mínimo 8 caracteres")
-      .max(15, "Máximo 15 caracteres")
       .oneOf([yup.ref("pass"), null], "Las contraseñas deben coincidir."),
   });
 
@@ -75,11 +73,11 @@ const RegisterPage = () => {
           });
         }
       } catch (error) {
-        console.error("Error al registrar el usuario:", error);
         Swal.fire({
           icon: "error",
           title: "Error al registrar el usuario",
           text: "El usuario y/o correo electronico no estan disponibles.",
+          error,
         });
       }
     } else {
@@ -104,7 +102,8 @@ const RegisterPage = () => {
           validationSchema={yupSchemaRegister}
           onSubmit={(values, actions) => {
             handleSubmitForm(values, actions);
-          }}>
+          }}
+        >
           {({
             values,
             errors,
@@ -118,7 +117,7 @@ const RegisterPage = () => {
                 <Form.Label>Correo Electrónico</Form.Label>
                 <Form.Control
                   type="email"
-                  placeholder="Por ej: usuario@gmail.com"
+                  placeholder="Por ejemplo: usuario@gmail.com"
                   value={values.user}
                   name="user"
                   minLength={8}
@@ -139,14 +138,14 @@ const RegisterPage = () => {
                 <Form.Label>Usuario</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Por ej: usuario123"
+                  placeholder="Por ejemplo: usuario123"
                   value={values.userName}
                   name="userName"
                   minLength={8}
                   maxLength={15}
                   onChange={handleChange}
                   className={
-                    errors.user && touched.user
+                    errors.userName && touched.userName
                       ? "form-control is-invalid"
                       : "form-control"
                   }
@@ -154,13 +153,16 @@ const RegisterPage = () => {
                 <p className="text-danger">
                   {errors.userName && touched.userName && errors.userName}
                 </p>
+                <Form.Text className="text-muted">
+                  El usuario debe tener entre 8 y 15 caracteres alfanuméricos.
+                </Form.Text>
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Contraseña</Form.Label>
                 <Form.Control
                   type="password"
-                  placeholder="Password"
+                  placeholder="Mínimo 8 caracteres"
                   value={values.pass}
                   name="pass"
                   minLength={8}
@@ -175,13 +177,17 @@ const RegisterPage = () => {
                 <p className="text-danger">
                   {errors.pass && touched.pass && errors.pass}
                 </p>
+                <Form.Text className="text-muted">
+                  Debe contener al menos una letra minúscula, una mayúscula, un
+                  número y un carácter especial.
+                </Form.Text>
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formBasicRPassword">
                 <Form.Label>Repetir Contraseña</Form.Label>
                 <Form.Control
                   type="password"
-                  placeholder="Password"
+                  placeholder="Repite la contraseña"
                   value={values.rpass}
                   name="rpass"
                   minLength={8}
@@ -199,7 +205,8 @@ const RegisterPage = () => {
               </Form.Group>
 
               <p className="text-center">
-                Si tienes una cuenta haz click <Link to="/login">aquí</Link>
+                Si ya tienes una cuenta, haz click <Link to="/login">aquí</Link>{" "}
+                para iniciar sesión.
               </p>
 
               <div>
@@ -207,7 +214,8 @@ const RegisterPage = () => {
                   variant="primary"
                   className="w-100 btnForm"
                   disabled={isSubmitting}
-                  onClick={handleGmailLogin}>
+                  onClick={handleGmailLogin}
+                >
                   Registrarse con Gmail
                 </Button>
               </div>
@@ -216,7 +224,8 @@ const RegisterPage = () => {
                 variant="primary"
                 type="submit"
                 className="w-100 btnForm mt-3"
-                disabled={isSubmitting}>
+                disabled={isSubmitting}
+              >
                 Registrarse
               </Button>
             </Form>

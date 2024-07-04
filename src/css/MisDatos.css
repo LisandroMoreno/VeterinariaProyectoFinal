@@ -23,4 +23,24 @@
   .btn-customMisDatos {
     width: 100%;
   }
+  .btn-customDelete {
+    width: 100%;
+  }
+}
+
+.btn-customDelete {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.btn-customDelete:hover {
+  background-color: #c82333;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
 }

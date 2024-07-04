@@ -3,8 +3,10 @@ import { Button } from "react-bootstrap";
 import ReactStars from "react-rating-stars-component";
 import Swal from "sweetalert2";
 import clienteAxios from "../helpers/clienteAxios";
+import { titlePage } from "../helpers/titlePages";
 
 const AdminPageComentarios = () => {
+  titlePage("Lista de comentarios");
   const [comentarios, setComentarios] = useState([]);
 
   const getPendientesComentarios = async () => {
@@ -101,12 +103,14 @@ const AdminPageComentarios = () => {
                 <div className="d-flex justify-content-between">
                   <Button
                     variant="success"
-                    onClick={() => handleAprobarComentario(comentario._id)}>
+                    onClick={() => handleAprobarComentario(comentario._id)}
+                  >
                     Aprobar
                   </Button>
                   <Button
                     variant="danger"
-                    onClick={() => handleRechazarComentario(comentario._id)}>
+                    onClick={() => handleRechazarComentario(comentario._id)}
+                  >
                     Rechazar
                   </Button>
                 </div>

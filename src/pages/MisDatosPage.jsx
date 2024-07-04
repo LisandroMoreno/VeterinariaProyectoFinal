@@ -5,7 +5,6 @@ import clienteAxios, { config } from "../helpers/clienteAxios";
 import { titlePage } from "../helpers/titlePages";
 import Swal from "sweetalert2";
 import "../css/MisDatos.css";
-import { Link } from "react-router-dom";
 
 const MisDatosPage = () => {
   titlePage("Mis Datos");
@@ -37,33 +36,16 @@ const MisDatosPage = () => {
           }));
         }
       } catch (error) {
-        console.error("Error al obtener los datos personales:", error);
+        Swal.fire(
+          "Error",
+          "Hubo un problema al cargar los datos personales",
+          error
+        );
       }
     };
 
     fetchDatos();
   }, [misDatos.idUser]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setMisDatos((prevMisDatos) => ({
-      ...prevMisDatos,
-      datosPersonales: {
-        ...prevMisDatos.datosPersonales,
-        [name]: value,
-      },
-    }));
-  };
-
-  const handleMascotaChange = (index, e) => {
-    const { name, value } = e.target;
-    const newMascotas = [...misDatos.mascotas];
-    newMascotas[index][name] = value;
-    setMisDatos({
-      ...misDatos,
-      mascotas: newMascotas,
-    });
-  };
 
   const handleAddMascota = () => {
     setMisDatos({
@@ -103,7 +85,6 @@ const MisDatosPage = () => {
               `/misDatos/mascota/${mascota._id}`,
               config
             );
-            console.log("Mascota eliminada:", response.data);
 
             const newMascotas = [...misDatos.mascotas];
             newMascotas.splice(index, 1);
@@ -116,8 +97,7 @@ const MisDatosPage = () => {
             );
           }
         } catch (error) {
-          console.error("Error al eliminar la mascota:", error);
-          Swal.fire("Error", "Hubo un error al eliminar la mascota", "error");
+          Swal.fire("Error", "Hubo un error al eliminar la mascota", error);
         }
       }
     });
@@ -133,7 +113,6 @@ const MisDatosPage = () => {
         },
         config
       );
-      console.log("Datos personales guardados:", response.data);
 
       Swal.fire({
         icon: "success",
@@ -141,28 +120,25 @@ const MisDatosPage = () => {
         text: "Se han guardado exitosamente los datos personales.",
       });
     } catch (error) {
-      console.error("Error al guardar los datos personales:", error);
-
       Swal.fire({
         icon: "error",
         title: "Error",
         text: "Hubo un error al guardar los datos personales.",
+        error,
       });
     }
   };
 
-  const handleSubmitMascota = async (index, e) => {
-    e.preventDefault();
+  const handleSubmitMascota = async (index, values) => {
     try {
       const response = await clienteAxios.post(
         `/misDatos/mascota`,
         {
           idUser: misDatos.idUser,
-          mascota: misDatos.mascotas[index],
+          mascota: values,
         },
         config
       );
-      console.log("Datos de la mascota guardados:", response.data);
 
       const updatedMascotas = [...misDatos.mascotas];
       updatedMascotas[index] = response.data;
@@ -174,12 +150,11 @@ const MisDatosPage = () => {
         text: "Se han guardado exitosamente los datos de la mascota.",
       });
     } catch (error) {
-      console.error("Error al guardar los datos de la mascota:", error);
-
       Swal.fire({
         icon: "error",
         title: "Error",
         text: "Hubo un error al guardar los datos de la mascota.",
+        error,
       });
     }
   };
@@ -204,18 +179,32 @@ const MisDatosPage = () => {
     nombre: Yup.string()
       .min(2, "El nombre debe tener al menos 2 caracteres")
       .max(50, "El nombre no puede tener más de 50 caracteres")
-      .required("El nombre es requerido"),
+      .required("El nombre es requerido")
+      .matches(/^[a-zA-Z\s]+$/, "El nombre solo puede contener letras."),
     apellido: Yup.string()
       .min(2, "El apellido debe tener al menos 2 caracteres")
       .max(50, "El apellido no puede tener más de 50 caracteres")
-      .required("El apellido es requerido"),
+      .required("El apellido es requerido")
+      .matches(/^[a-zA-Z\s]+$/, "El apellido solo puede contener letras."),
     mail: Yup.string()
       .email("Email inválido")
-      .required("El email es requerido"),
+      .required("El email es requerido")
+      .max(50, "El email no puede tener más de 50 caracteres"),
     telefono: Yup.string()
+      .matches(/^[0-9+\-\s()]+$/, "Teléfono inválido")
       .min(10, "El teléfono debe tener al menos 10 caracteres")
       .max(15, "El teléfono no puede tener más de 15 caracteres")
       .required("El teléfono es requerido"),
+  });
+
+  const validationSchemaMascota = Yup.object().shape({
+    nombreMascota: Yup.string()
+      .required("Nombre es requerido")
+      .min(2, "Mínimo 2 caracteres")
+      .max(50, "Máximo 50 caracteres")
+      .matches(/^[a-zA-Z\s]+$/, "El nombre solo puede contener letras."),
+    especie: Yup.string().required("Especie es requerida"),
+    raza: Yup.string().required("Raza es requerida"),
   });
 
   return (
@@ -301,70 +290,106 @@ const MisDatosPage = () => {
                       className="text-danger"
                     />
                   </div>
-                  <button type="submit" className="btn-customMisDatos mb-2">
-                    Guardar Cambios
+                  <button type="submit" className="btn-customMisDatos">
+                    Guardar Datos Personales
                   </button>
                 </Form>
               )}
             </Formik>
           </div>
+        </div>
+      </div>
 
+      <div className="mt-4">
+        <div className="row">
           {misDatos.mascotas.map((mascota, index) => (
-            <div key={index} className="col-12 col-md-6">
-              <form
-                onSubmit={(e) => handleSubmitMascota(index, e)}
-                className="pet-form"
+            <div className="col-12 col-md-6" key={index}>
+              <Formik
+                initialValues={mascota}
+                validationSchema={validationSchemaMascota}
+                onSubmit={(values) => handleSubmitMascota(index, values)}
+                enableReinitialize
               >
-                <div className="d-flex justify-content-between align-items-center">
-                  <h2 className="mb-4">Datos de tu Mascota</h2>
-                  <div className="text-end mb-4">
-                    <Link onClick={() => handleDeleteMascota(index)}>
-                      <i className="fa-solid fa-trash fa-lg icono-borrado"></i>
-                    </Link>
-                  </div>
-                </div>
-
-                <input
-                  type="text"
-                  name="nombreMascota"
-                  placeholder="Nombre"
-                  value={mascota.nombreMascota}
-                  onChange={(e) => handleMascotaChange(index, e)}
-                  className={`form-control ${
-                    !mascota.nombreMascota ? "is-invalid" : ""
-                  } mb-2`}
-                />
-                <select
-                  name="especie"
-                  value={mascota.especie}
-                  onChange={(e) => handleMascotaChange(index, e)}
-                  className={`form-select ${
-                    !mascota.especie ? "is-invalid" : ""
-                  } mb-2`}
-                >
-                  <option value="">Selecciona una especie</option>
-                  <option value="Perro">Perro</option>
-                  <option value="Gato">Gato</option>
-                </select>
-                <select
-                  name="raza"
-                  value={mascota.raza}
-                  onChange={(e) => handleMascotaChange(index, e)}
-                  className={`form-select ${
-                    !mascota.raza ? "is-invalid" : ""
-                  } mb-2`}
-                >
-                  <option value="">Selecciona una raza</option>
-                  {getRazasPorEspecie(mascota.especie).map((raza, idx) => (
-                    <option key={idx} value={raza}>
-                      {raza}
-                    </option>
-                  ))}
-                </select>
-                <button type="submit" className="btn-customMisDatos mb-2">
-                  Guardar Cambios
-                </button>
-              </form>
+                {({ values, errors, touched, setFieldValue }) => (
+                  <Form className="pet-form">
+                    <h2 className="mb-4">Mascota {index + 1}</h2>
+                    <div className="mb-2">
+                      <Field
+                        type="text"
+                        name="nombreMascota"
+                        placeholder="Nombre Mascota"
+                        className={`form-control ${
+                          errors.nombreMascota && touched.nombreMascota
+                            ? "is-invalid"
+                            : ""
+                        }`}
+                      />
+                      <ErrorMessage
+                        name="nombreMascota"
+                        component="div"
+                        className="text-danger"
+                      />
+                    </div>
+                    <div className="mb-2">
+                      <Field
+                        as="select"
+                        name="especie"
+                        className={`form-control ${
+                          errors.especie && touched.especie ? "is-invalid" : ""
+                        }`}
+                        onChange={(e) => {
+                          setFieldValue("especie", e.target.value);
+                          setFieldValue("raza", "");
+                        }}
+                      >
+                        <option value="">Seleccionar Especie</option>
+                        <option value="Perro">Perro</option>
+                        <option value="Gato">Gato</option>
+                      </Field>
+                      <ErrorMessage
+                        name="especie"
+                        component="div"
+                        className="text-danger"
+                      />
+                    </div>
+                    <div className="mb-2">
+                      <Field
+                        as="select"
+                        name="raza"
+                        className={`form-control ${
+                          errors.raza && touched.raza ? "is-invalid" : ""
+                        }`}
+                      >
+                        <option value="">Seleccionar Raza</option>
+                        {getRazasPorEspecie(values.especie).map((raza) => (
+                          <option key={raza} value={raza}>
+                            {raza}
+                          </option>
+                        ))}
+                      </Field>
+                      <ErrorMessage
+                        name="raza"
+                        component="div"
+                        className="text-danger"
+                      />
+                    </div>
+                    <div className="d-flex justify-content-between mt-3">
+                      <button type="submit" className="btn-customMisDatos">
+                        Guardar Mascota
+                      </button>
+                    </div>
+                    <div>
+                      <button
+                        type="button"
+                        className="btn-customDelete mt-3"
+                        onClick={() => handleDeleteMascota(index)}
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
             </div>
           ))}
         </div>

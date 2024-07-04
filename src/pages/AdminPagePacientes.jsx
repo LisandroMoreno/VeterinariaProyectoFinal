@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form, Spinner } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -8,12 +8,13 @@ import TablaC from "../components/TablaC";
 import { titlePage } from "../helpers/titlePages";
 
 const AdminPagePacientes = () => {
-  titlePage("Administracion Pacientes");
+  titlePage("Lista de Pacientes");
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [currentPaciente, setCurrentPaciente] = useState(null);
   const [selectedMascotaIndex, setSelectedMascotaIndex] = useState(0);
   const [razasPorEspecie, setRazasPorEspecie] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchData();
@@ -51,7 +52,14 @@ const AdminPagePacientes = () => {
       }));
       setData(pacientesData);
     } catch (error) {
-      console.error("Error fetching data", error);
+      Swal.fire({
+        title: "Error!",
+        text: "Error al obtener los datos",
+        error,
+        icon: "error",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -145,8 +153,12 @@ const AdminPagePacientes = () => {
         fetchData();
         Swal.fire("Guardado!", "El paciente ha sido guardado.", "success");
       } catch (error) {
-        console.error("Error saving paciente", error);
-        Swal.fire("Error!", "Hubo un error al guardar el paciente.", "error");
+        Swal.fire({
+          title: "Error!",
+          text: "Hubo un error al guardar el paciente.",
+          error,
+          icon: "error",
+        });
       } finally {
         setSubmitting(false);
       }
@@ -213,9 +225,14 @@ const AdminPagePacientes = () => {
     <div>
       <h2 className="mt-3">Administrar Pacientes</h2>
       <div className="table-responsive w-100 mt-5">
-        <TablaC columns={columns} data={data} handleEdit={handleEdit} />
+        {loading ? (
+          <div className="d-flex justify-content-center align-items-center mt-5">
+            <Spinner animation="border" role="status" className="my-4" />
+          </div>
+        ) : (
+          <TablaC columns={columns} data={data} handleEdit={handleEdit} />
+        )}
       </div>
-
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>
@@ -293,7 +310,8 @@ const AdminPagePacientes = () => {
                 <Form.Control
                   as="select"
                   value={selectedMascotaIndex}
-                  onChange={handleSelectMascota}>
+                  onChange={handleSelectMascota}
+                >
                   {currentPaciente.mascotas.map((mascota, index) => (
                     <option key={index} value={index}>
                       {mascota.nombreMascota}
@@ -331,7 +349,8 @@ const AdminPagePacientes = () => {
                   handleSelectEspecie(e);
                   formik.handleChange(e);
                 }}
-                isInvalid={formik.touched.especie && !!formik.errors.especie}>
+                isInvalid={formik.touched.especie && !!formik.errors.especie}
+              >
                 <option value="">Selecciona una especie</option>
                 <option value="Perro">Perro</option>
                 <option value="Gato">Gato</option>
@@ -347,7 +366,8 @@ const AdminPagePacientes = () => {
                 name="raza"
                 value={formik.values.raza}
                 onChange={formik.handleChange}
-                isInvalid={formik.touched.raza && !!formik.errors.raza}>
+                isInvalid={formik.touched.raza && !!formik.errors.raza}
+              >
                 <option value="">Selecciona una raza</option>
                 {razasPorEspecie.map((raza) => (
                   <option key={raza} value={raza}>
@@ -363,7 +383,8 @@ const AdminPagePacientes = () => {
               <Button
                 variant="success"
                 type="submit"
-                disabled={formik.isSubmitting}>
+                disabled={formik.isSubmitting}
+              >
                 Guardar
               </Button>
             </div>

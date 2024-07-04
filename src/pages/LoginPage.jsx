@@ -15,11 +15,11 @@ const LoginPage = () => {
     userName: yup
       .string()
       .required("Completa el campo vacío")
-      .min(8, "Mínimo 8 caracteres")
-      .max(15, "Máximo 15 caracteres")
+      .min(5, "Mínimo 5 caracteres")
+      .max(20, "Máximo 20 caracteres")
       .matches(
-        /^[a-zA-Z0-9]+$/,
-        "El nombre de usuario solo puede contener letras y números."
+        /^[a-zA-Z0-9_]{5,20}$/,
+        "El nombre de usuario solo puede contener letras, números y guion bajo (_)."
       ),
     pass: yup
       .string()
@@ -27,8 +27,8 @@ const LoginPage = () => {
       .min(8, "Mínimo 8 caracteres")
       .max(15, "Máximo 15 caracteres")
       .matches(
-        /^[a-zA-Z0-9]+$/,
-        "La contraseña solo puede contener letras y números."
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/,
+        "La contraseña debe contener al menos una letra minúscula, una mayúscula, un dígito, un carácter especial (@$!%*?&), y tener entre 8 y 15 caracteres."
       ),
   });
 
@@ -56,8 +56,8 @@ const LoginPage = () => {
           }).then(() => {
             setTimeout(() => {
               navigate("/home-adminLog");
-              window.location.reload(); 
-            }, 2000);
+              window.location.reload();
+            }, 1000);
           });
         } else {
           Swal.fire({
@@ -67,8 +67,8 @@ const LoginPage = () => {
           }).then(() => {
             setTimeout(() => {
               navigate("/");
-              window.location.reload(); 
-            }, 2000);
+              window.location.reload();
+            }, 1000);
           });
         }
       }
@@ -88,11 +88,11 @@ const LoginPage = () => {
           });
         }
       } else {
-        console.error("Error:", error);
         Swal.fire({
           icon: "error",
           title: "Error",
           text: "Error al iniciar sesión. Intente nuevamente más tarde.",
+          error,
         });
       }
     } finally {
