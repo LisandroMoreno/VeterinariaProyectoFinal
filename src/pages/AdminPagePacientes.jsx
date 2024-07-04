@@ -107,13 +107,24 @@ const AdminPagePacientes = () => {
       .required("El email es obligatorio")
       .min(8, "Mínimo 8 caracteres")
       .max(50, "Máximo 50 caracteres"),
-    telefono: Yup.number()
+    telefono: Yup.string()
       .required("El teléfono es obligatorio")
-      .positive("El numero debe ser un valor positivo"),
+      .matches(/^[0-9]+$/, "El teléfono debe contener solo números")
+      .min(10, "Mínimo 10 caracteres")
+      .max(15, "Máximo 15 caracteres")
+      .test("positive", "El número debe ser un valor positivo", (value) => {
+        if (!value) return true;
+        const intValue = parseInt(value, 10);
+        return intValue > 0;
+      }),
     nombreMascota: Yup.string()
       .required("El nombre de la mascota es obligatorio")
       .min(3, "Mínimo 3 caracteres")
-      .max(30, "Máximo 30 caracteres"),
+      .max(30, "Máximo 30 caracteres")
+      .matches(
+        /^[a-zA-Z\s]+$/,
+        "El nombre solo puede contener letras y espacios."
+      ),
     especie: Yup.string().required("La especie es obligatoria"),
     raza: Yup.string().required("La raza es obligatoria"),
   });
@@ -293,7 +304,9 @@ const AdminPagePacientes = () => {
             <Form.Group controlId="telefono">
               <Form.Label>Teléfono</Form.Label>
               <Form.Control
-                type="number"
+                minLength={10}
+                maxLength={15}
+                type="text"
                 name="telefono"
                 placeholder="Teléfono"
                 value={formik.values.telefono}
