@@ -98,7 +98,10 @@ const AdminPagePacientes = () => {
       .required("El apellido es obligatorio")
       .min(2, "Mínimo 2 caracteres")
       .max(30, "Máximo 30 caracteres")
-      .matches(/^[a-zA-Z]+$/, "El apellido solo puede contener letras."),
+      .matches(
+        /^[a-zA-Z\s]+$/,
+        "El apellido solo puede contener letras y espacios"
+      ),
     mail: Yup.string()
       .email("Formato de email incorrecto. Por ejemplo: usuario@gmail.com")
       .required("El email es obligatorio")

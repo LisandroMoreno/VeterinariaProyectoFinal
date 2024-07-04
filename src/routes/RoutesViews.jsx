@@ -18,7 +18,6 @@ import AdminUsersPage from "../pages/AdminUsersPage";
 import PrivateRoute from "../components/PrivateRoute";
 import CrearTurno from "../pages/CrearTurno";
 import DetalleMisReservas from "../pages/DetalleMisReservas";
-import AdminPageProfesionales from "../pages/AdminPageProfesionales";
 import MisDatosPage from "../pages/MisDatosPage";
 import AdminTurnos from "../pages/AdminTurnos";
 import AdminPageComentarios from "../pages/AdminPageComentarios";
@@ -117,14 +116,6 @@ const RoutesViews = () => {
           }
         />
 
-        <Route
-          path="/AdminProfesionales"
-          element={
-            <PrivateRoute role={"admin"}>
-              <AdminPageProfesionales />
-            </PrivateRoute>
-          }
-        />
         <Route
           path="/comentariosPendientes"
           element={

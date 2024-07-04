@@ -61,8 +61,6 @@ const ProfesionalesPage = () => {
           comentario: values.comentario,
         });
 
-        console.log("Comentario enviado:", response.data);
-
         resetForm();
         getComentarios(currentPage);
 

@@ -47,7 +47,10 @@ const AdminProfesionalesPage = () => {
       .required("El nombre es obligatorio")
       .min(3, "El nombre debe tener al menos 3 caracteres")
       .max(100, "El nombre no debe exceder los 100 caracteres")
-      .matches(/^[a-zA-Z]+$/, "El nombre solo puede contener letras."),
+      .matches(
+        /^[a-zA-Z0-9 .!@#$%^&*()]+$/,
+        "El nombre solo puede contener letras"
+      ),
     especialidad: Yup.string()
       .required("La especialidad es obligatoria")
       .min(3, "La especialidad debe tener al menos 3 caracteres")

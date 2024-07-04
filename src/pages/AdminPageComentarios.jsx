@@ -38,7 +38,6 @@ const AdminPageComentarios = () => {
         config
       );
       if (response.status === 200) {
-        console.log("Comentario aprobado:", response.data);
         setComentarios(
           comentarios.filter((comentario) => comentario._id !== id)
         );
