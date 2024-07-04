@@ -2,19 +2,27 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import ReactStars from "react-rating-stars-component";
 import Swal from "sweetalert2";
-import clienteAxios from "../helpers/clienteAxios";
+import clienteAxios, { config } from "../helpers/clienteAxios";
 import { titlePage } from "../helpers/titlePages";
 
 const AdminPageComentarios = () => {
   titlePage("Lista de comentarios");
   const [comentarios, setComentarios] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const getPendientesComentarios = async () => {
     try {
-      const response = await clienteAxios.get("/comentarios/pendientes");
+      const response = await clienteAxios.get(
+        "/comentarios/pendientes",
+        config
+      );
       setComentarios(response.data);
+      setLoading(false);
     } catch (error) {
       console.error("Error al obtener los comentarios pendientes:", error);
+      setError("Error al obtener los comentarios pendientes");
+      setLoading(false);
     }
   };
 
@@ -24,25 +32,45 @@ const AdminPageComentarios = () => {
 
   const aprobarComentario = async (id) => {
     try {
-      const response = await clienteAxios.patch(`/comentarios/${id}/aprobar`);
+      const response = await clienteAxios.patch(
+        `/comentarios/${id}/aprobar`,
+        {},
+        config
+      );
       if (response.status === 200) {
         setComentarios(
           comentarios.filter((comentario) => comentario._id !== id)
         );
       } else {
-        console.error("Error al aprobar el comentario:", response);
+        throw new Error("Error al aprobar el comentario");
       }
     } catch (error) {
       console.error("Error al aprobar el comentario:", error);
+      Swal.fire("Error", "Hubo un problema al aprobar el comentario.", "error");
     }
   };
 
   const rechazarComentario = async (id) => {
     try {
-      await clienteAxios.delete(`/comentarios/${id}/rechazar`);
-      setComentarios(comentarios.filter((comentario) => comentario._id !== id));
+      const response = await clienteAxios.delete(
+        `/comentarios/${id}/rechazar`,
+        config
+      );
+      if (response.status === 200) {
+        console.log("Comentario rechazado y eliminado:", response.data);
+        setComentarios(
+          comentarios.filter((comentario) => comentario._id !== id)
+        );
+      } else {
+        throw new Error("Error al rechazar el comentario");
+      }
     } catch (error) {
       console.error("Error al rechazar el comentario:", error);
+      Swal.fire(
+        "Error",
+        "Hubo un problema al rechazar el comentario.",
+        "error"
+      );
     }
   };
 
@@ -79,6 +107,16 @@ const AdminPageComentarios = () => {
       }
     });
   };
+
+  if (loading) {
+    return (
+      <div className="text-center">Cargando comentarios pendientes...</div>
+    );
+  }
+
+  if (error) {
+    return <div className="text-center text-danger">{error}</div>;
+  }
 
   return (
     <div className="container mt-5">

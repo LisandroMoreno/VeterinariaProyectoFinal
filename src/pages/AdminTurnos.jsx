@@ -21,7 +21,6 @@ const AdminTurnosPage = () => {
         Swal.fire({
           title: "Error!",
           text: "Error al obtener turnos",
-          error,
           icon: "error",
         });
       } finally {
@@ -59,12 +58,11 @@ const AdminTurnosPage = () => {
         Swal.fire("Eliminado!", "La reserva ha sido eliminada.", "success");
       }
     } catch (error) {
-      Swal.fire(
-        "Error",
-        "Hubo un problema al eliminar la reserva.",
-        "error",
-        error
-      );
+      Swal.fire({
+        title: "Error",
+        text: "Hubo un problema al eliminar la reserva.",
+        icon: "error",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -83,14 +81,18 @@ const AdminTurnosPage = () => {
 
   const data = turnos.flatMap((turno) =>
     turno.reservas.map((reserva) => ({
-      idUser: turno.datosPersonales.idUser,
-      nombre: `${turno.datosPersonales.nombre} ${turno.datosPersonales.apellido}`,
-      telefono: `${turno.datosPersonales.telefono}`,
-      detalleCita: reserva.detalleCita,
-      veterinario: reserva.veterinario,
-      mascota: reserva.mascota,
+      idUser: turno.idUser || "sin datos",
+      nombre: turno.datosPersonales
+        ? `${turno.datosPersonales.nombre || "sin datos"} ${
+            turno.datosPersonales.apellido || ""
+          }`
+        : "sin datos",
+      telefono: turno.datosPersonales?.telefono || "sin datos",
+      detalleCita: reserva.detalleCita || "sin datos",
+      veterinario: reserva.veterinario || "sin datos",
+      mascota: reserva.mascota || "sin datos",
       fecha: new Date(reserva.fecha).toISOString().slice(0, 10),
-      hora: reserva.hora,
+      hora: reserva.hora || "sin datos",
       _id: reserva._id,
     }))
   );
