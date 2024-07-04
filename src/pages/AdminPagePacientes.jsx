@@ -90,7 +90,10 @@ const AdminPagePacientes = () => {
       .required("El nombre es obligatorio")
       .min(2, "Mínimo 2 caracteres")
       .max(30, "Máximo 30 caracteres")
-      .matches(/^[a-zA-Z]+$/, "El nombre solo puede contener letras."),
+      .matches(
+        /^[a-zA-Z\s]+$/,
+        "El nombre solo puede contener letras y espacios."
+      ),
     apellido: Yup.string()
       .required("El apellido es obligatorio")
       .min(2, "Mínimo 2 caracteres")
@@ -181,15 +184,10 @@ const AdminPagePacientes = () => {
 
   const handleSelectEspecie = (e) => {
     const especieSeleccionada = e.target.value;
-    setCurrentPaciente((prevPaciente) => ({
-      ...prevPaciente,
-      mascotas: prevPaciente.mascotas.map((mascota, idx) =>
-        idx === selectedMascotaIndex
-          ? { ...mascota, especie: especieSeleccionada, raza: "" }
-          : mascota
-      ),
-    }));
-    setRazasPorEspecie(getRazasPorEspecie(especieSeleccionada));
+
+    const razas = getRazasPorEspecie(especieSeleccionada);
+    setRazasPorEspecie(razas);
+
     formik.setFieldValue("especie", especieSeleccionada);
     formik.setFieldValue("raza", "");
   };
@@ -203,13 +201,13 @@ const AdminPagePacientes = () => {
       "Bulldog",
       "Beagle",
     ];
+
     return especie === "Gato"
       ? razasGato
       : especie === "Perro"
       ? razasPerro
       : [];
   };
-
   const columns = [
     { key: "idUser", header: "ID USUARIO" },
     { key: "nombre", header: "Nombre" },
