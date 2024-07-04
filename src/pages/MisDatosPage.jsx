@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import clienteAxios, { config } from "../helpers/clienteAxios";
 import { titlePage } from "../helpers/titlePages";
 import Swal from "sweetalert2";
@@ -121,13 +123,13 @@ const MisDatosPage = () => {
     });
   };
 
-  const handleSubmitMisDatos = async (e) => {
-    e.preventDefault();
+  const handleSubmitMisDatos = async (values) => {
     try {
       const response = await clienteAxios.put(
         `/misDatos/${misDatos.idUser}`,
         {
           ...misDatos,
+          datosPersonales: values,
         },
         config
       );
@@ -198,6 +200,24 @@ const MisDatosPage = () => {
       : [];
   };
 
+  const validationSchema = Yup.object().shape({
+    nombre: Yup.string()
+      .min(2, "El nombre debe tener al menos 2 caracteres")
+      .max(50, "El nombre no puede tener más de 50 caracteres")
+      .required("El nombre es requerido"),
+    apellido: Yup.string()
+      .min(2, "El apellido debe tener al menos 2 caracteres")
+      .max(50, "El apellido no puede tener más de 50 caracteres")
+      .required("El apellido es requerido"),
+    mail: Yup.string()
+      .email("Email inválido")
+      .required("El email es requerido"),
+    telefono: Yup.string()
+      .min(10, "El teléfono debe tener al menos 10 caracteres")
+      .max(15, "El teléfono no puede tener más de 15 caracteres")
+      .required("El teléfono es requerido"),
+  });
+
   return (
     <div className="container">
       <div className="mt-4">
@@ -212,44 +232,81 @@ const MisDatosPage = () => {
       <div className="mt-4">
         <div className="row">
           <div className="col-12 col-md-6">
-            <form onSubmit={handleSubmitMisDatos} className="user-form">
-              <h2 className="mb-4">Datos Personales</h2>
-              <input
-                type="text"
-                name="nombre"
-                placeholder="Nombre"
-                value={misDatos.datosPersonales?.nombre || ""}
-                onChange={handleInputChange}
-                className="form-control mb-2"
-              />
-              <input
-                type="text"
-                name="apellido"
-                placeholder="Apellido"
-                value={misDatos.datosPersonales?.apellido || ""}
-                onChange={handleInputChange}
-                className="form-control mb-2"
-              />
-              <input
-                type="email"
-                name="mail"
-                placeholder="Email"
-                value={misDatos.datosPersonales?.mail || ""}
-                onChange={handleInputChange}
-                className="form-control mb-2"
-              />
-              <input
-                type="text"
-                name="telefono"
-                placeholder="Teléfono"
-                value={misDatos.datosPersonales?.telefono || ""}
-                onChange={handleInputChange}
-                className="form-control mb-2"
-              />
-              <button type="submit" className="btn-customMisDatos mb-2">
-                Guardar Cambios
-              </button>
-            </form>
+            <Formik
+              initialValues={misDatos.datosPersonales}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmitMisDatos}
+              enableReinitialize
+            >
+              {({ errors, touched }) => (
+                <Form className="user-form">
+                  <h2 className="mb-4">Datos Personales</h2>
+                  <div className="mb-2">
+                    <Field
+                      type="text"
+                      name="nombre"
+                      placeholder="Nombre"
+                      className={`form-control ${
+                        errors.nombre && touched.nombre ? "is-invalid" : ""
+                      }`}
+                    />
+                    <ErrorMessage
+                      name="nombre"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </div>
+                  <div className="mb-2">
+                    <Field
+                      type="text"
+                      name="apellido"
+                      placeholder="Apellido"
+                      className={`form-control ${
+                        errors.apellido && touched.apellido ? "is-invalid" : ""
+                      }`}
+                    />
+                    <ErrorMessage
+                      name="apellido"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </div>
+                  <div className="mb-2">
+                    <Field
+                      type="email"
+                      name="mail"
+                      placeholder="Email"
+                      className={`form-control ${
+                        errors.mail && touched.mail ? "is-invalid" : ""
+                      }`}
+                    />
+                    <ErrorMessage
+                      name="mail"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </div>
+                  <div className="mb-2">
+                    <Field
+                      type="text"
+                      name="telefono"
+                      placeholder="Teléfono"
+                      className={`form-control ${
+                        errors.telefono && touched.telefono ? "is-invalid" : ""
+                      }`}
+                    />
+                    <ErrorMessage
+                      name="telefono"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </div>
+                  <button type="submit" className="btn-customMisDatos mb-2">
+                    Guardar Cambios
+                  </button>
+                </Form>
+              )}
+            </Formik>
           </div>
 
           {misDatos.mascotas.map((mascota, index) => (
@@ -273,13 +330,17 @@ const MisDatosPage = () => {
                   placeholder="Nombre"
                   value={mascota.nombreMascota}
                   onChange={(e) => handleMascotaChange(index, e)}
-                  className="form-control mb-2"
+                  className={`form-control ${
+                    !mascota.nombreMascota ? "is-invalid" : ""
+                  } mb-2`}
                 />
                 <select
                   name="especie"
                   value={mascota.especie}
                   onChange={(e) => handleMascotaChange(index, e)}
-                  className="form-select mb-2"
+                  className={`form-select ${
+                    !mascota.especie ? "is-invalid" : ""
+                  } mb-2`}
                 >
                   <option value="">Selecciona una especie</option>
                   <option value="Perro">Perro</option>
@@ -289,7 +350,9 @@ const MisDatosPage = () => {
                   name="raza"
                   value={mascota.raza}
                   onChange={(e) => handleMascotaChange(index, e)}
-                  className="form-select mb-2"
+                  className={`form-select ${
+                    !mascota.raza ? "is-invalid" : ""
+                  } mb-2`}
                 >
                   <option value="">Selecciona una raza</option>
                   {getRazasPorEspecie(mascota.especie).map((raza, idx) => (
