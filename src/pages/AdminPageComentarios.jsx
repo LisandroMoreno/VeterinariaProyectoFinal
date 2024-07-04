@@ -26,7 +26,6 @@ const AdminPageComentarios = () => {
     try {
       const response = await clienteAxios.patch(`/comentarios/${id}/aprobar`);
       if (response.status === 200) {
-        console.log("Comentario aprobado:", response.data);
         setComentarios(
           comentarios.filter((comentario) => comentario._id !== id)
         );

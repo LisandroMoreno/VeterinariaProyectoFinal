@@ -43,8 +43,8 @@ const AdminUsersPage = () => {
       .min(8, "Mínimo 8 caracteres")
       .max(15, "Máximo 15 caracteres")
       .matches(
-        /^[a-zA-Z0-9]+$/,
-        "El nombre de usuario solo puede contener letras y números."
+        /^[a-zA-Z ]+$/,
+        "El nombre solo puede contener letras"
       ),
     emailUsuario: Yup.string()
       .email("Formato de email incorrecto. Por ejemplo: usuario@gmail.com")
