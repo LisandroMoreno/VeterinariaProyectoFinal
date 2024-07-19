@@ -1,6 +1,6 @@
 # Proyecto Final: Patas y Garras
 
-Este proyecto es la parte frontend del proyecto final de Rolling Code. Patas y Garras es un sistema donde vas a poder adquirir productos, reservar turnos con nuestros profesionales y adquirir nuestros planes para tu mascota.
+Este proyecto es la parte frontend del proyecto final de Rolling Code. Patas y Garras es un sistema donde vas a poder ver todos los servicios que ofrecemos. Vas a poder adquirir productos, reservar turnos con nuestros profesionales y adquirir nuestros planes para tu mascota.
 
 ## Tabla de Contenidos
 
