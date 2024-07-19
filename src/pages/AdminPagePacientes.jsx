@@ -90,24 +90,41 @@ const AdminPagePacientes = () => {
       .required("El nombre es obligatorio")
       .min(2, "Mínimo 2 caracteres")
       .max(30, "Máximo 30 caracteres")
-      .matches(/^[a-zA-Z ]+$/, "El nombre solo puede contener letras"),
+      .matches(
+        /^[a-zA-Z\s]+$/,
+        "El nombre solo puede contener letras y espacios."
+      ),
     apellido: Yup.string()
       .required("El apellido es obligatorio")
       .min(2, "Mínimo 2 caracteres")
       .max(30, "Máximo 30 caracteres")
-      .matches(/^[a-zA-Z ]+$/, "El apellido solo puede contener letras"),
+      .matches(
+        /^[a-zA-Z\s]+$/,
+        "El apellido solo puede contener letras y espacios"
+      ),
     mail: Yup.string()
       .email("Formato de email incorrecto. Por ejemplo: usuario@gmail.com")
       .required("El email es obligatorio")
       .min(8, "Mínimo 8 caracteres")
       .max(50, "Máximo 50 caracteres"),
-    telefono: Yup.number()
+    telefono: Yup.string()
       .required("El teléfono es obligatorio")
-      .positive("El numero debe ser un valor positivo"),
+      .matches(/^[0-9]+$/, "El teléfono debe contener solo números")
+      .min(10, "Mínimo 10 caracteres")
+      .max(15, "Máximo 15 caracteres")
+      .test("positive", "El número debe ser un valor positivo", (value) => {
+        if (!value) return true;
+        const intValue = parseInt(value, 10);
+        return intValue > 0;
+      }),
     nombreMascota: Yup.string()
       .required("El nombre de la mascota es obligatorio")
       .min(3, "Mínimo 3 caracteres")
-      .max(30, "Máximo 30 caracteres"),
+      .max(30, "Máximo 30 caracteres")
+      .matches(
+        /^[a-zA-Z\s]+$/,
+        "El nombre solo puede contener letras y espacios."
+      ),
     especie: Yup.string().required("La especie es obligatoria"),
     raza: Yup.string().required("La raza es obligatoria"),
   });
@@ -181,15 +198,10 @@ const AdminPagePacientes = () => {
 
   const handleSelectEspecie = (e) => {
     const especieSeleccionada = e.target.value;
-    setCurrentPaciente((prevPaciente) => ({
-      ...prevPaciente,
-      mascotas: prevPaciente.mascotas.map((mascota, idx) =>
-        idx === selectedMascotaIndex
-          ? { ...mascota, especie: especieSeleccionada, raza: "" }
-          : mascota
-      ),
-    }));
-    setRazasPorEspecie(getRazasPorEspecie(especieSeleccionada));
+
+    const razas = getRazasPorEspecie(especieSeleccionada);
+    setRazasPorEspecie(razas);
+
     formik.setFieldValue("especie", especieSeleccionada);
     formik.setFieldValue("raza", "");
   };
@@ -203,13 +215,13 @@ const AdminPagePacientes = () => {
       "Bulldog",
       "Beagle",
     ];
+
     return especie === "Gato"
       ? razasGato
       : especie === "Perro"
       ? razasPerro
       : [];
   };
-
   const columns = [
     { key: "idUser", header: "ID USUARIO" },
     { key: "nombre", header: "Nombre" },
@@ -292,7 +304,9 @@ const AdminPagePacientes = () => {
             <Form.Group controlId="telefono">
               <Form.Label>Teléfono</Form.Label>
               <Form.Control
-                type="number"
+                minLength={10}
+                maxLength={15}
+                type="text"
                 name="telefono"
                 placeholder="Teléfono"
                 value={formik.values.telefono}
@@ -310,7 +324,8 @@ const AdminPagePacientes = () => {
                 <Form.Control
                   as="select"
                   value={selectedMascotaIndex}
-                  onChange={handleSelectMascota}>
+                  onChange={handleSelectMascota}
+                >
                   {currentPaciente.mascotas.map((mascota, index) => (
                     <option key={index} value={index}>
                       {mascota.nombreMascota}
@@ -348,7 +363,8 @@ const AdminPagePacientes = () => {
                   handleSelectEspecie(e);
                   formik.handleChange(e);
                 }}
-                isInvalid={formik.touched.especie && !!formik.errors.especie}>
+                isInvalid={formik.touched.especie && !!formik.errors.especie}
+              >
                 <option value="">Selecciona una especie</option>
                 <option value="Perro">Perro</option>
                 <option value="Gato">Gato</option>
@@ -364,7 +380,8 @@ const AdminPagePacientes = () => {
                 name="raza"
                 value={formik.values.raza}
                 onChange={formik.handleChange}
-                isInvalid={formik.touched.raza && !!formik.errors.raza}>
+                isInvalid={formik.touched.raza && !!formik.errors.raza}
+              >
                 <option value="">Selecciona una raza</option>
                 {razasPorEspecie.map((raza) => (
                   <option key={raza} value={raza}>
@@ -380,7 +397,8 @@ const AdminPagePacientes = () => {
               <Button
                 variant="success"
                 type="submit"
-                disabled={formik.isSubmitting}>
+                disabled={formik.isSubmitting}
+              >
                 Guardar
               </Button>
             </div>
